@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="july.lol" property="og:title">
+    <meta content="July? The month?? NO!" property="og:description" />
+    <meta content="https://july.lol" property="og:url" />
+    <meta content="https://july.lol/img/july_closeup.png" property="og:image" />
+    <meta content="#73F3BB" data-react-helmet="true" name="theme-color" />
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <title>July.lol - Enhanced Site Layout</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/musicplayer.css">
+</head>
+<body class="crt">
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="branding-text">july.lol</div>
+            <div class="sidebar">
+                <div class="navigation-area">
+                    <a href="/pages/home.html" class="nav-item" target="contentFrame">home</a>
+                    <a href="/pages/webmaster.html" class="nav-item" target="contentFrame">webmaster</a>
+                    <a href="/pages/links.html" class="nav-item" target="contentFrame">links</a>
+                    <a href="/pages/faq.html" class="nav-item" target="contentFrame">faq</a>
+                    <a href="/pages/resources.html" class="nav-item" target="contentFrame">resources</a>
+                    <a href="/pages/stuff.html" class="nav-item" target="contentFrame">stuff by me</a>
+                    <a href="https://july.lol/blog.html" class="nav-item nav-item-external">blog</a>
+                    <a href="https://july.lol/vrring/home" class="nav-item nav-item-external">vrring</a>
+                    <a href="/pages/photography.html" class="nav-item" target="contentFrame">photography</a>
+                    <a href="/pages/sitemap.html" class="nav-item" target="contentFrame">site map</a>
+                </div>
+                <div class="bottom-left-box">
+                    <p id="created"></p>
+                    <p id="updated"></p>
+                    <p id="visitors"></p>
+                    <p id="followers"></p>
+                </div>
+            </div>
+            <iframe class="main-content-iframe" name="contentFrame" src="/pages/home.html" title="Main Content">
+                Your browser does not support iframes.
+            </iframe>
+        </div>
+
+        <!-- Footer with Credits and Guestbook links -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <a href="credits.html" class="footer-link">Credits</a>
+                <span class="footer-separator">|</span>
+                <a href="https://julylmao.atabook.org" class="footer-link" target="_blank">Guestbook</a>
+                <span class="footer-separator">|</span>
+                <button id="crt-toggle" class="footer-button" title="Toggle CRT Effect">CRT: ON</button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="music-player-container">
+        <div class="music-player">
+            <div class="song-info">
+                <span id="song-title">Title</span> - <span id="song-artist">Artist</span>
+            </div>
+            <button id="prev" title="Previous Song">◁</button>
+            <button id="play-pause" title="Play">▶</button>
+            <button id="next" title="Next Song">▷</button>
+            <button id="shuffle" title="Shuffle">⤭</button>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
+            <span id="volume-label">20%</span>
+            <input type="range" id="progress" min="0" max="1" value="0" title="Progress">
+        </div>
+        <button id="toggle-button" title="Collapse">❰</button>
+    </div>
+
+    <script src="js/stats.js"></script>
+    <script src="js/musicplayer.js"></script>
+    <script src="js/crtbutton.js"></script>
+</body>
+</html>

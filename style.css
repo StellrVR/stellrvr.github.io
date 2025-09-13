@@ -1,0 +1,501 @@
+@font-face {
+    font-family: "Iosevka";
+    src: url('fonts/iosevka.woff2') format('woff2'), url('fonts/iosevka.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "HerculesOutline";
+    src: url(fonts/HerculesPixelFont-Outline.woff) format('woff'), url(fonts/HerculesPixelFont-Outline.woff2) format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg-color: #06130E;
+    --green-color: #73F3BB;
+}
+
+.crt::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+@keyframes flicker {
+    0% {
+    opacity: 0.27861;
+    }
+    5% {
+    opacity: 0.34769;
+    }
+    10% {
+    opacity: 0.23604;
+    }
+    15% {
+    opacity: 0.90626;
+    }
+    20% {
+    opacity: 0.18128;
+    }
+    25% {
+    opacity: 0.83891;
+    }
+    30% {
+    opacity: 0.65583;
+    }
+    35% {
+    opacity: 0.67807;
+    }
+    40% {
+    opacity: 0.26559;
+    }
+    45% {
+    opacity: 0.84693;
+    }
+    50% {
+    opacity: 0.96019;
+    }
+    55% {
+    opacity: 0.08594;
+    }
+    60% {
+    opacity: 0.20313;
+    }
+    65% {
+    opacity: 0.71988;
+    }
+    70% {
+    opacity: 0.53455;
+    }
+    75% {
+    opacity: 0.37288;
+    }
+    80% {
+    opacity: 0.71428;
+    }
+    85% {
+    opacity: 0.70419;
+    }
+    90% {
+    opacity: 0.7003;
+    }
+    95% {
+    opacity: 0.36108;
+    }
+    100% {
+    opacity: 0.24387;
+    }
+}
+
+.crt::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+body {
+    font-family: "Iosevka";
+    background-color: var(--bg-color);
+    background-image: url(img/julybackground.png);
+    background-size: cover;
+    color: var(--green-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0 20px 0;
+}
+
+.container {
+    background-color: var(--bg-color);
+    display: flex;
+    width: 700px;
+    height: 450px;
+    border: 2px solid #39ffc1;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 0 8px #39ffc1, 0 0 20px rgba(57, 255, 193, 0.4);
+}
+
+.branding-text {
+    font-family: "HerculesOutline";
+    position: absolute;
+    font-size: 70px;
+    font-style: italic;
+    color: var(--green-color);
+    top: -66px;
+    right: -2px;
+    z-index: 10;
+    white-space: nowrap;
+    pointer-events: none;
+    text-shadow: 0 0 10px var(--green-color), 0 0 20px var(--green-color), 0 0 30px var(--green-color);
+}
+
+.sidebar {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #39ffc1;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.navigation-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 0px;
+    padding-bottom: 175px;
+}
+
+/* Custom scrollbar styling (optional, for webkit browsers) */
+.navigation-area::-webkit-scrollbar {
+    display: none;
+}
+
+.navigation-area::-webkit-scrollbar-track {
+    background: #002f2f;
+}
+
+.navigation-area::-webkit-scrollbar-thumb {
+    background-color: #39ffc1;
+    border-radius: 4px;
+    border: 1px solid #001f1f;
+}
+
+.nav-item {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: var(--green-color);
+    border-bottom: 2px solid var(--green-color);
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 5px;
+    position: relative;
+    transition: background-color 0.1s ease;
+    text-shadow: 0 0 1px var(--green-color), 0 0 2px var(--green-color), 0 0 3px var(--green-color);
+}
+.nav-item:hover::after {
+    content: ' \2190';
+}
+.nav-item.nav-item-external:hover::after {
+    content: ' \2197';
+}
+.nav-item:hover {
+    background-color: rgba(115, 243, 187, 0.2);
+}
+
+.nav-item:last-child {
+    border-bottom: none;
+}
+
+.nav-item-large-spacer {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-left-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    border-top: 2px solid var(--green-color);
+    background-color: var(--bg-color);
+}
+
+.main-content-iframe {
+    flex-grow: 1;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    display: block;
+    overflow-x: hidden;
+}
+
+.site-footer {
+    width: 700px;
+    background-color: transparent;
+    border: none;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: -1px;
+}
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.footer-link {
+    color: #73F3BB;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #73F3BB;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+}
+.footer-link:hover {
+    color: #06130E;
+    background-color: #73F3BB;
+    border: 1px solid #73F3BB;
+    text-shadow: none;
+    box-shadow: 0 0 10px #73F3BB;
+}
+.footer-separator {
+    color: #73F3BB;
+    font-size: 16px;
+}
+.footer-button {
+    background-color: transparent;
+    color: #73F3BB;
+    border: 1px solid #73F3BB;
+    padding: 5px 10px;
+    font-family: "Iosevka", monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #73F3BB;
+    margin-left: 5px;
+}
+.footer-button:hover {
+    color: #06130E;
+    background-color: #73F3BB;
+    text-shadow: none;
+    box-shadow: 0 0 10px #73F3BB;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 10px;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .main-wrapper {
+        margin: 40px 0 10px 0;
+        width: 100%;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 90vh;
+        flex-direction: column;
+        margin: 40px 0 20px 0;
+        margin-bottom: 10px;
+    }
+    
+    .branding-text {
+        font-size: 45px;
+        top: -45px;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        width: auto;
+        text-align: center;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #39ffc1;
+        height: auto;
+        min-height: 200px;
+    }
+    
+    .navigation-area {
+        padding-bottom: 10px;
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+    
+    .nav-item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 0.95em;
+    }
+    
+    .nav-item:hover::after {
+        font-size: 1em;
+    }
+    
+    .bottom-left-box {
+        position: relative;
+        width: 90%;
+        max-width: 250px;
+        height: auto;
+        aspect-ratio: unset;
+        min-height: auto;
+        margin: 15px auto;
+        padding: 10px;
+        border-top: 2px solid var(--green-color);
+    }
+    
+    .bottom-left-box p {
+        font-size: 0.85em;
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .main-content-iframe {
+        width: 100%;
+        height: 60vh;
+        min-height: 400px;
+    }
+
+    .site-footer {
+        width: 100%;
+        padding: 8px 0;
+        margin-top: 0;
+    }
+    .footer-content {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+    .footer-separator {
+        display: none;
+    }
+    .footer-link {
+        font-size: 13px;
+        padding: 4px 8px;
+    }
+    .footer-button {
+        font-size: 13px;
+        padding: 4px 8px;
+        margin: 5px 0 0 0;
+    }
+    
+    .footer-separator:nth-child(4) {
+        display: none;
+    }
+    
+    /* Hide music player on mobile */
+    #music-player-container {
+        display: none !important;
+    }
+}
+
+/* Music player styles for desktop only */
+@media (min-width: 769px) {
+    #music-player-container {
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        display: flex;
+        align-items: center;
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .music-player {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background-color: #06130E;
+        padding: 10px 10px;
+        border: 1px solid #73f3bb;
+    }
+
+    .music-player button {
+        background-color: #06130E;
+        color: #73f3bb;
+        border: 1px solid #73f3bb;
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .music-player button:hover {
+        background-color: #73f3bb;
+        opacity: 50%;
+        color: #06130E;
+    }
+    .music-player input[type="range"] {
+        appearance: none;
+        width: 150px;
+        height: 8px;
+        background: #73f3bb;
+        outline: #73f3bb;
+        margin: 0;
+    }
+    .music-player input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        background: #73f3bb;
+        cursor: pointer;
+    }
+    #volume-label {
+        font-size: 14px;
+        color: #73f3bb;
+    }
+
+    #song-info {
+        display: flex;
+        flex-direction: column;
+        margin-right: 15px;
+        font-size: 14px;
+        color: #73f3bb;
+        text-align: center;
+    }
+    #song-title {
+        font-weight: bold;
+    }
+    #song-artist {
+        font-style: italic;
+    }
+
+    #toggle-button {
+        background-color: #06130E;
+        color: #73f3bb;
+        border: 1px solid #73f3bb;
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    #toggle-button:hover {
+        background-color: #73f3bb;
+        color: #06130E;
+    }
+}

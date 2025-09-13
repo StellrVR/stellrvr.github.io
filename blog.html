@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="july.lol" property="og:title" />
+    <meta content="July? The month?? NO!" property="og:description" />
+    <meta content="https://july.lol" property="og:url" />
+    <meta content="https://july.lol/img/july_closeup.png" property="og:image" />
+    <meta content="#73F3BB" data-react-helmet="true" name="theme-color" />
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <title>july.lol | blog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=VT323" />
+</head>
+<body class="crt">
+    <header>
+        <div>
+            <h1 style="font-style: italic">JULY'S BLOG</h1>
+        </div>
+    </header>
+    <main>
+        <div class="tab-container">
+            <div class="tabs">
+                <a href="index.html"><button class="tab-link">&gt;GO BACK&lt;</button></a>
+                <button class="tab-link active" data-tab="bloghome">&gt;HOME&lt;</button>
+                <button class="tab-link rainbow" data-tab="twentyfive">&gt;2025&lt;</button>
+            </div>
+            
+            <div class="tab-content" id="bloghome">
+                <h1 style="text-align: center">Welcome to my blog</h1>
+                <br>
+                <p>Here, you can read about whatever is on my mind if you're that interested.</p>
+                <p>Rainbow outlines means there's something new there, so check it out!</p>
+            </div>
+            
+            <div class="tab-content hidden" id="twentyfive">
+                <h1 style="text-align: center">Posts from 2025</h1>
+                <hr>
+                <br>
+                <h1><a href="posts/2025/06-03.html">June 03, 2025 - One Year on Nekoweb</a></h1>
+                <p>My one year anniversary on Nekoweb rambling.</p>
+                <br>
+                <hr>
+                <br>
+                <h1><a href="posts/2025/04-02.html">April 02, 2025 - Updated Thought on the Nekoweb Discord</a></h1>
+                <p>An update on my thoughts on the Nekoweb server. Good stuff and actual words this time.</p>
+                <br>
+                <hr>
+                <br>
+                <h1><a href="posts/2025/03-14.html">March 14, 2025 - Ramblings of a Rut</a></h1>
+                <p>Struggling to finish my site while balancing school, hobbies, and depressions.</p>
+                <br>
+                <hr>
+                <br>
+                <h1><a href="posts/2025/03-11.html">March 11, 2025 - Nekoweb Discord</a></h1>
+                <p>Just my thoughts on the Nekoweb Discord.</p>
+            </div>
+        
+            <div>
+                <p style="text-align: center;">coded with my fingers &copy; july.lol | <button id="crt-toggle" style="background: transparent; border: 1px solid #73f3bb; color: #73f3bb; padding: 5px;">Disable CRT Effect</button></p>
+                <p style="text-align: center;"><a href="credits.html">credits</a> | <a href="https://julylmao.atabook.org">guestbook</a></p>
+            </div>
+            
+        </div>
+        <div id="music-player-container">
+            <div class="music-player">
+                <div id="song-info">
+                    <span id="song-title">Title</span> - <span id="song-artist">Artist</span>
+                </div>
+                <button id="prev" title="Previous Song">◁</button>
+                <button id="play-pause" title="Play">▶</button>
+                <button id="next" title="Next Song">▷</button>
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
+                <span id="volume-label">20%</span>
+                <input type="range" id="progress" min="0" max="100" value="0" title="Progress">
+            </div>
+            <button id="toggle-button" title="Collapse">❰</button>
+        </div>
+    </main>
+    <script src="js/musicplayer.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/crtbutton.js"></script>
+</body>
+</html>
