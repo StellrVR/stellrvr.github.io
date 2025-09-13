@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Solar System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <audio id="background-music" autoplay loop>
+        <source src="interstellarchiptune.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="stars"></div>
+    <div class="solar-system">
+        <div class="sun" data-info="The Sun is the star at the center of the Solar System. It is a nearly perfect sphere of hot plasma, with internal convective motion that generates a magnetic field via a dynamo process. It is by far the most important source of energy for life on Earth. The Sun has a diameter of about 1.4 million kilometers (865,000 miles) and accounts for about 99.86% of the total mass of the Solar System. Its surface temperature is approximately 5,600°C (10,000°F), while its core reaches temperatures of about 15 million°C (27 million°F). The Sun's energy is produced through nuclear fusion, primarily converting hydrogen into helium."></div>
+        <!-- Orbit Lines -->
+        <div class="orbit-line mercury-orbit"></div>
+        <div class="orbit-line venus-orbit"></div>
+        <div class="orbit-line earth-orbit"></div>
+        <div class="orbit-line mars-orbit"></div>
+        <div class="orbit-line jupiter-orbit"></div>
+        <div class="orbit-line saturn-orbit"></div>
+        <div class="orbit-line uranus-orbit"></div>
+        <div class="orbit-line neptune-orbit"></div>
+        <div class="orbit-line pluto-orbit"></div>
+        <!-- Planets -->
+        <div class="planet mercury" data-info="Mercury is the smallest planet in the Solar System and the closest to the Sun. It has a diameter of about 4,880 km and no moons. Mercury's surface is heavily cratered and resembles the Moon. It has a very thin exosphere composed mostly of oxygen, sodium, hydrogen, helium, and potassium. Due to its proximity to the Sun, temperatures on Mercury can reach up to 430°C during the day and drop to -180°C at night."></div>
+        <div class="planet venus" data-info="Venus is the second planet from the Sun and is often called Earth's 'sister planet' due to its similar size and composition. It has a diameter of about 12,104 km and no moons. Venus has a thick atmosphere composed mainly of carbon dioxide, with clouds of sulfuric acid, creating a runaway greenhouse effect. Surface temperatures can reach up to 470°C, making it the hottest planet in the Solar System. Venus rotates slowly in the opposite direction to most planets."></div>
+        <div class="planet earth" data-info="Earth is the third planet from the Sun and the only known astronomical object to support life. It has a diameter of about 12,742 km and one moon, simply called the Moon. Earth's atmosphere is composed of 78% nitrogen, 21% oxygen, and trace amounts of other gases. It has a diverse surface with oceans, mountains, deserts, and forests. Earth's magnetic field and atmosphere protect it from harmful solar radiation. The Moon is Earth's only natural satellite. It has a diameter of about 3,474 km, making it the fifth-largest moon in the Solar System. The Moon's surface is covered in craters, lava plains, and mountains. It has no atmosphere and experiences extreme temperature variations, ranging from 121°C during the day to -246°C at night. The Moon's gravitational pull causes Earth's tides and stabilizes Earth's axial tilt, contributing to a stable climate.">
+            <div class="moon"></div>
+        </div>
+        <div class="planet mars" data-info="Mars is the fourth planet from the Sun and is often called the 'Red Planet' due to its reddish appearance caused by iron oxide (rust) on its surface. It has a diameter of about 6,779 km and two small moons, Phobos and Deimos. Mars has a thin atmosphere composed mostly of carbon dioxide. Its surface features include the largest volcano in the Solar System, Olympus Mons, and a vast canyon system, Valles Marineris. Evidence suggests that liquid water once flowed on Mars."></div>
+        <div class="planet jupiter" data-info="Jupiter is the largest planet in the Solar System, with a diameter of about 139,820 km. It has 79 known moons, including the four large Galilean moons: Io, Europa, Ganymede, and Callisto. Jupiter is a gas giant composed mostly of hydrogen and helium. It has a strong magnetic field and a prominent feature called the Great Red Spot, a giant storm that has been raging for centuries. Jupiter's rapid rotation causes it to have a slightly flattened shape."></div>
+        <div class="planet saturn" data-info="Saturn is the sixth planet from the Sun and is known for its stunning ring system. It has a diameter of about 116,460 km and 83 known moons, including Titan, which has a thick atmosphere and lakes of liquid methane. Saturn is a gas giant composed mostly of hydrogen and helium. Its rings are made up of ice, rock, and dust particles. Saturn has a low density and would float in water if a large enough ocean existed.">
+            <div class="saturn-ring"></div>
+        </div>
+        <div class="planet uranus" data-info="Uranus is the seventh planet from the Sun and is unique for its sideways rotation, likely due to a massive collision in its past. It has a diameter of about 50,724 km and 27 known moons. Uranus is an ice giant composed mostly of water, ammonia, and methane, which gives it a blue-green color. It has a faint ring system and a cold atmosphere with winds reaching up to 900 km/h. Uranus was the first planet discovered with a telescope."></div>
+        <div class="planet neptune" data-info="Neptune is the eighth and farthest known planet from the Sun. It has a diameter of about 49,244 km and 14 known moons, including Triton, which orbits in the opposite direction to Neptune's rotation. Neptune is an ice giant composed mostly of water, ammonia, and methane, giving it a deep blue color. It has the strongest winds in the Solar System, reaching speeds of up to 2,100 km/h. Neptune was the first planet predicted by mathematical calculations before being observed."></div>
+        <div class="planet pluto" data-info="Pluto is a dwarf planet in the Kuiper Belt, a region of icy bodies beyond Neptune. It has a diameter of about 2,377 km and five known moons, the largest of which is Charon. Pluto's surface is composed of frozen nitrogen, methane, and carbon monoxide. It has a thin atmosphere that freezes and collapses as it moves away from the Sun. Pluto was once considered the ninth planet but was reclassified as a dwarf planet in 2006 due to its small size and inability to clear its orbit of other debris."></div>
+        <!-- Tooltip -->
+        <div class="info-tooltip"></div>
+    </div>
+    <script src="script.js"></script>
+    <script src="background-music.js"></script>
+</body>
+</html>
