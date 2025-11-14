@@ -19,7 +19,8 @@ var sites = [
     'https://andromeda-galaxy.ch/',
     'https://viktorious-diem.neocities.org/',
     'https://wolfsbane.nekoweb.org',
-    'https://cossechan.nekoweb.org'
+    'https://cossechan.nekoweb.org',
+    'https://smugwolf.neocities.org'
     ];
     
     //the name of the ring
@@ -37,4 +38,5 @@ var sites = [
     
     //should the widget include a random button?
     var useRandom = true;
+
     
