@@ -20,7 +20,8 @@ var sites = [
     'https://viktorious-diem.neocities.org/',
     'https://wolfsbane.nekoweb.org',
     'https://cossechan.nekoweb.org',
-    'https://smugwolf.neocities.org'
+    'https://smugwolf.neocities.org',
+    'https://bellastrange.neocities.org'
     ];
     
     //the name of the ring
@@ -40,3 +41,4 @@ var sites = [
     var useRandom = true;
 
     
+
