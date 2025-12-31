@@ -158,23 +158,24 @@ body {
     position: relative;
     border: 1px solid #333;
     max-width: 95vw;
-    overflow: hidden;
 }
-.device-case::before {
+.device-case::after {
     content: "";
     position: absolute;
     top: 60px;
-    left: 0;
+    left: 0px;
     width: 8px;
     height: 150px;
     background: linear-gradient(to bottom,
     var(--coral) 20%,
-    var(--tech-gold) 20%, var(--orange) 40%,
+    var(--orange) 20%, var(--orange) 40%,
     var(--yellow) 40%, var(--yellow) 60%,
     var(--mint) 60%, var(--mint) 80%,
     var(--cyan) 80%);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 0 4px 4px 0;
+    z-index: 999;
+    overflow: hidden;
 }
 
 .screw {
@@ -693,6 +694,7 @@ hr {
         width: 100%;
         border-radius: 10px;
     }
+    .device-case::before { display: none; }
     .screw, .model-label { display: none; }
 
     .container {
