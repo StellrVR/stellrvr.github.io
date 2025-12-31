@@ -3,10 +3,10 @@ const DISCORD_ID = "257252196926750720";
 const statusElement = document.getElementById("user-status");
 
 const COLORS = {
-    online: "var(--oxley)",      // Green
-    idle: "var(--tech-gold)",    // Orange/Gold
-    dnd: "var(--apricot)",       // Red
-    offline: "var(--text-dim)"   // Grey
+    online: "var(--oxley)",
+    idle: "var(--tech-gold)",
+    dnd: "var(--apricot)",
+    offline: "var(--text-dim)"
 };
 
 const STATUS_TEXT = {

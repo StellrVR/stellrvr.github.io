@@ -5,17 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    // Tab switching logic
     tabs.forEach(tab => {
         tab.addEventListener('click', function () {
-            // Deactivate all tabs and hide content
             tabs.forEach(t => t.classList.remove('active'));
             tabContents.forEach(content => {
                 content.classList.add('hidden');
                 content.style.display = 'none';
             });
 
-            // Activate the clicked tab
             tab.classList.add('active');
             const activeTab = document.querySelector(`#${tab.getAttribute('data-tab')}`);
             activeTab.classList.remove('hidden');
@@ -23,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Toggle between tab sets
     tabToggle.addEventListener('click', function () {
         if (tabSet1.classList.contains('hidden')) {
             tabSet1.classList.remove('hidden');
@@ -34,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Initially activate the first tab of the first set
     tabs[0].classList.add('active');
     tabContents[0].style.display = 'block';
 });
@@ -51,7 +46,7 @@ document.getElementById('toggle-tab-set').addEventListener('click', () => {
         tabSet2.style.transform = 'translateX(100%)';
         setTimeout(() => {
             tabSet2.hidden = true;
-        }, 500); // Matches CSS transition duration
+        }, 500);
     }
 });
 

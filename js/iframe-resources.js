@@ -1,8 +1,6 @@
-// /js/iframe-resources.js
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('resource-search');
     const tagFilterButtons = document.querySelectorAll('.tag-filters .tag-filter');
-    // Important: Update this selector if your item class name is different
     const resourceItems = document.querySelectorAll('.resource-button-grid .resource-button-item'); 
     let currentActiveTag = 'all'; 
 
@@ -11,9 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         resourceItems.forEach(item => {
             const title = (item.dataset.title || '').toLowerCase();
-            // You might want to search in description too if available
-            // const description = (item.querySelector('.resource-item-desc')?.textContent || '').toLowerCase();
-            const itemTextContent = item.textContent.toLowerCase(); // Fallback search in all text
+            const itemTextContent = item.textContent.toLowerCase();
             const tags = (item.dataset.tags || '').toLowerCase().split(',');
 
             const matchesSearchTerm = title.includes(searchTerm) || itemTextContent.includes(searchTerm);
@@ -21,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (matchesSearchTerm && matchesTag) {
                 item.classList.remove('hidden');
-                item.style.display = ''; // Reset to default display (CSS grid will handle it)
+                item.style.display = '';
             } else {
                 item.classList.add('hidden');
                 item.style.display = 'none';
