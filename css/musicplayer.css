@@ -1,0 +1,299 @@
+:root {
+    --bg-color: #0b0c0d;
+    --case-color: #1a1b1e;
+    --screen-bg: #06130E;
+    --apricot: #ff3e3e;
+    --tech-gold: #ff9d00;
+    --bergamot: #ffdd00;
+    --oxley: #44ff88;
+    --tiber: #00ddff;
+    --text-main: #e0e6ed;
+    --text-dim: #6c7a89;
+    --border-color: #333;
+}
+
+#music-player-container {
+    position: fixed;
+    bottom: 0;
+    left: 20px;
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.music-player-casing {
+    background-color: var(--case-color);
+    padding: 15px;
+    padding-top: 25px;
+    
+    border-radius: 12px 12px 0 0; 
+    
+    border: 1px solid #333;
+    border-bottom: none; 
+    
+    box-shadow: 
+        0px -5px 20px rgba(0,0,0,0.8),
+        inset 1px 1px 2px rgba(255,255,255,0.05);
+        
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    position: relative;
+    overflow: visible;
+}
+
+.music-player-casing::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        var(--apricot) 20%, 
+        var(--tech-gold) 20%, var(--tech-gold) 40%, 
+        var(--bergamot) 40%, var(--bergamot) 60%, 
+        var(--oxley) 60%, var(--oxley) 80%, 
+        var(--tiber) 80%
+    );
+    border-radius: 4px 0 0 0;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.music-player {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 5px;
+}
+
+.display-panel {
+    background-color: var(--screen-bg);
+    border: 2px solid #333;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+}
+.display-panel::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 40%;
+    background: linear-gradient(rgba(255,255,255,0.02), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.song-info-mask {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+}
+
+#song-info-scroller {
+    display: inline-block;
+    color: var(--oxley);
+    font-family: "Iosevka", monospace;
+    font-size: 0.85rem;
+    text-shadow: 0 0 5px rgba(68, 255, 136, 0.4);
+    white-space: nowrap;
+    transform: translateX(0);
+}
+
+#song-info-scroller.scrolling {
+    animation: scroll-text var(--scroll-duration) linear infinite;
+}
+
+@keyframes scroll-text {
+    0%, 20% { transform: translateX(0); }
+    80%, 100% { transform: translateX(var(--scroll-distance)); }
+}
+
+#song-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#song-artist {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    color: var(--text-dim);
+}
+
+.viz-bars {
+    display: flex;
+    gap: 2px;
+    margin-top: 5px;
+    height: 4px;
+}
+.bar { flex: 1; height: 100%; background: #222; }
+.bar:nth-child(1) { background: var(--apricot); }
+.bar:nth-child(2) { background: var(--bergamot); }
+.bar:nth-child(3) { background: var(--tiber); }
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+}
+
+.tactile-btn {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: var(--text-dim);
+    padding: 8px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "Iosevka", monospace;
+    position: relative;
+    flex-grow: 1;
+}
+
+.tactile-btn:hover {
+    color: #000;
+    border-color: transparent;
+}
+.tactile-btn:active {
+    transform: translateY(1px);
+}
+
+#prev:hover, #next:hover {
+    background-color: var(--bergamot);
+    box-shadow: 0 0 8px var(--bergamot);
+}
+
+.play-btn {
+    border-color: var(--oxley);
+    color: var(--oxley);
+}
+.play-btn:hover {
+    background-color: var(--oxley);
+    box-shadow: 0 0 8px var(--oxley);
+    color: #000;
+}
+
+.small-btn {
+    flex-grow: 0;
+    width: 40px;
+}
+#shuffle:hover {
+    background-color: var(--tiber);
+    box-shadow: 0 0 8px var(--tiber);
+}
+
+.tactile-btn.active {
+    background-color: var(--tiber);
+    color: #000;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.sliders-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+.slider-group label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-weight: bold;
+    font-family: "Iosevka", monospace;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+#volume {
+    height: 4px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 2px;
+}
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    border: 2px solid #111;
+    margin-top: -5px;
+}
+#volume:hover::-webkit-slider-thumb {
+    background: var(--oxley);
+}
+
+.digital-readout {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    color: var(--tech-gold);
+    background: #000;
+    padding: 2px 4px;
+    font-size: 0.75rem;
+    border: 1px solid #333;
+    min-width: 24px;
+    text-align: center;
+}
+
+.tape-progress {
+    height: 6px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+.tape-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 4px;
+    background: var(--apricot);
+    cursor: col-resize;
+    margin-top: -2px;
+}
+.tape-progress:hover::-webkit-slider-thumb {
+    background: var(--oxley);
+    width: 6px;
+    height: 12px;
+    margin-top: -3px;
+}
+
+#toggle-button {
+    position: absolute;
+    top: -22px;
+    right: 15px;
+    background: var(--case-color);
+    color: var(--text-dim);
+    border: 1px solid #333;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 2px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    height: 23px;
+    z-index: 5;
+    font-family: "Iosevka", monospace;
+    text-transform: uppercase;
+}
+#toggle-button:hover {
+    color: #000;
+    background: var(--tech-gold);
+}
+
+@media (max-width: 768px) {
+    #music-player-container { display: none !important; }
+}

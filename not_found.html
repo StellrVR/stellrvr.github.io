@@ -1,19 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Not found.</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=VT323" />
-</head>
-<body>
-    <main id="content">
-        <section class="full">
-            <h2>There's nothing here!</h2>
-            <a href="index.html" style="text-align: center">Go back</a>
-        </section>
-    </main>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>404 - DATA NOT FOUND</title>
+        <link rel="stylesheet" href="/stellrvr.github.io-main/style.css">
+        <style>
+            .error-screen {
+                flex-grow: 1;
+                background-color: #050000;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px;
+                box-sizing: border-box;
+                position: relative;
+                overflow: hidden;
+                font-family: "Iosevka", monospace;
+            }
+            .error-screen::after {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+                pointer-events: none;
+            }
+
+            .error-code {
+                font-size: 8rem;
+                font-weight: bold;
+                color: var(--apricot);
+                line-height: 1;
+                position: relative;
+                text-shadow: 2px 2px 0px var(--tech-gold);
+                animation: glitch-skew 1s infinite linear alternate-reverse;
+            }
+            .error-code::before, .error-code::after {
+                content: "404";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.8;
+            }
+            .error-code::before {
+                color: var(--tiber);
+                animation: glitch-anim-1 2s infinite linear alternate-reverse;
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+                transform: translate(-2px, -2px);
+            }
+            .error-code::after {
+                color: var(--oxley);
+                animation: glitch-anim-2 2s infinite alternate-reverse;
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+                transform: translate(2px, 2px);
+            }
+
+            .error-message {
+                margin-top: 20px;
+                color: var(--text-main);
+                text-align: center;
+                max-width: 80%;
+            }
+
+            .terminal-log {
+                text-align: left;
+                font-size: 0.8rem;
+                color: var(--text-dim);
+                margin-top: 15px;
+                border-left: 2px solid var(--apricot);
+                padding-left: 15px;
+                font-family: "Courier New", monospace;
+            }
+            .log-line { display: block; margin-bottom: 5px; }
+            .log-fail { color: var(--apricot); }
+
+            .reboot-btn {
+                margin-top: 30px;
+                background: transparent;
+                border: 2px solid var(--oxley);
+                color: var(--oxley);
+                padding: 10px 20px;
+                font-family: "Iosevka", monospace;
+                font-size: 1rem;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.2s;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .reboot-btn:hover {
+                background: var(--oxley);
+                color: #000;
+                box-shadow: 0 0 15px var(--oxley);
+            }
+            @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(-2deg); }
+            20% { transform: skew(2deg); }
+            30% { transform: skew(0deg); }
+            100% { transform: skew(0deg); }
+            }
+            @keyframes glitch-anim-1 {
+                0% { clip-path: inset(20% 0 80% 0); }
+                20% { clip-path: inset(60% 0 10% 0); }
+                40% { clip-path: inset(40% 0 50% 0); }
+                60% { clip-path: inset(80% 0 5% 0); }
+                80% { clip-path: inset(10% 0 70% 0); }
+                100% { clip-path: inset(30% 0 50% 0); }
+            }
+            @keyframes glitch-anim-2 {
+                0% { clip-path: inset(10% 0 60% 0); }
+                20% { clip-path: inset(30% 0 20% 0); }
+                40% { clip-path: inset(70% 0 20% 0); }
+                60% { clip-path: inset(20% 0 60% 0); }
+                80% { clip-path: inset(50% 0 30% 0); }
+                100% { clip-path: inset(10% 0 80% 0); }
+            }
+
+            @media (max-width: 768px) {
+                .error-code { font-size: 4rem; }
+            }
+        </style>
+    </head>
+
+    <body class="crt">
+
+        <div class="device-case">
+            <div class="screw top-left">+</div>
+            <div class="screw top-right">+</div>
+            <div class="screw bottom-left">+</div>
+            <div class="screw bottom-right">+</div>
+            <div class="model-label">JULY-OS <span style="font-size: 0.6em; opacity: 0.7;">SERIES 9000</span></div>
+
+            <div class="main-wrapper">
+                <div class="container screen-bezel">
+                    <div class="branding-text">july.lol</div>
+                    
+                    <div class="sidebar">
+                        <div class="navigation-area">
+                            <div class="nav-header">/// DIAGNOSTICS ///</div>
+                            <!-- Links still work so user isn't trapped -->
+                            <a href="/" class="nav-item">00. REBOOT</a>
+                            <a href="/pages/home.html" class="nav-item">01. HOME</a>
+                            <a href="/pages/webmaster.html" class="nav-item">02. WEBMASTER</a>
+                            <a href="/pages/links.html" class="nav-item">03. LINKS</a>
+                        </div>
+                        
+                        <div class="system-status" style="border-top: 2px solid var(--apricot);">
+                            STATUS: <span class="blink" style="color: var(--apricot);">SYSTEM ERROR</span>
+                        </div>
+                    </div>
+                    
+                    <!-- REPLACING IFRAME WITH ERROR SCREEN -->
+                    <div class="error-screen">
+                        <div class="error-code">404</div>
+                        <div class="error-message">
+                            <h3>FATAL EXCEPTION</h3>
+                            <div class="terminal-log">
+                                <span class="log-line">> MOUNTING TAPE DRIVE... OK</span>
+                                <span class="log-line">> SEEKING SECTOR... <span class="log-fail">FAILED</span></span>
+                                <span class="log-line">> ERROR: DATA_CORRUPTION</span>
+                                <span class="log-line">> The requested file could not be found.</span>
+                            </div>
+                        </div>
+                        <a href="/" class="reboot-btn">INITIATE REBOOT</a>
+                    </div>
+                </div>
+
+                <footer class="site-footer">
+                    <div class="footer-content">
+                        <a href="#" class="footer-link">DIAGNOSTICS</a>
+                        <span class="footer-separator">//</span>
+                        <button id="crt-toggle" class="footer-button" title="Toggle CRT Effect">CRT: ON</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <script src="/stellrvr.github.io-main/js/crtbutton.js"></script>
+    </body>
 </html>
