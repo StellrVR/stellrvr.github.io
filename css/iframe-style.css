@@ -11,11 +11,11 @@
     --bg-color: transparent;
     --text-main: #e0e6ed;
     --text-dim: #6c7a89;
-    --retro-red: #ff3e3e;
-    --retro-orange: #ff9d00;
-    --retro-yellow: #ffdd00;
-    --retro-green: #44ff88;
-    --retro-blue: #00ddff;
+    --coral: #ff3e3e;
+    --orange: #ff9d00;
+    --yellow: #ffdd00;
+    --mint: #44ff88;
+    --cyan: #00ddff;
     --border-dim: rgba(255, 255, 255, 0.1);
 }
 
@@ -38,7 +38,7 @@ body {
     border: 1px solid #111;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--retro-orange);
+    background-color: var(--orange);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Gradient text for main headers */
 h1 {
-    border-bottom-color: var(--retro-blue);
+    border-bottom-color: var(--cyan);
 }
 
 p {
@@ -63,14 +63,14 @@ p {
 }
 
 a {
-    color: var(--retro-blue);
+    color: var(--cyan);
     text-decoration: none;
-    border-bottom: 1px dotted var(--retro-blue);
+    border-bottom: 1px dotted var(--cyan);
     transition: all 0.2s;
 }
 
 a:hover {
-    color: var(--retro-orange);
+    color: var(--orange);
     border-bottom-style: solid;
 }
 
@@ -145,7 +145,7 @@ a:hover {
 
 /* Hover effects with the palette stripes */
 .webring-widget:hover, .resource-button-item:hover, .vr-card:hover, .shrine-card:hover, .indie-card:hover, .misc-card:hover {
-    border-color: var(--retro-orange);
+    border-color: var(--orange);
     color: var(--text-main);
     background: #111;
     transform: translateY(-2px);
@@ -155,7 +155,7 @@ a:hover {
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 3px;
-    background: var(--retro-orange);
+    background: var(--orange);
 }
 
 /* Input Fields */
@@ -171,7 +171,7 @@ a:hover {
     box-sizing: border-box;
 }
 #resource-search:focus {
-    border-color: var(--retro-blue);
+    border-color: var(--cyan);
     box-shadow: 0 0 5px rgba(0, 221, 255, 0.2);
 }
 
@@ -195,7 +195,7 @@ a:hover {
     color: var(--text-main);
 }
 .tab-link.active {
-    color: var(--retro-yellow);
-    border-bottom: 2px solid var(--retro-yellow);
+    color: var(--yellow);
+    border-bottom: 2px solid var(--yellow);
     background: rgba(255, 221, 0, 0.05);
 }

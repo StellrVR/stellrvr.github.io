@@ -2,11 +2,11 @@
     --bg-color: #0b0c0d;
     --case-color: #1a1b1e;
     --screen-bg: #06130E;
-    --apricot: #ff3e3e;
-    --tech-gold: #ff9d00;
-    --bergamot: #ffdd00;
-    --oxley: #44ff88;
-    --tiber: #00ddff;
+    --coral: #ff3e3e;
+    --orange: #ff9d00;
+    --yellow: #ffdd00;
+    --mint: #44ff88;
+    --cyan: #00ddff;
     --text-main: #e0e6ed;
     --text-dim: #6c7a89;
     --border-color: #333;
@@ -49,11 +49,11 @@
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, 
-        var(--apricot) 20%, 
-        var(--tech-gold) 20%, var(--tech-gold) 40%, 
-        var(--bergamot) 40%, var(--bergamot) 60%, 
-        var(--oxley) 60%, var(--oxley) 80%, 
-        var(--tiber) 80%
+        var(--coral) 20%, 
+        var(--orange) 20%, var(--orange) 40%, 
+        var(--yellow) 40%, var(--yellow) 60%, 
+        var(--mint) 60%, var(--mint) 80%, 
+        var(--cyan) 80%
     );
     border-radius: 4px 0 0 0;
     opacity: 0.8;
@@ -95,7 +95,7 @@
 
 #song-info-scroller {
     display: inline-block;
-    color: var(--oxley);
+    color: var(--mint);
     font-family: "Iosevka", monospace;
     font-size: 0.85rem;
     text-shadow: 0 0 5px rgba(68, 255, 136, 0.4);
@@ -130,9 +130,9 @@
     height: 4px;
 }
 .bar { flex: 1; height: 100%; background: #222; }
-.bar:nth-child(1) { background: var(--apricot); }
-.bar:nth-child(2) { background: var(--bergamot); }
-.bar:nth-child(3) { background: var(--tiber); }
+.bar:nth-child(1) { background: var(--coral); }
+.bar:nth-child(2) { background: var(--yellow); }
+.bar:nth-child(3) { background: var(--cyan); }
 
 .controls-row {
     display: flex;
@@ -164,17 +164,17 @@
 }
 
 #prev:hover, #next:hover {
-    background-color: var(--bergamot);
-    box-shadow: 0 0 8px var(--bergamot);
+    background-color: var(--yellow);
+    box-shadow: 0 0 8px var(--yellow);
 }
 
 .play-btn {
-    border-color: var(--oxley);
-    color: var(--oxley);
+    border-color: var(--mint);
+    color: var(--mint);
 }
 .play-btn:hover {
-    background-color: var(--oxley);
-    box-shadow: 0 0 8px var(--oxley);
+    background-color: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
     color: #000;
 }
 
@@ -183,12 +183,12 @@
     width: 40px;
 }
 #shuffle:hover {
-    background-color: var(--tiber);
-    box-shadow: 0 0 8px var(--tiber);
+    background-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
 }
 
 .tactile-btn.active {
-    background-color: var(--tiber);
+    background-color: var(--cyan);
     color: #000;
     box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
 }
@@ -235,13 +235,13 @@ input[type="range"] {
     margin-top: -5px;
 }
 #volume:hover::-webkit-slider-thumb {
-    background: var(--oxley);
+    background: var(--mint);
 }
 
 .digital-readout {
     font-family: "Courier New", monospace;
     font-weight: bold;
-    color: var(--tech-gold);
+    color: var(--orange);
     background: #000;
     padding: 2px 4px;
     font-size: 0.75rem;
@@ -261,12 +261,12 @@ input[type="range"] {
     -webkit-appearance: none;
     height: 10px;
     width: 4px;
-    background: var(--apricot);
+    background: var(--coral);
     cursor: col-resize;
     margin-top: -2px;
 }
 .tape-progress:hover::-webkit-slider-thumb {
-    background: var(--oxley);
+    background: var(--mint);
     width: 6px;
     height: 12px;
     margin-top: -3px;
@@ -291,7 +291,7 @@ input[type="range"] {
 }
 #toggle-button:hover {
     color: #000;
-    background: var(--tech-gold);
+    background: var(--orange);
 }
 
 @media (max-width: 768px) {
