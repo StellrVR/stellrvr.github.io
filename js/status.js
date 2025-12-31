@@ -3,9 +3,9 @@ const DISCORD_ID = "257252196926750720";
 const statusElement = document.getElementById("user-status");
 
 const COLORS = {
-    online: "var(--oxley)",
-    idle: "var(--tech-gold)",
-    dnd: "var(--apricot)",
+    online: "var(--mint)",
+    idle: "var(--orange)",
+    dnd: "var(--coral)",
     offline: "var(--text-dim)"
 };
 
