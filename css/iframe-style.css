@@ -54,7 +54,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Gradient text for main headers */
 h1 {
     background: linear-gradient(90deg, var(--retro-blue), var(--text-main));
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     border-bottom-color: var(--retro-blue);
 }
@@ -89,6 +88,42 @@ a:hover {
     overflow-y: auto;
     margin-bottom: 20px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+#listening {
+    margin-bottom: 10px;
+}
+#musicBox {
+    display: flex;
+    flex-direction: row;
+}
+#listening img {
+    height: 64px;
+    width: 64px;
+    margin-right: 10px;
+}
+#trackInfo #trackName {
+    margin: 0;
+    float: left;
+}
+
+.link-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.link-icons a {
+    text-decoration: none;
+}
+.link-icons img {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+.link-icons img:hover {
+    transform: scale(1.1);
 }
 
 .webring-grid, .site-button-grid, .resource-button-grid, .vr-grid, .shrine-grid, .indie-grid, .misc-grid {
