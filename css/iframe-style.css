@@ -130,6 +130,12 @@ a:hover {
     margin-bottom: 20px;
 }
 
+.site-button-grid {
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    justify-items: center;
+    align-items: center;
+}
+
 /* Generic Card Style */
 .webring-widget, .resource-button-item, .vr-card, .shrine-card, .indie-card, .misc-card {
     border: 1px solid #333;
