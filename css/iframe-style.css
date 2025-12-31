@@ -53,7 +53,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Gradient text for main headers */
 h1 {
-    -webkit-text-fill-color: transparent;
     border-bottom-color: var(--retro-blue);
 }
 
