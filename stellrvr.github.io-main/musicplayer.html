@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="july.lol | July's Music Player" property="og:title" />
+        <meta content="A simplistic music player for your website and customizable!" property="og:description" />
+        <meta content="https://july.lol" property="og:url" />
+        <meta content="https://july.lol/img/july_closeup.png" property="og:image" />
+        <meta content="#73F3BB" data-react-helmet="true" name="theme-color" />
+        <link rel="icon" type="image/x-icon" href="favicon.png">
+        <title>july.lol | music player</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=VT323" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    </head>
+    <body class="crt">
+        <main>
+            <div class="tab-container">
+                <ul class="tabs">
+                    <li class="tab-link active"><a href="index.html" style="color: #06130E">Go back</a></li>
+                </ul>
+                
+                <div class="tab-content">
+                    <h1>July's Music Player</h1>
+                    <p>Here is my music player that I wrote with very little knowledge of JavaScript.</p>
+                    <p>Keep in mind that I am not the best with JS, so it may not be the <i>best</i>, but it works.</p>
+                    <p>I tried my best to comment on what each thing does, but if there's any problems, just let me know what it is via discord or send me an <a href="mailto:me@july.lol">email</a>.</p>
+                    <p>You can also test out the music player on this page if you'd like.</p>
+                    <br>
+                    <p><b>I only ask to give credit if you use it</b></p>
+                    <br><hr><br>
+                    <h2>HTML</h2>
+                    <pre>
+                        <code class="language-html">
+&lt;div id="music-player-container"&gt;
+    &lt;div class="music-player"&gt;
+        &lt;div class="song-info"&gt;
+            &lt;span id="song-title"&gt;Title&lt;/span&gt; - &lt;span id="song-artist"&gt;Artist&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;button id="prev" title="Previous Song"&gt;◁&lt;/button&gt;
+        &lt;button id="play-pause" title="Play"&gt;▶&lt;/button&gt;
+        &lt;button id="next" title="Next Song"&gt;▷&lt;/button&gt;
+        &lt;button id="shuffle" title="Shuffle"&gt;⤭&lt;/button&gt;
+        &lt;input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume"&gt; &lt;!--The default volume is 20%, but you can change it to whatever you'd like--&gt;
+        &lt;span id="volume-label"&gt;20%&lt;/span&gt;
+        &lt;input type="range" id="progress" min="0" max="1" value="0" title="Progress"&gt;
+    &lt;/div&gt;
+    &lt;button id="toggle-button" title="Collapse"&gt;❰&lt;/button&gt;
+&lt;/div&gt;
+                        </code>
+                    </pre>
+                    <p>Then at the bottom of your page, put this just before your <code>&lt;/body&gt;</code> tag</p>
+                    <code class="language-html">&lt;script src="musicplayer.js"&gt;</code>
+                    <br>
+                    <h2>CSS</h2>
+                    <pre>
+                        <code class="language-css">
+#music-player-container {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: ; /* Use whatever color you want */
+    padding: 10px 10px;
+    border: ; /* Make the border however you want */
+}
+
+.music-player button {
+    background-color: ; /* Previous, Play/Pause, and Next button color */
+    color: ; /* Symbol colors */
+    border: ; /* Button border */
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.music-player button:hover {
+    background-color: ; /* Button hover background */
+    opacity: 50%;
+    color: ; /* Button hover text */
+}
+.music-player input[type="range"] {
+    appearance: none;
+    width: 150px;
+    height: 8px;
+    background: ; /* Progress and Volume slider background */
+    outline: ; /* Change its color */
+    margin: 0;
+}
+.music-player input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: ; /* Mobile slider color, I think */
+    cursor: pointer;
+}
+#volume-label {
+    font-size: 14px;
+    color: ; /* Volume percentage */
+}
+
+#song-info {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    font-size: 14px;
+    color: ; /* Song and Artist labels */
+    text-align: center;
+}
+#song-title {
+    font-weight: bold;
+}
+#song-artist {
+    font-style: italic;
+}
+
+/* Button to hide the player */
+#toggle-button {
+    background-color: ;
+    color: ;
+    border: ;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+#toggle-button:hover {
+    background-color: ;
+    color: ;
+}
+/* Button end */
+                        </code>
+                    </pre>
+                    <br>
+                    <h2>JavaScript</h2>
+                    <pre>
+                        <code class="language-javascript">
+// NEW! If you want the music player to be disabled when viewing your site on mobile devices,
+// uncomment this portion below (please see end of file for important info):
+// const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+//
+// if (!isMobile) {
+  // Song list
+  const songs = [
+    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
+    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
+    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
+    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
+    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" }
+  ];
+  
+  let currentIndex = Math.floor(Math.random() * songs.length); // Random starting song
+  let isPlaying = false; // Tracks play/pause state
+  let isShuffleOn = false; // Tracks shuffle state NEW!!
+  let shuffledPlaylist = [...songs]; // Copy of original playlist for shuffling
+  const audio = new Audio(songs[currentIndex].file);
+  audio.volume = 0.2; // Default volume
+
+  const songTitle = document.getElementById("song-title");
+  const songArtist = document.getElementById("song-artist");
+  const playPauseButton = document.getElementById("play-pause");
+  const prevButton = document.getElementById("prev");
+  const nextButton = document.getElementById("next");
+  const volumeSlider = document.getElementById("volume");
+  const volumeLabel = document.getElementById("volume-label");
+  const progressBar = document.getElementById("progress");
+  const toggleButton = document.getElementById("toggle-button");
+  const musicPlayerContainer = document.getElementById("music-player-container");
+  const shuffleButton = document.getElementById("shuffle");
+
+  // Shuffle button
+  shuffleButton.textContent = "⤭"; // Shuffle symbol
+  shuffleButton.style.opacity = "0.5"; // Indicates shuffle is off initially
+
+  // Collapse the music player on load
+  let isCollapsed = false; // Change to 'true' if you want the music player to be collapsed on page load
+  musicPlayerContainer.style.transform = "translateX(0%)"; // Change to 'translateX(-95%)' for collpased
+  toggleButton.textContent = "❱"; // Show expand symbol
+
+  // Autoplay on page load
+  window.addEventListener("load", () => {
+    updateSongInfo();
+    audio.play().then(() => {
+      isPlaying = true;
+      playPauseButton.textContent = "||"; // Pause symbol
+    }).catch((error) => {
+      console.warn("Autoplay blocked by browser. User interaction required.");
+    });
+  });
+
+  // Update the song title and artist display
+  function updateSongInfo() {
+    songTitle.textContent = songs[currentIndex].title;
+    songArtist.textContent = songs[currentIndex].artist;
+  }
+
+  // Handle play/pause toggle
+  playPauseButton.addEventListener("click", () => {
+    if (isPlaying) {
+      audio.pause();
+      playPauseButton.textContent = "▶"; // Play symbol
+      isPlaying = false;
+    } else {
+      audio.play();
+      playPauseButton.textContent = "||"; // Pause symbol
+      isPlaying = true;
+    }
+  });
+
+  // Previous song
+  prevButton.addEventListener("click", () => {
+    if (isShuffleOn) {
+      // In shuffle mode, go to a random previous song
+      currentIndex = Math.floor(Math.random() * songs.length);
+    } else {
+      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    }
+    loadAndPlaySong();
+  });
+
+  // Next song
+  nextButton.addEventListener("click", () => {
+    if (isShuffleOn) {
+      // In shuffle mode, go to a random next song
+      currentIndex = Math.floor(Math.random() * songs.length);
+    } else {
+      currentIndex = (currentIndex + 1) % songs.length;
+    }
+    loadAndPlaySong();
+  });
+
+  // Toggle shuffle
+  shuffleButton.addEventListener("click", () => {
+    isShuffleOn = !isShuffleOn;
+    if (isShuffleOn) {
+      shuffleButton.style.opacity = "1"; // Bright indicates shuffle is on
+      // Create a shuffled playlist (excluding current song)
+      shuffledPlaylist = [...songs];
+      const currentSong = shuffledPlaylist.splice(currentIndex, 1)[0];
+      shuffleArray(shuffledPlaylist);
+      shuffledPlaylist.unshift(currentSong); // Put current song first
+    } else {
+      shuffleButton.style.opacity = "0.5"; // Dim indicates shuffle is off
+    }
+  });
+
+  // Helper function to shuffle array (Fisher-Yates algorithm)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  // Volume control
+  volumeSlider.addEventListener("input", () => {
+    audio.volume = volumeSlider.value;
+    volumeLabel.textContent = `${Math.round(volumeSlider.value * 100)}%`;
+  });
+
+  // Song progress control
+  progressBar.addEventListener("input", () => {
+    audio.currentTime = (progressBar.value / 100) * audio.duration;
+  });
+
+  // Update the progress bar with the song's progress
+  audio.addEventListener("timeupdate", () => {
+    if (audio.duration) {
+      progressBar.value = (audio.currentTime / audio.duration) * 100;
+    }
+  });
+
+  // Automatically move to the next song when the current song ends
+  audio.addEventListener("ended", () => {
+    if (isShuffleOn) {
+      currentIndex = Math.floor(Math.random() * songs.length);
+    } else {
+      currentIndex = (currentIndex + 1) % songs.length;
+    }
+    loadAndPlaySong();
+  });
+
+  // Load a new song and play it
+  function loadAndPlaySong() {
+    audio.src = songs[currentIndex].file;
+    updateSongInfo();
+    audio.play();
+    isPlaying = true;
+    playPauseButton.textContent = "||"; // Pause symbol
+  }
+
+  // Collapse/Expand the music player
+  toggleButton.addEventListener("click", () => {
+    if (isCollapsed) {
+      musicPlayerContainer.style.transform = "translateX(0)";
+      toggleButton.textContent = "❰"; // Show collapse symbol
+    } else {
+      musicPlayerContainer.style.transform = "translateX(-95%)";
+      toggleButton.textContent = "❱"; // Show expand symbol
+    }
+    isCollapsed = !isCollapsed;
+  });
+} // IMPORTANT! Add this closing curly bracket for the mobile disabler to work!!
+                        </code>
+                    </pre>
+                </div>
+            </div>
+            <div id="music-player-container">
+            <div class="music-player">
+                <div id="song-info">
+                    <span id="song-title">Title</span> - <span id="song-artist">Artist</span>
+                </div>
+                <button id="prev" title="Previous Song">◁</button>
+                <button id="play-pause" title="Play">▶</button>
+                <button id="next" title="Next Song">▷</button>
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
+                <span id="volume-label">20%</span>
+                <input type="range" id="progress" min="0" max="100" value="0" title="Progress">
+            </div>
+            <button id="toggle-button" title="Collapse">❰</button>
+        </div>
+        </main>
+        <script src="js/musicplayer.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    </body>
+</html>

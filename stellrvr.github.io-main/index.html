@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="july.lol" property="og:title">
+    <meta content="July? The month?? NO!" property="og:description" />
+    <meta content="https://july.lol" property="og:url" />
+    <meta content="https://july.lol/img/july_closeup.png" property="og:image" />
+    <meta content="#73F3BB" data-react-helmet="true" name="theme-color" />
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <title>July.lol - TERMINAL SYSTEM</title>
+    <link rel="stylesheet" href="/stellrvr.github.io-main/style.css">
+    <link rel="stylesheet" href="/stellrvr.github.io-main/css/musicplayer.css">
+</head>
+<body class="crt">
+    
+    <div class="device-case">
+        <div class="screw top-left">+</div>
+        <div class="screw top-right">+</div>
+        <div class="screw bottom-left">+</div>
+        <div class="screw bottom-right">+</div>
+        <div class="model-label">JULY-OS <span style="font-size: 0.6em; opacity: 0.7;">SERIES 9000</span></div>
+
+        <div class="main-wrapper">
+            <div class="container screen-bezel">
+                <div class="branding-text">july.lol</div>
+                
+                <div class="sidebar">
+                    <div class="navigation-area">
+                        <div class="nav-header">/// MENU ///</div>
+                        <a href="pages/home.html" class="nav-item" target="contentFrame">01. HOME</a>
+                        <a href="pages/webmaster.html" class="nav-item" target="contentFrame">02. WEBMASTER</a>
+                        <a href="pages/links.html" class="nav-item" target="contentFrame">03. LINKS</a>
+                        <a href="pages/faq.html" class="nav-item" target="contentFrame">04. FAQ</a>
+                        <a href="pages/resources.html" class="nav-item" target="contentFrame">05. RESOURCES</a>
+                        <a href="pages/stuff.html" class="nav-item" target="contentFrame">06. STUFF BY ME</a>
+                        <a href="https://july.lol/blog.html" class="nav-item nav-item-external">07. BLOG</a>
+                        <a href="https://july.lol/vrring/home" class="nav-item nav-item-external">08. VRRING</a>
+                        <a href="pages/photography.html" class="nav-item" target="contentFrame">09. PHOTOGRAPHY</a>
+                        <a href="pages/sitemap.html" class="nav-item" target="contentFrame">10. SITE MAP</a>
+                    </div>
+                    <div class="system-status">
+                        STATUS: <span id="user-status" class="blink">CONNECTING...</span>
+                    </div>
+                </div>
+                
+                <iframe class="main-content-iframe" name="contentFrame" src="pages/home.html" title="Main Content">
+                    Your browser does not support iframes.
+                </iframe>
+            </div>
+
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <a href="credits.html" class="footer-link">CREDITS</a>
+                    <span class="footer-separator">//</span>
+                    <a href="https://julylmao.atabook.org" class="footer-link" target="_blank">GUESTBOOK</a>
+                    <span class="footer-separator">//</span>
+                    <button id="crt-toggle" class="footer-button" title="Toggle CRT Effect">CRT: ON</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div id="music-player-container">
+        <div class="music-player-casing">
+            <button id="toggle-button" title="Eject/Hide">▼</button>
+            
+            <div class="music-player">
+                <div class="display-panel">
+                    <div class="song-info-mask">
+                        <div id="song-info-scroller">
+                            <span id="song-title">NO DISC</span> - <span id="song-artist">INSERT CASSETTE</span>
+                        </div>
+                    </div>
+
+                    <div class="viz-bars">
+                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                    </div>
+                </div>
+                
+                <div class="controls-row">
+                    <button id="prev" title="Rewind" class="tactile-btn"><span>◁◁</span></button>
+                    <button id="play-pause" title="Play/Stop" class="tactile-btn play-btn"><span>▶</span></button>
+                    <button id="next" title="Fast Forward" class="tactile-btn"><span>▷▷</span></button>
+                    <button id="shuffle" title="Shuffle Mode" class="tactile-btn small-btn"><span>⤭</span></button>
+                </div>
+
+                <div class="sliders-row">
+                    <div class="slider-group">
+                        <label for="volume">VOL</label>
+                        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
+                    </div>
+                    <span id="volume-label" class="digital-readout">20</span>
+                </div>
+                
+                <input type="range" id="progress" min="0" max="100" value="0" title="Tape Position" class="tape-progress">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/stats.js"></script>
+    <script src="js/musicplayer.js"></script>
+    <script src="js/crtbutton.js"></script>
+    <script src="js/status.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<rss version="2.0">
+    <channel>
+        <title>july's void shouts</title>
+        <description>stuff that comes to the mind</description>
+        <link>https://july.lol</link>
+        
+        
+        <item>
+            <title>Nekoweb Discord</title>
+            <description>Just my thoughts on how I feel about the Nekoweb Discord.</description>
+            <link>https://july.lol/posts/2025/03-11</link>
+            <guid>julyNekowebDiscord</guid>
+            <pubDate>Tue 11 Mar 2025, 21:00:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Ramblings of a Rut</title>
+            <description>Struggling to finish my site while balancing school, hobbies, and depression.</description>
+            <link>https://july.lol/posts/2025/03-14</link>
+            <guid>julyRamblingsOfARut</guid>
+            <pubDate>Fri 14 Mar 2025, 07:34:00</pubDate>
+        </item>
+        
+        <item>
+            <title>Updated Thoughts on the Nekoweb Discord</title>
+            <description>An update on my thoughts on the Nekoweb server. Good stuff and actual words this time.</description>
+            <link>https://july.lol/posts/2025/04-02</link>
+            <guid>julyUpdatedThoughts</guid>
+            <pubDate>Wed 02 Apr 2025, 18:50:00</pubDate>
+        </item>
+        
+        <item>
+            <title>One Year of Nekoweb</title>
+            <description>My one year anniversary on Nekoweb. Some thoughts and reflections.</description>
+            <link>https://july.lol/posts/2025/06-03</link>
+            <guid>julyOneYear</guid>
+            <pubDate>Tue 03 June 2025, 09:55:00</pubDate>
+        </item>
+    </channel>
+</rss>
