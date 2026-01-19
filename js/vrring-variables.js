@@ -6,6 +6,7 @@
 //this file contains the stuff you edit to set up your specific webring
 
 //the full URLs of all the sites in the ring
+//yes all of them
 var sites = [
     'https://july.lol',
     'https://dankalicious.nekoweb.org',
