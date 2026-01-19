@@ -8,7 +8,7 @@
 //the full URLs of all the sites in the ring
 var sites = [
     'https://july.lol',
-    'https://kasperspace.nekoweb.org',
+    'https://dankalicious.nekoweb.org',
     'https://lessthanthree.online',
     'https://thecozy.cat/',
     'https://astralily.nekoweb.org/',
