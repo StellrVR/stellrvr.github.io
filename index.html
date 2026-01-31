@@ -12,6 +12,7 @@
     <title>july.lol - terminal system</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/musicplayer.css">
+    <link rel="stylesheet" href="css/theme-styles.css">
 </head>
 <body class="crt">
     
@@ -57,6 +58,17 @@
                     <a href="https://julylmao.atabook.org" class="footer-link" target="_blank">GUESTBOOK</a>
                     <span class="footer-separator">//</span>
                     <button id="crt-toggle" class="footer-button" title="Toggle CRT Effect">CRT: ON</button>
+                    <span class="footer-separator">//</span>
+                    <div id="theme-selector-container">
+                        <button id="theme-toggle" class="footer-button" title="Change Theme">
+                            THEME
+                        </button>
+                        <div id="theme-dropdown">
+                            <div class="theme-option" data-theme="default">DEFAULT</div>
+                            <div class="theme-option" data-theme="signalis">SIGNALIS</div>
+                            <div class="theme-option" data-theme="elite">ELITE</div>
+                        </div>
+                    </div>
                 </div>
             </footer>
         </div>
@@ -64,8 +76,7 @@
 
     <div id="music-player-container">
         <div class="music-player-casing">
-            <button id="toggle-button" title="Eject/Hide">▼</button>
-            
+            <button id="toggle-button" title="Show/Hide Player">▼</button>
             <div class="music-player">
                 <div class="display-panel">
                     <div class="song-info-mask">
@@ -73,28 +84,45 @@
                             <span id="song-title">NO DISC</span> - <span id="song-artist">INSERT CASSETTE</span>
                         </div>
                     </div>
-
                     <div class="viz-bars">
-                        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
                     </div>
                 </div>
-                
                 <div class="controls-row">
-                    <button id="prev" title="Rewind" class="tactile-btn"><span>◁◁</span></button>
-                    <button id="play-pause" title="Play/Stop" class="tactile-btn play-btn"><span>▶</span></button>
-                    <button id="next" title="Fast Forward" class="tactile-btn"><span>▷▷</span></button>
-                    <button id="shuffle" title="Shuffle Mode" class="tactile-btn small-btn"><span>⤭</span></button>
+                    <button id="prev" title="Previous Track" class="tactile-btn">
+                        <span>◄◄</span>
+                    </button>
+                    <button id="play-pause" title="Play/Pause" class="tactile-btn play-btn">
+                        <span>▶</span>
+                    </button>
+                    <button id="next" title="Next Track" class="tactile-btn">
+                        <span>►►</span>
+                    </button>
+                    <button id="shuffle" title="Shuffle Mode" class="tactile-btn small-btn">
+                        <span>⤭</span>
+                    </button>
                 </div>
-
                 <div class="sliders-row">
                     <div class="slider-group">
                         <label for="volume">VOL</label>
-                        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
+                        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume Control">
                     </div>
                     <span id="volume-label" class="digital-readout">20</span>
                 </div>
-                
-                <input type="range" id="progress" min="0" max="100" value="0" title="Tape Position" class="tape-progress">
+                <input type="range" id="progress" min="0" max="100" value="0" title="Seek Position" class="tape-progress">
+            </div>
+        </div>
+    </div>
+
+    <div id="cookie-banner">
+        <div class="cookie-content">
+            <h3>Cookies Notice</h3>
+            <p>This site uses browser storage to save your preferences (theme, music volume, etc.). No tracking or analytics.</p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="cookie-btn">Accept</button>
+                <button id="decline-cookies" class="cookie-btn">Decline</button>
             </div>
         </div>
     </div>
@@ -103,5 +131,7 @@
     <script src="js/musicplayer.js"></script>
     <script src="js/crtbutton.js"></script>
     <script src="js/status.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>
