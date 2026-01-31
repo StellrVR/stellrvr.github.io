@@ -11,251 +11,714 @@
         <link rel="icon" type="image/x-icon" href="favicon.png">
         <title>july.lol | music player</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/musicplayer-page.css">
+        <link rel="stylesheet" href="css/musicplayer.css"
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=VT323" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     </head>
-    <body class="crt">
+    <body class="crt musicplayer-page">
         <main>
-            <div class="tab-container">
-                <ul class="tabs">
-                    <li class="tab-link active"><a href="index.html" style="color: #06130E">Go back</a></li>
-                </ul>
+            <div class="device-case">
+                <div class="screw top-left">+</div>
+                <div class="screw top-right">+</div>
+                <div class="screw bottom-left">+</div>
+                <div class="screw bottom-right">+</div>
+                <div class="model-label">JULY-OS SERIES 0001</div>
                 
-                <div class="tab-content">
-                    <h1>July's Music Player</h1>
-                    <p>Here is my music player that I wrote with very little knowledge of JavaScript.</p>
-                    <p>Keep in mind that I am not the best with JS, so it may not be the <i>best</i>, but it works.</p>
-                    <p>I tried my best to comment on what each thing does, but if there's any problems, just let me know what it is via discord or send me an <a href="mailto:me@july.lol">email</a>.</p>
-                    <p>You can also test out the music player on this page if you'd like.</p>
-                    <br>
-                    <p><b>I only ask to give credit if you use it</b></p>
-                    <br><hr><br>
-                    <h2>HTML</h2>
-                    <pre>
-                        <code class="language-html">
-&lt;div id="music-player-container"&gt;
-    &lt;div class="music-player"&gt;
-        &lt;div class="song-info"&gt;
-            &lt;span id="song-title"&gt;Title&lt;/span&gt; - &lt;span id="song-artist"&gt;Artist&lt;/span&gt;
+                <div class="main-wrapper">
+                    <div class="container">
+                        <div class="branding-text">july.lol</div>
+                        
+                        <div class="tab-container">
+                            <ul class="tabs">
+                                <li class="tab-link active"><a href="index.html" style="color: #06130E">Go back</a></li>
+                            </ul>
+                            
+                            <div class="tab-content">
+                                <h1>July's Music Player</h1>
+                                <p>Here is my music player that I've made with JavaScript.</p>
+                                <p>Keep in mind that I am not too great with JS, so it may not be the <i>best</i>, but it works.</p>
+                                <p>I tried my best to comment on what each thing does, but if there's any problems, just let me know what it is via discord or send me an <a href="mailto:me@july.lol">email</a>.</p>
+                                <p>You can also test out the music player on this page if you'd like.</p>
+                                <br>
+                                <p><b>Credit isn't needed, but appreciated.</b></p>
+                                <br><hr><br>
+                                
+                                <h2>HTML</h2>
+                                <pre><button class="copy-button" data-clipboard-target="html-code">Copy</button><code id="html-code" class="language-html">&lt;div id="music-player-container"&gt;
+      &lt;div class="music-player-casing"&gt;
+            &lt;button id="toggle-button" title="Show/Hide Player"&gt;▼&lt;/button&gt;
+            &lt;div class="music-player"&gt;
+                &lt;div class="display-panel"&gt;
+                    &lt;div class="song-info-mask"&gt;
+                        &lt;div id="song-info-scroller"&gt;
+                            &lt;span id="song-title"&gt;NO DISC&lt;/span&gt; - &lt;span id="song-artist"&gt;INSERT CASSETTE&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;!-- Un-comment if you want the bars --&gt;
+                    &lt;!-- &lt;div class="viz-bars"&gt;
+                        &lt;div class="bar"&gt;&lt;/div&gt;
+                        &lt;div class="bar"&gt;&lt;/div&gt;
+                        &lt;div class="bar"&gt;&lt;/div&gt;
+                    &lt;/div&gt;--&gt;
+                &lt;/div&gt;
+                &lt;div class="controls-row"&gt;
+                    &lt;button id="prev" title="Previous Track" class="tactile-btn"&gt;
+                        &lt;span&gt;◄◄&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;button id="play-pause" title="Play/Pause" class="tactile-btn play-btn"&gt;
+                        &lt;span&gt;▶&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;button id="next" title="Next Track" class="tactile-btn"&gt;
+                        &lt;span&gt;►►&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;button id="shuffle" title="Shuffle Mode" class="tactile-btn small-btn"&gt;
+                        &lt;span&gt;⤭&lt;/span&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div class="sliders-row"&gt;
+                    &lt;div class="slider-group"&gt;
+                        &lt;label for="volume"&gt;VOL&lt;/label&gt;
+                        &lt;input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume Control"&gt;
+                    &lt;/div&gt;
+                    &lt;span id="volume-label" class="digital-readout"&gt;20&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;input type="range" id="progress" min="0" max="100" value="0" title="Seek Position" class="tape-progress"&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
-        &lt;button id="prev" title="Previous Song"&gt;◁&lt;/button&gt;
-        &lt;button id="play-pause" title="Play"&gt;▶&lt;/button&gt;
-        &lt;button id="next" title="Next Song"&gt;▷&lt;/button&gt;
-        &lt;button id="shuffle" title="Shuffle"&gt;⤭&lt;/button&gt;
-        &lt;input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume"&gt; &lt;!--The default volume is 20%, but you can change it to whatever you'd like--&gt;
-        &lt;span id="volume-label"&gt;20%&lt;/span&gt;
-        &lt;input type="range" id="progress" min="0" max="1" value="0" title="Progress"&gt;
-    &lt;/div&gt;
-    &lt;button id="toggle-button" title="Collapse"&gt;❰&lt;/button&gt;
-&lt;/div&gt;
-                        </code>
-                    </pre>
-                    <p>Then at the bottom of your page, put this just before your <code>&lt;/body&gt;</code> tag</p>
-                    <code class="language-html">&lt;script src="musicplayer.js"&gt;</code>
-                    <br>
-                    <h2>CSS</h2>
-                    <pre>
-                        <code class="language-css">
+      &lt;/div&gt;</code></pre>
+                                
+                                <p>Then at the bottom of your page, put this just before your <code>&lt;/body&gt;</code> tag</p>
+                                <pre><button class="copy-button" data-clipboard-target="script-code">Copy</button><code id="script-code" class="language-html">&lt;script src="musicplayer.js"&gt;&lt;/script&gt;</code></pre>
+                                
+                                <br>
+                                <h2>CSS</h2>
+                                <pre><button class="copy-button" data-clipboard-target="css-code">Copy</button><code id="css-code" class="language-css">/*
+  ========================================================================
+  
+  This contains the *minimum* amount of CSS for the music player.
+  You can add whatever you want, but I'm pretty sure removing anything
+  below will break the player.
+  
+  ========================================================================
+*/
+
+/* == CUSTOMIZATION SECTION - You can edit this to whatever you'd like == */
+
+:root {
+    /* Background colors */
+    --player-bg: #1a1b1e;           /* Player casing background */
+    --screen-bg: #06130E;            /* Display screen background */
+    
+    /* Accent colors */
+    --accent-primary: #44ff88;       /* Main interactive elements */
+    --accent-secondary: #00ddff;     /* Secondary highlights */
+    --accent-warn: #ff9d00;          /* Warning/special elements */
+    
+    /* Text colors */
+    --text-primary: #e0e6ed;         /* Main text color */
+    --text-secondary: #6c7a89;       /* Dimmed/secondary text */
+    
+    /* Border and shadow colors */
+    --border-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.8);
+    
+    /* Sizing - adjust these to make the player bigger/smaller */
+    --player-width: 280px;
+    --player-padding: 15px;
+    --border-radius: 12px;
+    
+    /* Positioning */
+    --player-bottom: 0;
+    --player-left: 20px;
+}
+
+/* == PLAYER CONTAINER AND POSITIONING == */
+
 #music-player-container {
     position: fixed;
-    bottom: 10px;
-    left: 0;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s ease-in-out;
+    bottom: var(--player-bottom);
+    left: var(--player-left);
+    z-index: 1000;
+    
+    /* Sliding animation */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.music-player {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: ; /* Use whatever color you want */
-    padding: 10px 10px;
-    border: ; /* Make the border however you want */
-}
-
-.music-player button {
-    background-color: ; /* Previous, Play/Pause, and Next button color */
-    color: ; /* Symbol colors */
-    border: ; /* Button border */
-    padding: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.music-player button:hover {
-    background-color: ; /* Button hover background */
-    opacity: 50%;
-    color: ; /* Button hover text */
-}
-.music-player input[type="range"] {
-    appearance: none;
-    width: 150px;
-    height: 8px;
-    background: ; /* Progress and Volume slider background */
-    outline: ; /* Change its color */
-    margin: 0;
-}
-.music-player input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    background: ; /* Mobile slider color, I think */
-    cursor: pointer;
-}
-#volume-label {
-    font-size: 14px;
-    color: ; /* Volume percentage */
-}
-
-#song-info {
+/* Main player casing */
+.music-player-casing {
+    background-color: var(--player-bg);
+    padding: var(--player-padding);
+    padding-top: 25px; /* Extra space for toggle button */
+    
+    /* Rounded top corners */
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    
+    /* Border styling */
+    border: 1px solid var(--border-color);
+    border-bottom: none; /* No bottom border (sits at screen edge) */
+    
+    /* Shadow */
+    box-shadow: 0px -5px 20px var(--shadow-color),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.05);
+    
+    /* Layout */
     display: flex;
     flex-direction: column;
-    margin-right: 15px;
-    font-size: 14px;
-    color: ; /* Song and Artist labels */
-    text-align: center;
+    width: var(--player-width);
+    position: relative;
+    overflow: visible;
 }
+
+/* Optional: Decorative side stripe 
+   Remove or un-comment out this entire block if you want it */
+/* .music-player-casing::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        #ff3e3e 20%,
+        #ff9d00 20%, #ff9d00 40%,
+        #ffdd00 40%, #ffdd00 60%,
+        #44ff88 60%, #44ff88 80%,
+        #00ddff 80%
+    );
+    border-radius: 4px 0 0 0;
+    opacity: 0.8;
+    pointer-events: none;
+} */
+
+/* Inner player content */
+.music-player {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 5px;
+}
+
+/* == DISPLAY SCREEN == */
+
+.display-panel {
+    background-color: var(--screen-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    padding: 8px;
+    
+    /* Inner shadow */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+    
+    margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optional: Screen glare effect 
+   Remove or comment out if you don't want this */
+.display-panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(rgba(255, 255, 255, 0.02), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Song info scrolling container */
+.song-info-mask {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+}
+
+#song-info-scroller {
+    display: inline-block;
+    color: var(--accent-primary);
+    
+    /* This is the main font I use, but you can change it to whatever you'd like. (Iosevka font is required to be in your dashboard if you want to use it, btw) */
+    font-family: "Iosevka", monospace;
+    font-size: 0.85rem;
+    
+    /* Optional: Glow effect - remove if you don't want it */
+    text-shadow: 0 0 5px rgba(68, 255, 136, 0.4);
+    
+    white-space: nowrap;
+    transform: translateX(0);
+}
+
+/* Scrolling animation for long text */
+#song-info-scroller.scrolling {
+    animation: scroll-text var(--scroll-duration) linear infinite;
+}
+
+@keyframes scroll-text {
+    0%, 20% { 
+        transform: translateX(0); 
+    }
+    80%, 100% { 
+        transform: translateX(var(--scroll-distance)); 
+    }
+}
+
+/* Song title styling */
 #song-title {
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
+
+/* Artist name styling */
 #song-artist {
-    font-style: italic;
+    font-size: 0.7rem;
+    opacity: 0.7;
+    color: var(--text-secondary);
 }
 
-/* Button to hide the player */
-#toggle-button {
-    background-color: ;
-    color: ;
-    border: ;
-    padding: 10px;
-    font-size: 18px;
+/* Optional: Visualizer bars
+   Remove or comment out this entire section if you don't want them */
+/* .viz-bars {
+    display: flex;
+    gap: 2px;
+    margin-top: 5px;
+    height: 4px;
+} */
+
+.bar {
+    flex: 1;
+    height: 100%;
+    background: #222;
+}
+
+.bar:nth-child(1) { background: #ff3e3e; }
+.bar:nth-child(2) { background: #ffdd00; }
+.bar:nth-child(3) { background: #00ddff; }
+
+/* == CONTROL BUTTONS == */
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Base button styling */
+.tactile-btn {
+    background: #111;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    padding: 8px 10px;
+    font-size: 14px;
     cursor: pointer;
-    margin-left: 5px;
+    transition: all 0.2s;
+    font-family: inherit; /* Match display font or use system font */
+    position: relative;
+    flex-grow: 1;
 }
-#toggle-button:hover {
-    background-color: ;
-    color: ;
-}
-/* Button end */
-                        </code>
-                    </pre>
-                    <br>
-                    <h2>JavaScript</h2>
-                    <pre>
-                        <code class="language-javascript">
-// NEW! If you want the music player to be disabled when viewing your site on mobile devices,
-// uncomment this portion below (please see end of file for important info):
-// const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-//
-// if (!isMobile) {
-  // Song list
-  const songs = [
-    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
-    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
-    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
-    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" },
-    { title: "Title", artist: "Artist", file: "path/to/music/file.mp3" }
-  ];
-  
-  let currentIndex = Math.floor(Math.random() * songs.length); // Random starting song
-  let isPlaying = false; // Tracks play/pause state
-  let isShuffleOn = false; // Tracks shuffle state NEW!!
-  let shuffledPlaylist = [...songs]; // Copy of original playlist for shuffling
-  const audio = new Audio(songs[currentIndex].file);
-  audio.volume = 0.2; // Default volume
 
+/* Button hover effects */
+.tactile-btn:hover {
+    color: #000;
+    border-color: transparent;
+}
+
+.tactile-btn:active {
+    transform: translateY(1px); /* Press down effect */
+}
+
+/* Previous/Next button hover colors */
+#prev:hover,
+#next:hover {
+    background-color: var(--accent-warn);
+    box-shadow: 0 0 8px var(--accent-warn);
+}
+
+/* Play button styling */
+.play-btn {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.play-btn:hover {
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+    color: #000;
+}
+
+/* Shuffle button sizing */
+.small-btn {
+    flex-grow: 0;
+    width: 40px;
+}
+
+#shuffle:hover {
+    background-color: var(--accent-secondary);
+    box-shadow: 0 0 8px var(--accent-secondary);
+}
+
+/* Active state for shuffle button */
+.tactile-btn.active {
+    background-color: var(--accent-secondary);
+    color: #000;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* == SLIDERS (VOLUME AND PROGRESS) == */
+
+.sliders-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.slider-group label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-weight: bold;
+    font-family: inherit;
+}
+
+/* Reset default range slider styling */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Volume slider track */
+#volume {
+    height: 4px;
+    background: #111;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+}
+
+/* Volume slider thumb (the draggable part) */
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid #111;
+    margin-top: -5px;
+}
+
+#volume::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid #111;
+}
+
+/* Volume slider thumb hover effect */
+#volume:hover::-webkit-slider-thumb {
+    background: var(--accent-primary);
+}
+
+#volume:hover::-moz-range-thumb {
+    background: var(--accent-primary);
+}
+
+/* Volume number display */
+.digital-readout {
+    font-family: "Iosevka", monospace;
+    font-weight: bold;
+    color: var(--accent-warn);
+    background: #000;
+    padding: 2px 4px;
+    font-size: 0.75rem;
+    border: 1px solid var(--border-color);
+    min-width: 24px;
+    text-align: center;
+}
+
+/* Progress bar */
+.tape-progress {
+    height: 6px;
+    background: #111;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+/* Progress bar thumb */
+.tape-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 4px;
+    background: #ff3e3e;
+    cursor: col-resize;
+    margin-top: -2px;
+}
+
+.tape-progress::-moz-range-thumb {
+    height: 10px;
+    width: 4px;
+    background: #ff3e3e;
+    border: none;
+    border-radius: 0;
+}
+
+/* Progress bar thumb hover effect */
+.tape-progress:hover::-webkit-slider-thumb {
+    background: var(--accent-primary);
+    width: 6px;
+    height: 12px;
+    margin-top: -3px;
+}
+
+.tape-progress:hover::-moz-range-thumb {
+    background: var(--accent-primary);
+    width: 6px;
+    height: 12px;
+}
+
+/* == TOGGLE BUTTON (SHOW/HIDE) == */
+
+#toggle-button {
+    position: absolute;
+    top: -22px;
+    right: 15px;
+    background: var(--player-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 2px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    height: 23px;
+    z-index: 5;
+    font-family: inherit;
+    text-transform: uppercase;
+}
+
+#toggle-button:hover {
+    color: #000;
+    background: var(--accent-warn);
+}
+
+/* == MOBILE DISABLE BACKUP == */
+
+/* Hide player on mobile devices (handled by JavaScript, but I added CSS as a backup) */
+@media (max-width: 768px) {
+    #music-player-container {
+        display: none !important;
+    }
+}</code></pre>
+                                
+                                <br>
+                                <h2>JavaScript</h2>
+                                <pre><button class="copy-button" data-clipboard-target="js-code">Copy</button><code id="js-code" class="language-javascript">/*
+  == JULY'S MUSIC PLAYER ==
+  
+  HOW TO USE:
+  1. Add your music files to a folder (e.g., "music/" or "audio/")
+  2. Edit the 'songs' array below with your titles, artists, and file paths
+  3. Adjust 'defaultVolume' (0.0 to 1.0) to set initial volume level
+  4. Link this file in your HTML: <script src="musicplayer.js"></script> before the ending &lt;/body&gt; tag
+  5. Customize styling in musicplayer.css to match your site
+  
+  FEATURES:
+  - Play/pause, previous/next track controls
+  - Shuffle mode
+  - Volume control with visual feedback
+  - Progress bar for seeking through tracks
+  - Auto-scrolling text for long song titles
+  - Collapsible player interface
+  - Automatically hidden on mobile devices
+  
+  ============================================================================
+*/
+
+// == CONFIGURATION - Edit these settings for your playlist ==
+
+// Set default volume level (0.0 = muted, 1.0 = max volume)
+const defaultVolume = 0.2;
+
+// Your playlist
+const songs = [
+    { 
+        title: "Song Title 1", 
+        artist: "Artist Name", 
+        file: "music/song1.mp3" 
+    },
+    { 
+        title: "Song Title 2", 
+        artist: "Artist Name", 
+        file: "music/song2.mp3" 
+    },
+    { 
+        title: "Song Title 3", 
+        artist: "Artist Name", 
+        file: "music/song3.mp3" 
+    }
+];
+
+// == PLAYER LOGIC - Don't touch anything unless you know what you're looking at ==
+
+// Detect mobile devices to disable music player
+const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+// Only initialize music player on desktop devices
+if (!isMobile) {
+  
+  // == STATE VARIABLES ==
+  
+  let isPlaying = false;           // Track if music is currently playing
+  let isShuffleOn = false;          // Track if shuffle mode is enabled
+  let isDragging = false;           // Prevent progress bar updates while user drags
+  let isCollapsed = false;          // Track player show/hide state
+  
+  // Play queue holds the current order of songs (changes when shuffle is toggled)
+  let playQueue = [...songs]; 
+  
+  // Start with a random song
+  let currentSongIndex = Math.floor(Math.random() * songs.length);
+  
+  // == AUDIO SETUP ==
+  
+  const audio = new Audio();
+  audio.volume = defaultVolume;
+  
+  // == DOM STUFF ==
+  
+  // Song info display elements
   const songTitle = document.getElementById("song-title");
   const songArtist = document.getElementById("song-artist");
+  const songScroller = document.getElementById("song-info-scroller");
+  const songMask = document.querySelector(".song-info-mask");
+  
+  // Control buttons
   const playPauseButton = document.getElementById("play-pause");
   const prevButton = document.getElementById("prev");
   const nextButton = document.getElementById("next");
+  const shuffleButton = document.getElementById("shuffle");
+  const toggleButton = document.getElementById("toggle-button");
+  
+  // Slider controls
   const volumeSlider = document.getElementById("volume");
   const volumeLabel = document.getElementById("volume-label");
   const progressBar = document.getElementById("progress");
-  const toggleButton = document.getElementById("toggle-button");
+  
+  // Container
   const musicPlayerContainer = document.getElementById("music-player-container");
-  const shuffleButton = document.getElementById("shuffle");
-
-  // Shuffle button
-  shuffleButton.textContent = "⤭"; // Shuffle symbol
-  shuffleButton.style.opacity = "0.5"; // Indicates shuffle is off initially
-
-  // Collapse the music player on load
-  let isCollapsed = false; // Change to 'true' if you want the music player to be collapsed on page load
-  musicPlayerContainer.style.transform = "translateX(0%)"; // Change to 'translateX(-95%)' for collpased
-  toggleButton.textContent = "❱"; // Show expand symbol
-
-  // Autoplay on page load
-  window.addEventListener("load", () => {
-    updateSongInfo();
-    audio.play().then(() => {
-      isPlaying = true;
-      playPauseButton.textContent = "||"; // Pause symbol
-    }).catch((error) => {
-      console.warn("Autoplay blocked by browser. User interaction required.");
-    });
-  });
-
-  // Update the song title and artist display
-  function updateSongInfo() {
-    songTitle.textContent = songs[currentIndex].title;
-    songArtist.textContent = songs[currentIndex].artist;
+  
+  // == INITIALIZATION ==
+  
+  if (musicPlayerContainer) {
+      // Set up progress bar
+      progressBar.max = 100;
+      progressBar.value = 0;
+      
+      // Set up volume display
+      volumeSlider.value = audio.volume;
+      volumeLabel.textContent = Math.round(audio.volume * 100);
+      
+      // Show the player
+      musicPlayerContainer.style.display = "flex";
+      
+      // Load the first song
+      loadSong(currentSongIndex);
+      
+      // Ensure everything displays correctly after page loads
+      window.addEventListener("load", () => {
+        updateSongInfo();
+      });
   }
-
-  // Handle play/pause toggle
-  playPauseButton.addEventListener("click", () => {
-    if (isPlaying) {
-      audio.pause();
-      playPauseButton.textContent = "▶"; // Play symbol
-      isPlaying = false;
-    } else {
-      audio.play();
-      playPauseButton.textContent = "||"; // Pause symbol
-      isPlaying = true;
+  
+  // == CORE PLAYER FUNCTIONS ==
+  
+  // Loads a song at index and handles looping back to start
+  function loadSong(index) {
+    // Wrap index if out of bounds
+    if (index < 0) {
+      index = playQueue.length - 1;
     }
-  });
-
-  // Previous song
-  prevButton.addEventListener("click", () => {
-    if (isShuffleOn) {
-      // In shuffle mode, go to a random previous song
-      currentIndex = Math.floor(Math.random() * songs.length);
-    } else {
-      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    if (index >= playQueue.length) {
+      index = 0;
     }
-    loadAndPlaySong();
-  });
-
-  // Next song
-  nextButton.addEventListener("click", () => {
-    if (isShuffleOn) {
-      // In shuffle mode, go to a random next song
-      currentIndex = Math.floor(Math.random() * songs.length);
-    } else {
-      currentIndex = (currentIndex + 1) % songs.length;
+    
+    currentSongIndex = index;
+    audio.src = playQueue[currentSongIndex].file;
+    updateSongInfo();
+  }
+  
+  // Start playing song and handles browser autoplay restrictions
+  function playSong() {
+    const playPromise = audio.play();
+    
+    // Browsers require user interaction before playing audio so this handles errors to show that
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            isPlaying = true;
+            playPauseButton.innerHTML = "<span>||</span>"; // Pause icon
+        }).catch(error => {
+            console.log("Playback prevented (user interaction required):", error);
+            isPlaying = false;
+            playPauseButton.innerHTML = "<span>▶</span>"; // Play icon
+        });
     }
-    loadAndPlaySong();
-  });
-
-  // Toggle shuffle
-  shuffleButton.addEventListener("click", () => {
-    isShuffleOn = !isShuffleOn;
-    if (isShuffleOn) {
-      shuffleButton.style.opacity = "1"; // Bright indicates shuffle is on
-      // Create a shuffled playlist (excluding current song)
-      shuffledPlaylist = [...songs];
-      const currentSong = shuffledPlaylist.splice(currentIndex, 1)[0];
-      shuffleArray(shuffledPlaylist);
-      shuffledPlaylist.unshift(currentSong); // Put current song first
-    } else {
-      shuffleButton.style.opacity = "0.5"; // Dim indicates shuffle is off
-    }
-  });
-
-  // Helper function to shuffle array (Fisher-Yates algorithm)
+  }
+  
+  // Pause function
+  function pauseSong() {
+    audio.pause();
+    isPlaying = false;
+    playPauseButton.innerHTML = "<span>▶</span>";
+  }
+  
+  // Updates song playing and handles scrolling text for long ass titles
+  function updateSongInfo() {
+    if (!songScroller) return;
+    
+    // Reset any existing animation
+    songScroller.classList.remove("scrolling");
+    songScroller.style.transform = "translateX(0)";
+    
+    // Update the text content
+    songTitle.textContent = playQueue[currentSongIndex].title;
+    songArtist.textContent = playQueue[currentSongIndex].artist;
+    
+    // Check if text needs to scroll (is it wider than container?)
+    setTimeout(() => {
+        const textWidth = songScroller.scrollWidth;
+        const containerWidth = songMask.clientWidth;
+        
+        // Only scroll if text overflows the container
+        if (textWidth > containerWidth) {
+            const distanceToScroll = textWidth - containerWidth + 10; // +10 for padding
+            const speed = 30; // pixels per second
+            const scrollTime = distanceToScroll / speed;
+            const totalDuration = scrollTime + 4; // Add pause time at start/end
+            
+            // Set CSS custom properties for animation
+            songScroller.style.setProperty('--scroll-distance', `-${distanceToScroll}px`);
+            songScroller.style.setProperty('--scroll-duration', `${totalDuration}s`);
+            songScroller.classList.add("scrolling");
+        }
+    }, 50); // Small delay to ensure DOM is updated
+  }
+  
+  // Shuffle function using Fisher-Yates algo
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -263,79 +726,237 @@
     }
     return array;
   }
-
-  // Volume control
-  volumeSlider.addEventListener("input", () => {
-    audio.volume = volumeSlider.value;
-    volumeLabel.textContent = `${Math.round(volumeSlider.value * 100)}%`;
-  });
-
-  // Song progress control
-  progressBar.addEventListener("input", () => {
-    audio.currentTime = (progressBar.value / 100) * audio.duration;
-  });
-
-  // Update the progress bar with the song's progress
-  audio.addEventListener("timeupdate", () => {
-    if (audio.duration) {
-      progressBar.value = (audio.currentTime / audio.duration) * 100;
-    }
-  });
-
-  // Automatically move to the next song when the current song ends
-  audio.addEventListener("ended", () => {
-    if (isShuffleOn) {
-      currentIndex = Math.floor(Math.random() * songs.length);
-    } else {
-      currentIndex = (currentIndex + 1) % songs.length;
-    }
-    loadAndPlaySong();
-  });
-
-  // Load a new song and play it
-  function loadAndPlaySong() {
-    audio.src = songs[currentIndex].file;
-    updateSongInfo();
-    audio.play();
-    isPlaying = true;
-    playPauseButton.textContent = "||"; // Pause symbol
-  }
-
-  // Collapse/Expand the music player
-  toggleButton.addEventListener("click", () => {
+  
+  // Music player expand/collapse
+  function togglePlayer() {
     if (isCollapsed) {
-      musicPlayerContainer.style.transform = "translateX(0)";
-      toggleButton.textContent = "❰"; // Show collapse symbol
+      // Show the player
+      musicPlayerContainer.style.transform = "translateY(0)";
+      toggleButton.textContent = "▼"; 
     } else {
-      musicPlayerContainer.style.transform = "translateX(-95%)";
-      toggleButton.textContent = "❱"; // Show expand symbol
+      // Hide the player (slide down)
+      const casing = document.querySelector('.music-player-casing');
+      const slideDistance = casing.offsetHeight; 
+      musicPlayerContainer.style.transform = `translateY(${slideDistance}px)`;
+      toggleButton.textContent = "▲"; 
     }
     isCollapsed = !isCollapsed;
+  }
+  
+  // == EVENT LISTENERS ==
+  
+  // Play/Pause button
+  if (playPauseButton) {
+      playPauseButton.addEventListener("click", () => {
+        if (isPlaying) {
+          pauseSong();
+        } else {
+          playSong();
+        }
+      });
+  }
+  
+  // Previous song button
+  if (prevButton) {
+      prevButton.addEventListener("click", () => {
+        loadSong(currentSongIndex - 1);
+        if (isPlaying) playSong();
+      });
+  }
+  
+  // Next song button
+  if (nextButton) {
+      nextButton.addEventListener("click", () => {
+        loadSong(currentSongIndex + 1);
+        if (isPlaying) playSong();
+      });
+  }
+  
+  // Shuffle button
+  if (shuffleButton) {
+      shuffleButton.addEventListener("click", () => {
+        isShuffleOn = !isShuffleOn;
+        
+        // Remember which song is currently playing
+        const currentSongObj = playQueue[currentSongIndex];
+        
+        if (isShuffleOn) {
+          // Enable shuffle mode
+          shuffleButton.classList.add("active");
+          
+          // Create shuffled queue with current song at the front
+          let remainingSongs = songs.filter(s => s !== currentSongObj);
+          shuffleArray(remainingSongs);
+          
+          playQueue = [currentSongObj, ...remainingSongs];
+          currentSongIndex = 0;
+          
+        } else {
+          // Disable shuffle mode
+          shuffleButton.classList.remove("active");
+          
+          // Restore original order
+          playQueue = [...songs];
+          
+          // Find where current song is in original list
+          currentSongIndex = songs.findIndex(s => s.title === currentSongObj.title);
+        }
+      });
+  }
+  
+  // Volume slider
+  if (volumeSlider) {
+      volumeSlider.addEventListener("input", () => {
+        audio.volume = volumeSlider.value;
+        volumeLabel.textContent = Math.round(volumeSlider.value * 100);
+      });
+  }
+  
+  // Progress bar and seeking tracker
+  if (progressBar) {
+      progressBar.addEventListener("mousedown", () => {
+        isDragging = true;
+      });
+      
+      // Handle seek when user releases or clicks
+      progressBar.addEventListener("change", () => {
+        const seekTime = (progressBar.value / 100) * audio.duration;
+        if (isFinite(seekTime)) {
+            audio.currentTime = seekTime;
+        }
+        isDragging = false;
+      });
+  }
+  
+  // Update progress bar as song plays (unless user is dragging)
+  audio.addEventListener("timeupdate", () => {
+    if (!isDragging && audio.duration && !isNaN(audio.duration) && progressBar) {
+      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      progressBar.value = progressPercent;
+    }
   });
-} // IMPORTANT! Add this closing curly bracket for the mobile disabler to work!!
-                        </code>
-                    </pre>
+  
+  // Auto-advance to next song when current one ends
+  audio.addEventListener("ended", () => {
+    loadSong(currentSongIndex + 1);
+    playSong();
+  });
+  
+  // Show/Hide toggle button
+  if (toggleButton) {
+      toggleButton.addEventListener("click", togglePlayer);
+  }
+  
+} else {
+  // Hide player on mobile devices
+  const container = document.getElementById("music-player-container");
+  if (container) {
+    container.style.display = "none";
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <!-- Demo Music Player at Bottom -->
             <div id="music-player-container">
-            <div class="music-player">
-                <div id="song-info">
-                    <span id="song-title">Title</span> - <span id="song-artist">Artist</span>
-                </div>
-                <button id="prev" title="Previous Song">◁</button>
-                <button id="play-pause" title="Play">▶</button>
-                <button id="next" title="Next Song">▷</button>
-                <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume">
-                <span id="volume-label">20%</span>
-                <input type="range" id="progress" min="0" max="100" value="0" title="Progress">
+              <div class="music-player-casing">
+                  <button id="toggle-button" title="Show/Hide Player">▼</button>
+                  <div class="music-player">
+                      <div class="display-panel">
+                          <div class="song-info-mask">
+                              <div id="song-info-scroller">
+                                  <span id="song-title">NO DISC</span> - <span id="song-artist">INSERT CASSETTE</span>
+                              </div>
+                          </div>
+                          <div class="viz-bars">
+                              <div class="bar"></div>
+                              <div class="bar"></div>
+                              <div class="bar"></div>
+                          </div>
+                      </div>
+                      <div class="controls-row">
+                          <button id="prev" title="Previous Track" class="tactile-btn">
+                              <span>◄◄</span>
+                          </button>
+                          <button id="play-pause" title="Play/Pause" class="tactile-btn play-btn">
+                              <span>▶</span>
+                          </button>
+                          <button id="next" title="Next Track" class="tactile-btn">
+                              <span>►►</span>
+                          </button>
+                          <button id="shuffle" title="Shuffle Mode" class="tactile-btn small-btn">
+                              <span>⤭</span>
+                          </button>
+                      </div>
+                      <div class="sliders-row">
+                          <div class="slider-group">
+                              <label for="volume">VOL</label>
+                              <input type="range" id="volume" min="0" max="1" step="0.01" value="0.2" title="Volume Control">
+                          </div>
+                          <span id="volume-label" class="digital-readout">20</span>
+                      </div>
+                      <input type="range" id="progress" min="0" max="100" value="0" title="Seek Position" class="tape-progress">
+                  </div>
+              </div>
             </div>
-            <button id="toggle-button" title="Collapse">❰</button>
-        </div>
         </main>
+        
+        <!-- Scripts -->
         <script src="js/musicplayer.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const copyButtons = document.querySelectorAll('.copy-button');
+                
+                copyButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const targetId = this.getAttribute('data-clipboard-target');
+                        const codeElement = document.getElementById(targetId);
+                        
+                        const textToCopy = codeElement.textContent;
+                        
+                        navigator.clipboard.writeText(textToCopy).then(() => {
+                            const originalText = this.textContent;
+                            this.textContent = 'Copied!';
+                            this.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                this.textContent = originalText;
+                                this.classList.remove('copied');
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy:', err);
+                            const textArea = document.createElement('textarea');
+                            textArea.value = textToCopy;
+                            textArea.style.position = 'fixed';
+                            textArea.style.opacity = '0';
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            
+                            try {
+                                document.execCommand('copy');
+                                this.textContent = 'Copied!';
+                                this.classList.add('copied');
+                                setTimeout(() => {
+                                    this.textContent = 'Copy';
+                                    this.classList.remove('copied');
+                                }, 2000);
+                            } catch (err) {
+                                console.error('Fallback copy failed:', err);
+                            }
+                            
+                            document.body.removeChild(textArea);
+                        });
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
