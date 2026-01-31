@@ -1,17 +1,7 @@
-/*
-  JULY'S MUSIC PLAYER
-  -----------------------------------------------------------------------
-  HOW TO USE:
-  1. Add your music files to a folder (e.g., "music/")
-  2. Edit the 'songs' list below with your own titles, artists, and file paths.
-  3. Adjust 'defaultVolume' if you want it louder/quieter by default.
-  -----------------------------------------------------------------------
-*/
+// Set default volume level (0.0 = muted, 1.0 = max volume)
+const defaultVolume = 0.2;
 
-// --- CONFIGURATION START ---
-
-const defaultVolume = 0.2; // 0.0 to 1.0 (0.2 = 20%)
-
+// Your music library - add or remove songs as needed
 const songs = [
     { 
         title: "Blossom (8-Bit Remix)", 
@@ -28,146 +18,171 @@ const songs = [
         artist: "Fearofdark", 
         file: "music/Funknitium-99.mp3" 
     },
-    { 
-        title: "Perfect Pinterest Garden (8-Bit Remix)", 
-        artist: "Porter Robinson", 
-        file: "music/perfectpinterestgarden.mp3" 
+    {
+        title: "Perfect Pinterest Garden (8-Bit Remix)",
+        artist: "Porter Robinson",
+        file: "music/perfectpinterestgarden.mp3"
     },
-    { 
-        title: "Unfold (8-Bit Remix)", 
-        artist: "Porter Robinson", 
-        file: "music/Unfold.mp3" 
+    {
+        title: "Unfold (8-Bit Remix)",
+        artist: "Porter Robinson",
+        file: "music/Unfold.mp3"
     }
 ];
 
-// --- CONFIGURATION END ---
-// Don't mess with stuff below unless you need to!
-
-// Check is user is on mobile
+// Detect mobile devices to hide player (music players work poorly on mobile)
 const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
 // Only initialize music player on desktop devices
 if (!isMobile) {
   
-  // Player state variables
-  let isPlaying = false;
-  let isShuffleOn = false;
-  let isDragging = false; // Prevents progress bar from jumping around while dragging
-  let isCollapsed = false;
-
-  // 'playQueue' holds the actual order of the songs and changes when shuffle is toggled
+  let isPlaying = false;           // Track if music is currently playing
+  let isShuffleOn = false;          // Track if shuffle mode is enabled
+  let isDragging = false;           // Prevent progress bar updates while user drags
+  let isCollapsed = false;          // Track player show/hide state
+  
+  // Play queue holds the current order of songs (changes when shuffle is toggled)
   let playQueue = [...songs]; 
+  
+  // Start with a random song
   let currentSongIndex = Math.floor(Math.random() * songs.length);
   
-  // Audio setup
   const audio = new Audio();
   audio.volume = defaultVolume;
   
-  // DOM stuff
+  // Song info display elements
   const songTitle = document.getElementById("song-title");
   const songArtist = document.getElementById("song-artist");
   const songScroller = document.getElementById("song-info-scroller");
   const songMask = document.querySelector(".song-info-mask");
-
+  
+  // Control buttons
   const playPauseButton = document.getElementById("play-pause");
   const prevButton = document.getElementById("prev");
   const nextButton = document.getElementById("next");
+  const shuffleButton = document.getElementById("shuffle");
+  const toggleButton = document.getElementById("toggle-button");
+  
+  // Slider controls
   const volumeSlider = document.getElementById("volume");
   const volumeLabel = document.getElementById("volume-label");
   const progressBar = document.getElementById("progress");
-  const toggleButton = document.getElementById("toggle-button");
+  
+  // Container
   const musicPlayerContainer = document.getElementById("music-player-container");
-  const shuffleButton = document.getElementById("shuffle");
-
-  // Initial state
+  
   if (musicPlayerContainer) {
+      // Set up progress bar
       progressBar.max = 100;
       progressBar.value = 0;
+      
+      // Set up volume display
       volumeSlider.value = audio.volume;
       volumeLabel.textContent = Math.round(audio.volume * 100);
+      
+      // Show the player
       musicPlayerContainer.style.display = "flex";
-
-      // Preload first song
+      
+      // Load the first song
       loadSong(currentSongIndex);
-
-      // Make sure everything displays correctly after page load
+      
+      // Ensure everything displays correctly after page loads
       window.addEventListener("load", () => {
         updateSongInfo();
       });
   }
 
-  // --- MAIN FUNCTIONS ---
-
-  // Load song into audio player
   function loadSong(index) {
-    // Handle wrapping at playlist boundaries
-    if (index < 0) index = playQueue.length - 1;
-    if (index >= playQueue.length) index = 0;
+    // Wrap index if out of bounds
+    if (index < 0) {
+      index = playQueue.length - 1;
+    }
+    if (index >= playQueue.length) {
+      index = 0;
+    }
     
     currentSongIndex = index;
     audio.src = playQueue[currentSongIndex].file;
     updateSongInfo();
   }
 
-  // Start playing current song
   function playSong() {
     const playPromise = audio.play();
     
-    // Browsers nowadays require the user to interact before playing any audio
-    // This catches errors if the page hasn't been clicked on yet
     if (playPromise !== undefined) {
         playPromise.then(() => {
             isPlaying = true;
-            playPauseButton.innerHTML = "<span>||</span>"; // pause icon
+            playPauseButton.innerHTML = "<span>||</span>"; // Pause icon
         }).catch(error => {
-            console.log("Playback prevented:", error);
+            console.log("Playback prevented (user interaction required):", error);
             isPlaying = false;
-            playPauseButton.innerHTML = "<span>▶</span>"; // play icon
+            playPauseButton.innerHTML = "<span>▶</span>"; // Play icon
         });
     }
   }
+  
 
-  // Pause playback
   function pauseSong() {
     audio.pause();
     isPlaying = false;
     playPauseButton.innerHTML = "<span>▶</span>";
   }
 
-  // Update the song title/artist with scrolling animation (if too long for display)
   function updateSongInfo() {
     if (!songScroller) return;
-
-    // Reset animation
+    
+    // Reset any existing animation
     songScroller.classList.remove("scrolling");
     songScroller.style.transform = "translateX(0)";
-
-    // Update Text
+    
+    // Update the text content
     songTitle.textContent = playQueue[currentSongIndex].title;
     songArtist.textContent = playQueue[currentSongIndex].artist;
-
-    // Figure out if we need to scroll the text at all
+    
+    // Check if text needs to scroll (is it wider than container?)
     setTimeout(() => {
         const textWidth = songScroller.scrollWidth;
         const containerWidth = songMask.clientWidth;
-
-        // Only scroll if text is wider than container
+        
+        // Only scroll if text overflows the container
         if (textWidth > containerWidth) {
-            const distanceToScroll = textWidth - containerWidth + 10; // +10 extra padding
+            const distanceToScroll = textWidth - containerWidth + 10; // +10 for padding
             const speed = 30; // pixels per second
             const scrollTime = distanceToScroll / speed;
-            const totalDuration = scrollTime + 4; // pause in animation at start/end
-
+            const totalDuration = scrollTime + 4; // Add pause time at start/end
+            
+            // Set CSS custom properties for animation
             songScroller.style.setProperty('--scroll-distance', `-${distanceToScroll}px`);
             songScroller.style.setProperty('--scroll-duration', `${totalDuration}s`);
             songScroller.classList.add("scrolling");
         }
-    }, 50); // delay to ensure DOM is updated
+    }, 50); // Small delay to ensure DOM is updated
   }
 
-  // --- EVENT LISTENERS ---
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
-  // Play/pause button
+  function togglePlayer() {
+    if (isCollapsed) {
+      // Show the player
+      musicPlayerContainer.style.transform = "translateY(0)";
+      toggleButton.textContent = "▼"; 
+    } else {
+      // Hide the player (slide down)
+      const casing = document.querySelector('.music-player-casing');
+      const slideDistance = casing.offsetHeight; 
+      musicPlayerContainer.style.transform = `translateY(${slideDistance}px)`;
+      toggleButton.textContent = "▲"; 
+    }
+    isCollapsed = !isCollapsed;
+  }
+
+  // Play/Pause button
   if (playPauseButton) {
       playPauseButton.addEventListener("click", () => {
         if (isPlaying) {
@@ -177,7 +192,7 @@ if (!isMobile) {
         }
       });
   }
-
+  
   // Previous song button
   if (prevButton) {
       prevButton.addEventListener("click", () => {
@@ -185,7 +200,7 @@ if (!isMobile) {
         if (isPlaying) playSong();
       });
   }
-
+  
   // Next song button
   if (nextButton) {
       nextButton.addEventListener("click", () => {
@@ -193,19 +208,20 @@ if (!isMobile) {
         if (isPlaying) playSong();
       });
   }
-
+  
   // Shuffle button
   if (shuffleButton) {
       shuffleButton.addEventListener("click", () => {
         isShuffleOn = !isShuffleOn;
         
-        // Get the song currently playing
+        // Remember which song is currently playing
         const currentSongObj = playQueue[currentSongIndex];
-
+        
         if (isShuffleOn) {
+          // Enable shuffle mode
           shuffleButton.classList.add("active");
           
-          // Build shuffled queue with current song at front
+          // Create shuffled queue with current song at the front
           let remainingSongs = songs.filter(s => s !== currentSongObj);
           shuffleArray(remainingSongs);
           
@@ -213,15 +229,18 @@ if (!isMobile) {
           currentSongIndex = 0;
           
         } else {
+          // Disable shuffle mode
           shuffleButton.classList.remove("active");
           
+          // Restore original order
           playQueue = [...songs];
-          // Find where our current song is in the original list
+          
+          // Find where current song is in original list
           currentSongIndex = songs.findIndex(s => s.title === currentSongObj.title);
         }
       });
   }
-
+  
   // Volume slider
   if (volumeSlider) {
       volumeSlider.addEventListener("input", () => {
@@ -229,14 +248,13 @@ if (!isMobile) {
         volumeLabel.textContent = Math.round(volumeSlider.value * 100);
       });
   }
-
-  // Progress bar interaction
+  
+  // Progress bar - track when user starts dragging
   if (progressBar) {
-      // Tracks when user starts dragging
       progressBar.addEventListener("mousedown", () => {
         isDragging = true;
       });
-
+      
       // Handle seek when user releases or clicks
       progressBar.addEventListener("change", () => {
         const seekTime = (progressBar.value / 100) * audio.duration;
@@ -246,52 +264,30 @@ if (!isMobile) {
         isDragging = false;
       });
   }
-
-  // Update progress bar as song plays
+  
+  // Update progress bar as song plays (unless user is dragging)
   audio.addEventListener("timeupdate", () => {
     if (!isDragging && audio.duration && !isNaN(audio.duration) && progressBar) {
       const progressPercent = (audio.currentTime / audio.duration) * 100;
       progressBar.value = progressPercent;
     }
   });
-
+  
   // Auto-advance to next song when current one ends
   audio.addEventListener("ended", () => {
     loadSong(currentSongIndex + 1);
     playSong();
   });
-
-  // Show/hide music player with sliding animation
-  function togglePlayer() {
-    if (isCollapsed) {
-      // Show
-        musicPlayerContainer.style.transform = "translateY(0)";
-        toggleButton.textContent = "▼"; 
-    } else {
-      // Hide
-        const casing = document.querySelector('.music-player-casing');
-        const slideDistance = casing.offsetHeight; 
-        musicPlayerContainer.style.transform = `translateY(${slideDistance}px)`;
-        toggleButton.textContent = "▲"; 
-    }
-    isCollapsed = !isCollapsed;
-  }
   
+  // Show/Hide toggle button
   if (toggleButton) {
       toggleButton.addEventListener("click", togglePlayer);
   }
-
-  // Looked up shuffling algorithm and put it here lol
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
+  
 } else {
-  // Hide on mobile
+  // Hide player on mobile devices
   const container = document.getElementById("music-player-container");
-  if(container) container.style.display = "none";
+  if (container) {
+    container.style.display = "none";
+  }
 }
