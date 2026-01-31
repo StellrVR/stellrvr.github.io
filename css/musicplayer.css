@@ -1,46 +1,87 @@
+/*
+  ═══════════════════════════════════════════════════════════════════════════
+  RETRO MUSIC PLAYER - Minimal Base Styles
+  ═══════════════════════════════════════════════════════════════════════════
+  
+  This file contains the MINIMUM CSS required for the player to function.
+  Customize the CSS variables below to match your site's design!
+  
+  ═══════════════════════════════════════════════════════════════════════════
+*/
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CUSTOMIZATION SECTION - Edit these variables to style the player
+   ═══════════════════════════════════════════════════════════════════════ */
+
 :root {
-    --bg-color: #0b0c0d;
-    --case-color: #1a1b1e;
-    --screen-bg: #06130E;
-    --coral: #ff3e3e;
-    --orange: #ff9d00;
-    --yellow: #ffdd00;
-    --mint: #44ff88;
-    --cyan: #00ddff;
-    --text-main: #e0e6ed;
-    --text-dim: #6c7a89;
+    /* Background colors */
+    --player-bg: #1a1b1e;           /* Player casing background */
+    --screen-bg: #06130E;            /* Display screen background */
+    
+    /* Accent colors - customize to match your site! */
+    --accent-primary: #44ff88;       /* Main interactive elements */
+    --accent-secondary: #00ddff;     /* Secondary highlights */
+    --accent-warn: #ff9d00;          /* Warning/special elements */
+    
+    /* Text colors */
+    --text-primary: #e0e6ed;         /* Main text color */
+    --text-secondary: #6c7a89;       /* Dimmed/secondary text */
+    
+    /* Border and shadow colors */
     --border-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.8);
+    
+    /* Sizing - adjust these to make the player bigger/smaller */
+    --player-width: 280px;
+    --player-padding: 15px;
+    --border-radius: 12px;
+    
+    /* Positioning */
+    --player-bottom: 0;
+    --player-left: 20px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PLAYER CONTAINER AND POSITIONING
+   ═══════════════════════════════════════════════════════════════════════ */
 
 #music-player-container {
     position: fixed;
-    bottom: 0;
-    left: 20px;
+    bottom: var(--player-bottom);
+    left: var(--player-left);
     z-index: 1000;
+    
+    /* Smooth slide animation */
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Main player casing */
 .music-player-casing {
-    background-color: var(--case-color);
-    padding: 15px;
-    padding-top: 25px;
+    background-color: var(--player-bg);
+    padding: var(--player-padding);
+    padding-top: 25px; /* Extra space for toggle button */
     
-    border-radius: 12px 12px 0 0; 
+    /* Rounded top corners only */
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     
-    border: 1px solid #333;
-    border-bottom: none; 
+    /* Border styling */
+    border: 1px solid var(--border-color);
+    border-bottom: none; /* No bottom border (sits at screen edge) */
     
-    box-shadow: 
-        0px -5px 20px rgba(0,0,0,0.8),
-        inset 1px 1px 2px rgba(255,255,255,0.05);
-        
+    /* Shadow for depth */
+    box-shadow: 0px -5px 20px var(--shadow-color),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.05);
+    
+    /* Layout */
     display: flex;
     flex-direction: column;
-    width: 280px;
+    width: var(--player-width);
     position: relative;
     overflow: visible;
 }
 
+/* Optional: Decorative side stripe 
+   Remove or comment out this entire block if you don't want it */
 .music-player-casing::after {
     content: "";
     position: absolute;
@@ -49,17 +90,18 @@
     width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, 
-        var(--coral) 20%, 
-        var(--orange) 20%, var(--orange) 40%, 
-        var(--yellow) 40%, var(--yellow) 60%, 
-        var(--mint) 60%, var(--mint) 80%, 
-        var(--cyan) 80%
+        #ff3e3e 20%,      /* Red */
+        #ff9d00 20%, #ff9d00 40%,  /* Orange */
+        #ffdd00 40%, #ffdd00 60%,  /* Yellow */
+        #44ff88 60%, #44ff88 80%,  /* Green */
+        #00ddff 80%       /* Cyan */
     );
     border-radius: 4px 0 0 0;
     opacity: 0.8;
-    pointer-events: none;
+    pointer-events: none; /* Don't interfere with clicks */
 }
 
+/* Inner player content */
 .music-player {
     display: flex;
     flex-direction: column;
@@ -67,25 +109,39 @@
     padding-bottom: 5px;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   DISPLAY SCREEN
+   ═══════════════════════════════════════════════════════════════════════ */
+
 .display-panel {
     background-color: var(--screen-bg);
-    border: 2px solid #333;
+    border: 2px solid var(--border-color);
     border-radius: 4px;
     padding: 8px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+    
+    /* Inner shadow for depth */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+    
     margin-bottom: 5px;
     position: relative;
     overflow: hidden;
 }
+
+/* Optional: Screen glare effect 
+   Remove or comment out if you don't want this */
 .display-panel::after {
     content: "";
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 40%;
-    background: linear-gradient(rgba(255,255,255,0.02), transparent);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(rgba(255, 255, 255, 0.02), transparent);
     pointer-events: none;
     z-index: 2;
 }
 
+/* Song info scrolling container */
 .song-info-mask {
     overflow: hidden;
     white-space: nowrap;
@@ -95,44 +151,69 @@
 
 #song-info-scroller {
     display: inline-block;
-    color: var(--mint);
+    color: var(--accent-primary);
+    
+    /* Use a monospace font for retro feel - or change to any font you like */
     font-family: "Iosevka", monospace;
     font-size: 0.85rem;
+    
+    /* Optional: Glow effect - remove if you don't want it */
     text-shadow: 0 0 5px rgba(68, 255, 136, 0.4);
+    
     white-space: nowrap;
     transform: translateX(0);
 }
 
+/* Scrolling animation for long text */
 #song-info-scroller.scrolling {
     animation: scroll-text var(--scroll-duration) linear infinite;
 }
 
 @keyframes scroll-text {
-    0%, 20% { transform: translateX(0); }
-    80%, 100% { transform: translateX(var(--scroll-distance)); }
+    0%, 20% { 
+        transform: translateX(0); 
+    }
+    80%, 100% { 
+        transform: translateX(var(--scroll-distance)); 
+    }
 }
 
+/* Song title styling */
 #song-title {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+/* Artist name styling */
 #song-artist {
     font-size: 0.7rem;
     opacity: 0.7;
-    color: var(--text-dim);
+    color: var(--text-secondary);
 }
 
+/* Optional: Visualizer bars
+   Remove or comment out this entire section if you don't want them */
 .viz-bars {
     display: flex;
     gap: 2px;
     margin-top: 5px;
     height: 4px;
 }
-.bar { flex: 1; height: 100%; background: #222; }
-.bar:nth-child(1) { background: var(--coral); }
-.bar:nth-child(2) { background: var(--yellow); }
-.bar:nth-child(3) { background: var(--cyan); }
+
+.bar {
+    flex: 1;
+    height: 100%;
+    background: #222;
+}
+
+.bar:nth-child(1) { background: #ff3e3e; }
+.bar:nth-child(2) { background: #ffdd00; }
+.bar:nth-child(3) { background: #00ddff; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CONTROL BUTTONS
+   ═══════════════════════════════════════════════════════════════════════ */
 
 .controls-row {
     display: flex;
@@ -141,76 +222,98 @@
     gap: 4px;
 }
 
+/* Base button styling */
 .tactile-btn {
     background: #111;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    color: var(--text-dim);
+    color: var(--text-secondary);
     padding: 8px 10px;
     font-size: 14px;
     cursor: pointer;
+    
+    /* Smooth transitions */
     transition: all 0.2s;
-    font-family: "Iosevka", monospace;
+    
+    /* Match display font or use system font */
+    font-family: inherit;
+    
     position: relative;
     flex-grow: 1;
 }
 
+/* Button hover effects - customize these colors! */
 .tactile-btn:hover {
     color: #000;
     border-color: transparent;
 }
+
 .tactile-btn:active {
-    transform: translateY(1px);
+    transform: translateY(1px); /* Press down effect */
 }
 
-#prev:hover, #next:hover {
-    background-color: var(--yellow);
-    box-shadow: 0 0 8px var(--yellow);
+/* Previous/Next button hover colors */
+#prev:hover,
+#next:hover {
+    background-color: var(--accent-warn);
+    box-shadow: 0 0 8px var(--accent-warn);
 }
 
+/* Play button styling */
 .play-btn {
-    border-color: var(--mint);
-    color: var(--mint);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
 }
+
 .play-btn:hover {
-    background-color: var(--mint);
-    box-shadow: 0 0 8px var(--mint);
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
     color: #000;
 }
 
+/* Shuffle button sizing */
 .small-btn {
     flex-grow: 0;
     width: 40px;
 }
+
 #shuffle:hover {
-    background-color: var(--cyan);
-    box-shadow: 0 0 8px var(--cyan);
+    background-color: var(--accent-secondary);
+    box-shadow: 0 0 8px var(--accent-secondary);
 }
 
+/* Active state for shuffle button */
 .tactile-btn.active {
-    background-color: var(--cyan);
+    background-color: var(--accent-secondary);
     color: #000;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SLIDERS (VOLUME AND PROGRESS)
+   ═══════════════════════════════════════════════════════════════════════ */
 
 .sliders-row {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 .slider-group {
     display: flex;
     align-items: center;
     gap: 5px;
     flex-grow: 1;
 }
+
 .slider-group label {
     font-size: 0.7rem;
-    color: var(--text-dim);
+    color: var(--text-secondary);
     font-weight: bold;
-    font-family: "Iosevka", monospace;
+    font-family: inherit;
 }
 
+/* Reset default range slider styling */
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -219,66 +322,107 @@ input[type="range"] {
     width: 100%;
 }
 
+/* Volume slider track */
 #volume {
     height: 4px;
     background: #111;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     border-radius: 2px;
 }
+
+/* Volume slider thumb (the draggable part) */
 #volume::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 12px;
     width: 12px;
     border-radius: 50%;
-    background: var(--text-dim);
+    background: var(--text-secondary);
     border: 2px solid #111;
     margin-top: -5px;
 }
-#volume:hover::-webkit-slider-thumb {
-    background: var(--mint);
+
+#volume::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid #111;
 }
 
+/* Volume slider thumb hover effect */
+#volume:hover::-webkit-slider-thumb {
+    background: var(--accent-primary);
+}
+
+#volume:hover::-moz-range-thumb {
+    background: var(--accent-primary);
+}
+
+/* Volume number display */
 .digital-readout {
-    font-family: "Courier New", monospace;
+    font-family: "Courier New", "Courier", monospace;
     font-weight: bold;
-    color: var(--orange);
+    color: var(--accent-warn);
     background: #000;
     padding: 2px 4px;
     font-size: 0.75rem;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     min-width: 24px;
     text-align: center;
 }
 
+/* Progress bar (tape position) */
 .tape-progress {
     height: 6px;
     background: #111;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     border-radius: 2px;
     margin-top: 5px;
 }
+
+/* Progress bar thumb */
 .tape-progress::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 10px;
     width: 4px;
-    background: var(--coral);
+    background: #ff3e3e;
     cursor: col-resize;
     margin-top: -2px;
 }
+
+.tape-progress::-moz-range-thumb {
+    height: 10px;
+    width: 4px;
+    background: #ff3e3e;
+    border: none;
+    border-radius: 0;
+}
+
+/* Progress bar thumb hover effect */
 .tape-progress:hover::-webkit-slider-thumb {
-    background: var(--mint);
+    background: var(--accent-primary);
     width: 6px;
     height: 12px;
     margin-top: -3px;
 }
 
+.tape-progress:hover::-moz-range-thumb {
+    background: var(--accent-primary);
+    width: 6px;
+    height: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TOGGLE BUTTON (SHOW/HIDE)
+   ═══════════════════════════════════════════════════════════════════════ */
+
 #toggle-button {
     position: absolute;
     top: -22px;
     right: 15px;
-    background: var(--case-color);
-    color: var(--text-dim);
-    border: 1px solid #333;
+    background: var(--player-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
     border-bottom: none;
     border-radius: 4px 4px 0 0;
     padding: 2px 10px;
@@ -286,14 +430,22 @@ input[type="range"] {
     cursor: pointer;
     height: 23px;
     z-index: 5;
-    font-family: "Iosevka", monospace;
+    font-family: inherit;
     text-transform: uppercase;
 }
+
 #toggle-button:hover {
     color: #000;
-    background: var(--orange);
+    background: var(--accent-warn);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Hide player on mobile devices (handled by JavaScript, but adding CSS backup) */
 @media (max-width: 768px) {
-    #music-player-container { display: none !important; }
+    #music-player-container {
+        display: none !important;
+    }
 }

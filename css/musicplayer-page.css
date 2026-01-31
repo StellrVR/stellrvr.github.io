@@ -1,0 +1,217 @@
+/* 
+   Music Player Documentation Page Specific Styles
+   Prevents clashing with main stylesheet 
+*/
+
+/* Override container dimensions for this page specifically */
+.musicplayer-page .tab-container {
+    width: 100%;
+    max-width: 1400px;
+}
+
+.musicplayer-page .tab-content {
+    display: block !important;
+    min-height: 80vh;
+    padding: 40px;
+}
+
+/* Make the device case wider and taller */
+.musicplayer-page .device-case {
+    max-width: 1500px;
+    width: 95vw;
+}
+
+.musicplayer-page .container {
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    min-height: 80vh;
+}
+
+/* Code block container styling */
+.musicplayer-page pre {
+    position: relative;
+    margin: 20px 0;
+    background: var(--screen-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+    padding-top: 45px; /* Extra space for copy button */
+    overflow: auto; /* Allow scrolling in both directions */
+    max-height: 450px; /* Limit height of code blocks */
+}
+
+.musicplayer-page code {
+    font-family: "Iosevka", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-main);
+    display: block;
+}
+
+/* Custom scrollbar for code blocks */
+.musicplayer-page pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.musicplayer-page pre::-webkit-scrollbar-track {
+    background: #000;
+    border-radius: 4px;
+}
+
+.musicplayer-page pre::-webkit-scrollbar-thumb {
+    background: var(--mint);
+    border-radius: 4px;
+    border: 1px solid #000;
+}
+
+.musicplayer-page pre::-webkit-scrollbar-thumb:hover {
+    background: var(--cyan);
+}
+
+/* Copy button styling */
+.copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--case-color);
+    color: var(--mint);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    font-family: "Iosevka", monospace;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.copy-button:hover {
+    background: var(--mint);
+    color: #000;
+    border-color: var(--mint);
+    box-shadow: 0 0 8px var(--mint);
+}
+
+.copy-button:active {
+    transform: translateY(1px);
+}
+
+.copy-button.copied {
+    background: var(--cyan);
+    color: #000;
+    border-color: var(--cyan);
+}
+
+.copy-button.copied::after {
+    content: " ✓";
+}
+
+/* Improve readability */
+.musicplayer-page p {
+    color: var(--text-main);
+    line-height: 1.8;
+    margin: 15px 0;
+}
+
+.musicplayer-page h1 {
+    color: var(--mint);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(68, 255, 136, 0.3);
+}
+
+.musicplayer-page h2 {
+    color: var(--cyan);
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 10px;
+}
+
+.musicplayer-page a {
+    color: var(--orange);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--orange);
+    transition: all 0.2s;
+}
+
+.musicplayer-page a:hover {
+    background: var(--orange);
+    color: #000;
+    border-bottom-style: solid;
+}
+
+/* Code inline */
+.musicplayer-page code:not(pre code) {
+    background: rgba(68, 255, 136, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--mint);
+    font-size: 13px;
+}
+
+/* Lists */
+.musicplayer-page ul,
+.musicplayer-page ol {
+    color: var(--text-main);
+    line-height: 1.8;
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.musicplayer-page li {
+    margin: 8px 0;
+}
+
+/* Emphasis */
+.musicplayer-page b,
+.musicplayer-page strong {
+    color: var(--cyan);
+    font-weight: bold;
+}
+
+.musicplayer-page i,
+.musicplayer-page em {
+    color: var(--orange);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .musicplayer-page .tab-content {
+        padding: 20px 15px;
+    }
+    
+    .musicplayer-page .container {
+        min-height: auto;
+    }
+    
+    .musicplayer-page pre {
+        padding: 15px;
+        padding-top: 40px;
+        font-size: 12px;
+        max-height: 350px; /* Smaller max-height on mobile */
+    }
+    
+    .copy-button {
+        padding: 4px 8px;
+        font-size: 10px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .musicplayer-page h1 {
+        font-size: 1.5rem;
+    }
+    
+    .musicplayer-page h2 {
+        font-size: 1.2rem;
+        margin-top: 30px;
+    }
+}
