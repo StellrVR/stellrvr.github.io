@@ -1,6 +1,7 @@
 const DISCORD_ID = "257252196926750720"; 
 
 const statusElement = document.getElementById("user-status");
+const activityElement = document.getElementById("user-activity");
 
 const COLORS = {
     online: "var(--mint)",
@@ -59,7 +60,6 @@ function updateStatus(data) {
 
     if (statusElement) {
         statusElement.textContent = STATUS_TEXT[status] || "UNKNOWN";
-        
         statusElement.style.color = COLORS[status] || COLORS.offline;
         
         if (status === "online" || status === "dnd") {
@@ -67,5 +67,54 @@ function updateStatus(data) {
         } else {
             statusElement.classList.remove("blink");
         }
+    }
+
+    if (activityElement) {
+        updateActivity(data.activities);
+    }
+}
+
+function updateActivity(activities) {
+    if (!activities || activities.length === 0) {
+        activityElement.textContent = "";
+        activityElement.style.display = "none";
+        return;
+    }
+
+    const game = activities.find(activity => 
+        activity.type === 0
+    );
+
+    const customStatus = activities.find(activity => 
+        activity.type === 4
+    );
+
+    const spotify = activities.find(activity => 
+        activity.name === "Spotify" || activity.type === 2
+    );
+
+    let displayText = "";
+
+    if (game) {
+        displayText = `PLAYING: ${game.name.toUpperCase()}`;
+
+        if (game.details) {
+            displayText += ` - ${game.details.toUpperCase()}`;
+        }
+    } else if (spotify) {
+        const songName = spotify.details || "Unknown Track";
+        const artistName = spotify.state || "Unknown Artist";
+        displayText = `♪ ${songName.toUpperCase()} - ${artistName.toUpperCase()}`;
+    } else if (customStatus && customStatus.state) {
+        displayText = customStatus.state.toUpperCase();
+    }
+
+    if (displayText) {
+        activityElement.textContent = displayText;
+        activityElement.style.display = "block";
+        console.log("July-OS: Activity update ->", displayText);
+    } else {
+        activityElement.textContent = "";
+        activityElement.style.display = "none";
     }
 }
