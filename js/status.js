@@ -1,10 +1,21 @@
 const DISCORD_ID = "257252196926750720"; 
 
-const statusElement = document.getElementById("user-status");
-const activityElement = document.getElementById("user-activity");
+let statusElement;
+let activityElement;
 
-console.log("July-OS: Status element found:", statusElement);
-console.log("July-OS: Activity element found:", activityElement);
+document.addEventListener('DOMContentLoaded', function() {
+    statusElement = document.getElementById("user-status");
+    activityElement = document.getElementById("user-activity");
+    
+    if (!statusElement) {
+        console.error("July-OS: #user-status element not found!");
+    }
+    if (!activityElement) {
+        console.error("July-OS: #user-activity element not found! Add it to your HTML.");
+    }
+    
+    connectToLanyard();
+});
 
 const COLORS = {
     online: "var(--mint)",
@@ -20,13 +31,7 @@ const STATUS_TEXT = {
     offline: "OFFLINE"
 };
 
-connectToLanyard();
-
 function connectToLanyard() {
-    if (DISCORD_ID === "257252196926750720") {
-        console.warn("July-OS: Discord ID is still set to placeholder. Please edit js/status.js");
-    }
-
     const ws = new WebSocket("wss://api.lanyard.rest/socket");
 
     ws.onopen = () => {
@@ -39,11 +44,9 @@ function connectToLanyard() {
 
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log("July-OS: Raw message received:", data);
         const { t, d } = data;
 
         if (t === "INIT_STATE" || t === "PRESENCE_UPDATE") {
-            console.log("July-OS: Presence data:", d);
             updateStatus(d);
         }
     };
@@ -61,8 +64,7 @@ function connectToLanyard() {
 function updateStatus(data) {
     let status = data.discord_status || "offline";
     
-    console.log("July-OS: Status update received ->", status);
-    console.log("July-OS: Activities data ->", data.activities);
+    console.log("July-OS: Status update ->", status);
 
     if (statusElement) {
         statusElement.textContent = STATUS_TEXT[status] || "UNKNOWN";
@@ -75,72 +77,51 @@ function updateStatus(data) {
         }
     }
 
-    if (activityElement) {
-        console.log("July-OS: Updating activity element");
-        updateActivity(data.activities);
-    } else {
-        console.warn("July-OS: Activity element not found! Make sure #user-activity exists in HTML");
-    }
+    updateActivity(data.activities);
 }
 
 function updateActivity(activities) {
-    console.log("July-OS: updateActivity called with:", activities);
-    
     if (!activityElement) {
-        console.error("July-OS: activityElement is null!");
         return;
     }
 
     if (!activities || activities.length === 0) {
-        console.log("July-OS: No activities found, hiding display");
         activityElement.textContent = "";
         activityElement.style.display = "none";
         return;
     }
 
-    console.log("July-OS: Processing", activities.length, "activities");
-
-    const game = activities.find(activity => {
-        console.log("July-OS: Checking activity type:", activity.type, "name:", activity.name);
-        return activity.type === 0;
-    });
-
-    const customStatus = activities.find(activity => 
-        activity.type === 4
-    );
+    const game = activities.find(activity => activity.type === 0);
 
     const spotify = activities.find(activity => 
-        activity.name === "Spotify" || activity.type === 2
+        activity.type === 2 || activity.name === "Spotify"
     );
 
-    console.log("July-OS: Found - Game:", game, "Spotify:", spotify, "Custom:", customStatus);
+    const customStatus = activities.find(activity => activity.type === 4);
 
     let displayText = "";
 
     if (game) {
         displayText = `PLAYING: ${game.name.toUpperCase()}`;
-        console.log("July-OS: Setting game display:", displayText);
-
         if (game.details) {
             displayText += ` - ${game.details.toUpperCase()}`;
         }
+        console.log("July-OS: Game activity ->", displayText);
     } else if (spotify) {
         const songName = spotify.details || "Unknown Track";
         const artistName = spotify.state || "Unknown Artist";
         displayText = `♪ ${songName.toUpperCase()} - ${artistName.toUpperCase()}`;
-        console.log("July-OS: Setting Spotify display:", displayText);
+        console.log("July-OS: Spotify activity ->", displayText);
     } else if (customStatus && customStatus.state) {
         displayText = customStatus.state.toUpperCase();
-        console.log("July-OS: Setting custom status display:", displayText);
+        console.log("July-OS: Custom status ->", displayText);
     }
 
     if (displayText) {
         activityElement.textContent = displayText;
         activityElement.style.display = "block";
-        console.log("July-OS: Activity display updated ->", displayText);
     } else {
         activityElement.textContent = "";
         activityElement.style.display = "none";
-        console.log("July-OS: No displayable activity found");
     }
 }
