@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>july.lol</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        window.tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        colors: {
+                            ctp: {
+                                rosewater:'#f5e0dc', flamingo:'#f2cdcd', pink:'#f5c2e7',
+                                mauve:'#cba6f7', red:'#f38ba8', maroon:'#eba0ac',
+                                peach:'#fab387', yellow:'#f9e2af', green:'#a6e3a1',
+                                teal:'#94e2d5', sky:'#89dceb', sapphire:'#74c7ec',
+                                blue:'#89b4fa', lavender:'#b4befe', text:'#cdd6f4',
+                                subtext1:'#bac2de', subtext0:'#a6adc8', overlay2:'#9399b2',
+                                overlay1:'#7f849c', overlay0:'#6c7086', surface2:'#585b70',
+                                surface1:'#45475a', surface0:'#313244', base:'#1e1e2e',
+                                mantle:'#181825', crust:'#11111b',
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="profile-card">
+
+    <div class="card-banner">
+        <canvas id="banner-canvas"></canvas>
+        <div class="banner-fade"></div>
+    </div>
+
+    <div class="avatar-section">
+        <div class="avatar-ring">
+            <canvas id="avatar-canvas" data-src="assets/img/julyaviimg.png"></canvas>
+        </div>
+        <div class="identity">
+            <h1 class="username">july</h1>
+            <p class="handle">"i'm not good at being a horse"</p>
+            <div class="status-row">
+                <span class="badge" id="status-badge">
+                  <span class="badge-dot" id="status-dot"></span>
+                  <span id="status-text">loading...</span>
+                </span>
+                <span class="badge">
+                  <span class="badge-dot mauve"></span>
+                  stupid
+                </span>
+                <span class="badge">
+                  <span class="badge-dot blue"></span>
+                  actually a gibbon
+                </span>
+                <span class="badge">
+                  <span class="badge-dot pink"></span>
+                  lover of Wys
+                </span>
+            </div>
+            <p class="bio">bio here</p>
+        </div>
+    </div>
+
+    <div class="card-divider"><canvas class="divider-canvas"></canvas></div>
+
+    <div class="card-body">
+        <div class="col-left">
+
+            <div class="section-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                details
+            </div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-item-label">location</div>
+                    <div class="info-item-value">outer space</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">timezone</div>
+                    <div class="info-item-value">clt (coordinated lunar time)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">languages</div>
+                    <div class="info-item-value">en / asl</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">pronouns</div>
+                    <div class="info-item-value">he/him</div>
+                </div>
+            </div>
+
+            <div class="col-divider-spacer"></div>
+
+            <div class="section-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                interests
+            </div>
+            <div class="tags-wrap">
+                <span class="tag tag-accent">VRChat</span>
+                <span class="tag tag-blue">Space</span>
+                <span class="tag tag-teal">Cassette Futurism</span>
+                <span class="tag tag-peach">D&amp;D</span>
+                <span class="tag tag-pink">ASL</span>
+            </div>
+
+            <div class="col-divider-spacer"></div>
+
+            <div class="section-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                links
+            </div>
+            <div class="links-stack">
+                <a href="mailto:me@july.lol" class="link-btn" aria-label="Email me">
+                    <canvas></canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <span class="link-label">email</span>
+                    <span class="link-arrow">&rarr;</span>
+                </a>
+                <a href="https://github.com/StellrVR" target="_blank" class="link-btn" aria-label="Github Profile">
+                    <canvas></canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    <span class="link-label">github</span>
+                    <span class="link-arrow">&rarr;</span>
+                </a>
+                <a href="https://sk.waf.moe/@july" target="_blank" class="link-btn" aria-label="Fediverse Profile">
+                    <canvas></canvas>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 22,8.5 19,19.5 5,19.5 2,8.5"/><line x1="12" y1="2" x2="19" y2="19.5"/><line x1="12" y1="2" x2="5" y2="19.5"/><line x1="2" y1="8.5" x2="19" y2="19.5"/><line x1="22" y1="8.5" x2="5" y2="19.5"/><circle cx="12" cy="2" r="1.5" fill="currentColor"/><circle cx="22" cy="8.5" r="1.5" fill="currentColor"/><circle cx="19" cy="19.5" r="1.5" fill="currentColor"/><circle cx="5" cy="19.5" r="1.5" fill="currentColor"/><circle cx="2" cy="8.5" r="1.5" fill="currentColor"/></svg>
+                    <span class="link-label">fediverse</span>
+                    <span class="link-arrow">&rarr;</span>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="col-right">
+
+            <div class="section-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                projects
+            </div>
+            <div class="projects-stack">
+                <div class="project-mini">
+                    <div class="project-thumb"><canvas class="project-canvas"></canvas></div>
+                    <div class="project-info">
+                        <div class="project-name">creative impressions</div>
+                        <div class="project-desc">a VRChat social community focused on art and bringing artists together</div>
+                        <p style="color: var(--ctp-overlay0); font-size: 12px;"><i>link soon</i></p>
+                    </div>
+                </div>
+                <div class="project-mini">
+                    <div class="project-thumb"><canvas class="project-canvas"></canvas></div>
+                    <div class="project-info">
+                        <div class="project-name">dragonspire</div>
+                        <div class="project-desc">a dungeons &amp; dragons VRChat world aimed to be as close to the real thing as possible</div>
+                        <p style="color: var(--ctp-overlay0); font-size: 12px;"><i>link soon</i></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-footer">
+        made with level 3 spell slots
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
