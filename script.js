@@ -327,6 +327,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const bgToggle = document.getElementById('bg-toggle');
+    const bgImg = document.getElementById('background-img');
+
+    if (bgToggle && bgImg) {
+        bgToggle.addEventListener('click', () => {
+            const isRevealed = bgImg.classList.toggle('revealed');
+            bgToggle.textContent = isRevealed ? 'hide bg' : 'view bg';
+        });
+    }
+
     const avatar = document.getElementById('avatar-canvas');
     if (avatar) {
         const src = avatar.getAttribute('data-src');
