@@ -1,13 +1,13 @@
 module.exports = function(eleventyConfig) {
-    eleventyConfig.addPassthroughCopy("styles.css");
-    eleventyConfig.addPassthroughCopy("script.js");
-    eleventyConfig.addPassthroughCopy("assets");
+    eleventyConfig.addPassthroughCopy({"styles.css": "styles.css"});
+    eleventyConfig.addPassthroughCopy({"script.js": "script.js"});
+    eleventyConfig.addPassthroughCopy({"assets": "assets"});
 
     eleventyConfig.addFilter("readableDate", (dateObj) => {
         return new Date(dateObj).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric',
+            day: 'numeric'
         });
     });
 
@@ -18,8 +18,8 @@ module.exports = function(eleventyConfig) {
 
     return {
         dir: {
-            input: "blog",
-            output: "_site/blog",
+            input: "src",
+            output: "blog",
             includes: "_includes"
         },
         templateFormats: ["md", "njk", "html"],
