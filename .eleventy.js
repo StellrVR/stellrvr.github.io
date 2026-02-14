@@ -3,8 +3,6 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({"script.js": "script.js"});
     eleventyConfig.addPassthroughCopy({"assets": "assets"});
 
-    eleventyConfig.ignores.add("src/!(blog|blog.njk|_includes)/**");
-
     eleventyConfig.addCollection("posts", function(collectionApi) {
         return collectionApi.getFilteredByGlob("src/posts/**/*.md")
             .sort((a, b) => b.date - a.date);
@@ -36,6 +34,7 @@ module.exports = function(eleventyConfig) {
             output: "blog",
             includes: "_includes"
         },
+        pathPrefix: "/blog/",  // ← ADD THIS LINE
         markdownTemplateEngine: "njk",
         htmlTemplateEngine: "njk"
     };
