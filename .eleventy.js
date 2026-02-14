@@ -1,6 +1,5 @@
-const rssPlugin = require("@11ty/eleventy-plugin-rss");
-
 module.exports = function(eleventyConfig) {
+    const rssPlugin = require("@11ty/eleventy-plugin-rss");
     eleventyConfig.addPlugin(rssPlugin);
 
     eleventyConfig.addPassthroughCopy({"styles.css": "styles.css"});
@@ -38,7 +37,7 @@ module.exports = function(eleventyConfig) {
             output: "blog",
             includes: "_includes"
         },
-        pathPrefix: "/blog/",
+        // pathPrefix: "/blog/",  ← REMOVE THIS LINE
         markdownTemplateEngine: "njk",
         htmlTemplateEngine: "njk"
     };
