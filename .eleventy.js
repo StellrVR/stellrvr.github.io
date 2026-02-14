@@ -34,7 +34,7 @@ module.exports = function(eleventyConfig) {
             output: "blog",
             includes: "_includes"
         },
-        pathPrefix: "/blog/",  // ← ADD THIS LINE
+        pathPrefix: "/blog/",
         markdownTemplateEngine: "njk",
         htmlTemplateEngine: "njk"
     };
