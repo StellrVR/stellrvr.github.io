@@ -9,7 +9,7 @@ permalink: /
     <div class="post-list">
         {% for post in collections.posts %}
         <article class="post-preview">
-            <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+            <h2><a href="/blog{{ post.url }}">{{ post.data.title }}</a></h2>
             <div class="post-meta">
                 {{ post.date | readableDate }}
                 {% if post.data.author %}
