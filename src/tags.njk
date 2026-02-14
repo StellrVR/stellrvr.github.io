@@ -1,0 +1,26 @@
+---
+layout: layout.njk
+title: tags
+description: browse posts by topic
+permalink: /tags/
+---
+
+<div class="content-card">
+    {% if collections.tagList.length > 0 %}
+    <div class="tag-grid">
+        {% for tag in collections.tagList %}
+        {% set taggedPosts = collections.posts | filterByTag(tag) %}
+        <div class="tag-card">
+            <a href="/blog/tags/{{ tag }}/">
+                <div style="font-size: 1.1rem; margin-bottom: 0.25rem;">{{ tag }}</div>
+                <div class="tag-count">{{ taggedPosts.length }} post{% if taggedPosts.length != 1 %}s{% endif %}</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem; color: var(--ctp-overlay1);">
+        <p style="font-family: 'Space Mono', monospace; font-size: 0.9rem;">no tags yet!</p>
+    </div>
+    {% endif %}
+</div>
