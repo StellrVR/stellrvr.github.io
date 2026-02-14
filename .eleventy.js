@@ -6,7 +6,7 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.ignores.add("src/!(blog|blog.njk|_includes)/**");
 
     eleventyConfig.addCollection("posts", function(collectionApi) {
-        return collectionApi.getFilteredByGlob("src/blog/posts/**/*.md")
+        return collectionApi.getFilteredByGlob("src/posts/**/*.md")
             .sort((a, b) => b.date - a.date);
     });
 

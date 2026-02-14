@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>blog - july's blog</title>
+    <title>{{ title }} - july's blog</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,8 +265,8 @@
 
 <div class="blog-container">
     <div class="blog-header">
-        <h1 class="blog-title">blog</h1>
-        <p style="color: var(--ctp-subtext0); font-size: 0.9rem;">thoughts, projects, and whatever else</p>
+        <h1 class="blog-title">{{ title or "july's blog" }}</h1>
+        <p style="color: var(--ctp-subtext0); font-size: 0.9rem;">{{ description or "thoughts, projects, and whatever else" }}</p>
         <nav class="blog-nav">
             <a href="/">← home</a>
             <a href="/blog/">all posts</a>
@@ -274,15 +274,7 @@
         </nav>
     </div>
 
-    
-<div class="content-card">
-    
-    <div style="text-align: center; padding: 3rem; color: var(--ctp-overlay1);">
-        <p style="font-family: 'Space Mono', monospace; font-size: 0.9rem;">no posts yet... check back soon!</p>
-    </div>
-    
-</div>
-
+    {{ content | safe }}
 </div>
 
 <script src="/script.js"></script>
