@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>july's blog</title>
+  <subtitle>thoughts, projects, and whatever else</subtitle>
+  <link href="https://july.lol/blog/feed.xml" rel="self"/>
+  <link href="https://july.lol/blog/"/>
+  <updated>2026-02-14T00:00:00Z</updated>
+  <id>https://july.lol/blog/</id>
+  <author>
+    <name>july</name>
+    <email>me@july.lol</email>
+  </author>
+  <entry>
+    <title>ROUTINE (game review)</title>
+    <link href="https://july.lol/blog/posts/02-14/"/>
+    <updated>2026-02-14T00:00:00Z</updated>
+    <id>https://july.lol/blog/posts/02-14/</id>
+    <content type="html">&lt;p&gt;Writing this later... when I have the time&lt;/p&gt;
+</content>
+  </entry>
+</feed>

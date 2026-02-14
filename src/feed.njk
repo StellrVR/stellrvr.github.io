@@ -1,0 +1,27 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>july's blog</title>
+  <subtitle>thoughts, projects, and whatever else</subtitle>
+  <link href="https://july.lol/blog/feed.xml" rel="self"/>
+  <link href="https://july.lol/blog/"/>
+  <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+  <id>https://july.lol/blog/</id>
+  <author>
+    <name>july</name>
+    <email>me@july.lol</email>
+  </author>
+  {%- for post in collections.posts | reverse %}
+  {%- set absolutePostUrl = post.url | url | absoluteUrl("https://july.lol") %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="{{ absolutePostUrl }}"/>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <id>{{ absolutePostUrl }}</id>
+    <content type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
+  </entry>
+  {%- endfor %}
+</feed>
