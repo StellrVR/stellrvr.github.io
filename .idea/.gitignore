@@ -7,4 +7,6 @@
 /dataSources/
 /dataSources.local.xml
 .idea/
+node_modules/
+blog/
 .DS_Store

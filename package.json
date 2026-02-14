@@ -1,0 +1,17 @@
+{
+  "name": "stellrvr.github.io",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000s\u0000t\u0000e\u0000l\u0000l\u0000r\u0000v\u0000r\u0000.\u0000g\u0000i\u0000t\u0000h\u0000u\u0000b\u0000.\u0000i\u0000o\u0000\r\u0000 \u0000",
+  "main": "script.js",
+  "scripts": {
+    "build:blog": "eleventy",
+    "serve:blog": "eleventy --serve",
+    "clean": "rm -rf blog"
+  },
+  "keywords": [],
+  "author": "july",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
