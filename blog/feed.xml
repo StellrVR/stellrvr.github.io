@@ -4,7 +4,7 @@
   <subtitle>thoughts, projects, and whatever else</subtitle>
   <link href="https://july.lol/blog/feed.xml" rel="self"/>
   <link href="https://july.lol/blog/"/>
-  <updated>2026-02-14T00:00:00Z</updated>
+  <updated>2026-02-16T00:00:00Z</updated>
   <id>https://july.lol/blog/</id>
   <author>
     <name>july</name>
@@ -41,6 +41,218 @@ The crew also talks about a &amp;quot;Canal&amp;quot; like it&#39;s calling to t
 &lt;p&gt;Entity A is still here.&lt;/p&gt;
 &lt;p&gt;This was also my first discovery that the game doesn&#39;t pause when you pause. Terrifying.&lt;/p&gt;
 &lt;p&gt;Listen, I could go on about the rest of the game, but my explanation doesn&#39;t do it justice. I highly encourage you to play it and experience it yourself. It&#39;s easily one of my favorite horror games and one of my favorite examples of the retro/cassette futurism genre. The ending of the game is abstract and really makes you think and look back at your time during playing.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>100 Webmaster Questions</title>
+    <link href="https://july.lol/posts/02-16/"/>
+    <updated>2026-02-16T00:00:00Z</updated>
+    <id>https://july.lol/posts/02-16/</id>
+    <content type="html">&lt;p&gt;I saw someone posted this questionnaire on their site so I decided to do it myself.
+The original can be found &lt;a href=&quot;https://mouseling.net/100webmaster&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;1. Please introduce yourself.&lt;/h3&gt;
+&lt;p&gt;My name is July, or Stellr on other platforms. I&#39;m a big fan of space, retro/cassette futurism, Dungeons &amp;amp; Dragons, Porter Robinson, and gibbons. I play a lot of video games (especially VR), I like to code sometimes, I listen to lots of music, and I love spending time with my wonderful partner.&lt;/p&gt;
+&lt;h3&gt;2. How long have you been making websites?&lt;/h3&gt;
+&lt;p&gt;I remember making my first website when I was around 8 years old or so (2007), but I didn&#39;t get super into it until around 2023.&lt;/p&gt;
+&lt;h3&gt;3. And what got you into the hobby?&lt;/h3&gt;
+&lt;p&gt;I had met someone who had a friend and that friend had their website listed in their Discord bio. Out of curiosity, I checked it out and they had &amp;quot;Yesterwebring&amp;quot; listed in their footer. From there, it was just a rabbit hole of finding cool &amp;quot;old web&amp;quot; sites and so I just decided I wanted to do it myself.&lt;/p&gt;
+&lt;h3&gt;4. What kind of website are you most interested in?&lt;/h3&gt;
+&lt;p&gt;I really like personal websites that aren&#39;t too flashy or overcomplicated. While I still believe that anyone should make their website however they want to, very simple sites are the ones that make me want to check them out more.&lt;/p&gt;
+&lt;h3&gt;5. What&#39;s your workflow? Do you plan your websites our thoroughly or do you come up with the design as you go along?&lt;/h3&gt;
+&lt;p&gt;I usually just see a design aesthetic, regardless if it&#39;s a website or not, and I think &amp;quot;I should try and do something like that.&amp;quot; I know that&#39;s not very original, but is there really any originality nowadays?&lt;/p&gt;
+&lt;h3&gt;6. Please link your biggest inspirations.&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/Wys_teriaFlower&quot;&gt;My lovely partner&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;7. What&#39;s your favorite part about making websites?&lt;/h3&gt;
+&lt;p&gt;I think trying to style the site with CSS is kinda fun. Just throwing shit at the wall and seeing what sticks.&lt;/p&gt;
+&lt;h3&gt;8. And the thing you struggle with the most?&lt;/h3&gt;
+&lt;p&gt;More recently? Getting 11ty to work for this blog.
+But overall, probably learning JavaScript.&lt;/p&gt;
+&lt;h3&gt;9. Do you keep the same layout on all of your pages? Or do you use different ones?&lt;/h3&gt;
+&lt;p&gt;I try to keep it consistent on all of my pages.&lt;/p&gt;
+&lt;h3&gt;10. How confident are you with CSS?&lt;/h3&gt;
+&lt;p&gt;I&#39;m a lot more confident about CSS now than I was a year or so ago.&lt;/p&gt;
+&lt;h3&gt;11. Do you know how to correctly use &amp;lt;dl&amp;gt;?&lt;/h3&gt;
+&lt;p&gt;No, but I&#39;ll look into it. I think it&#39;s a good semantic way of replacing lists? But that&#39;s all I know.&lt;/p&gt;
+&lt;h3&gt;12. What is your favorite HTML element?&lt;/h3&gt;
+&lt;p&gt;Either &amp;lt;section&amp;gt; or &amp;lt;footer&amp;gt;.&lt;/p&gt;
+&lt;h3&gt;13. If you&#39;re making a new web page from scratch, what is the first thing you do?&lt;/h3&gt;
+&lt;p&gt;Pasting my boilerplate, I guess.&lt;/p&gt;
+&lt;h3&gt;14. Do you know JavaScript?&lt;/h3&gt;
+&lt;p&gt;Not &lt;em&gt;everything,&lt;/em&gt; but I&#39;ve been learning for a while now.&lt;/p&gt;
+&lt;h3&gt;15. How about PHP?&lt;/h3&gt;
+&lt;p&gt;I tried learning PHP a while ago when I made NekoForum (RIP), but it was too much for my small potato chip brain.&lt;/p&gt;
+&lt;h3&gt;16. Does your website have a theme that you stick to?&lt;/h3&gt;
+&lt;p&gt;Anyone who knows me will say no lol. It used to be very terminal-esque (think 1970&#39;s kind of tech), but I&#39;ve grown to enjoy more modern stuff more recently.&lt;/p&gt;
+&lt;h3&gt;17. Are you more focused on content or design?&lt;/h3&gt;
+&lt;p&gt;Definitely design.&lt;/p&gt;
+&lt;h3&gt;18. Do you own a domain name?&lt;/h3&gt;
+&lt;p&gt;Yes, three actually.&lt;/p&gt;
+&lt;h3&gt;19. What do you think of nostalgia-focused or &amp;quot;retro&amp;quot; websites?&lt;/h3&gt;
+&lt;p&gt;Again, I believe people should be allowed to do whatever they want. However, I think it&#39;s a little strange for people to say that they &amp;quot;miss&amp;quot; the early 2000s era of the web when they either weren&#39;t around back then or they were way too young to understand it.&lt;/p&gt;
+&lt;h3&gt;20. Is your HTML valid? Do you even check?&lt;/h3&gt;
+&lt;p&gt;I don&#39;t check on a regular basis, but I did recently and it said it&#39;s valid.&lt;/p&gt;
+&lt;h3&gt;21. What is your opinion on buttons and banners?&lt;/h3&gt;
+&lt;p&gt;This implies there&#39;s negative connotation to them lol. I love them.&lt;/p&gt;
+&lt;h3&gt;22. What do you think of button walls in particular?&lt;/h3&gt;
+&lt;p&gt;Again, I love them. Do people really have a problem with this?&lt;/p&gt;
+&lt;h3&gt;23. If you started over again, would you make something similar or completely different?&lt;/h3&gt;
+&lt;p&gt;I&#39;d probably make something similar but not the exact same. I&#39;d most likely experiment with the layout, but keep the overall design.&lt;/p&gt;
+&lt;h3&gt;24. Are you envious of other people&#39;s websites?&lt;/h3&gt;
+&lt;p&gt;Yes and no. I think some people&#39;s websites are very cool, and I&#39;d love to know how they did certain things, but I also don&#39;t really put much thought into it.&lt;/p&gt;
+&lt;h3&gt;25. What text editor do you use?&lt;/h3&gt;
+&lt;p&gt;Right now, I use JetBrains WebStorm. But I used to use VSCodium.&lt;/p&gt;
+&lt;h3&gt;26. Why do you use that one?&lt;/h3&gt;
+&lt;p&gt;It saves me a ton of time with its autofill feature when writing CSS or JS.&lt;/p&gt;
+&lt;h3&gt;27. Do you host your image files on your web server, or on another host?&lt;/h3&gt;
+&lt;p&gt;I host my own image files and I firmly believe that you shouldn&#39;t host your images on another host simply because of link expiry or potential shut-downs from that host.&lt;/p&gt;
+&lt;h3&gt;28. What&#39;s your opinion on the Neocities vs. Nekoweb debate?&lt;/h3&gt;
+&lt;p&gt;Is this still a debate? I don&#39;t host my site on those platforms anymore, but I think that debate is ridiculous. Both of them have their own pros and cons.&lt;/p&gt;
+&lt;h3&gt;29. How much server space would you estimate your main website takes up?&lt;/h3&gt;
+&lt;p&gt;It&#39;s currently 23.4MB&lt;/p&gt;
+&lt;h3&gt;30. Do you keep local backups of your files?&lt;/h3&gt;
+&lt;p&gt;Always.&lt;/p&gt;
+&lt;h3&gt;31. Do you prefer simple or highly visual websites?&lt;/h3&gt;
+&lt;p&gt;I think you could have a little bit of both.&lt;/p&gt;
+&lt;h3&gt;32. Do you stick to certain colors? Do you do that on purpose, or is it your subconscious?&lt;/h3&gt;
+&lt;p&gt;I used to stick with a certain green color (#73F3BB), but now I&#39;m just using Catppuccin.&lt;/p&gt;
+&lt;h3&gt;33. Have you ever thought about quitting? Why?&lt;/h3&gt;
+&lt;p&gt;Numerous times. It was mostly because of the community behind the indie web and how much drama was going around, but I told myself that I shouldn&#39;t get involved nor should I care about it. Other times it was because of other things in my life that was keeping me away from doing this.&lt;/p&gt;
+&lt;h3&gt;34. Do you have many webmaster friends, or is it a solitary hobby?&lt;/h3&gt;
+&lt;p&gt;I don&#39;t know if they would consider me a friend, but I do know a lot of other people in the community that are chill.&lt;/p&gt;
+&lt;h3&gt;35. Do people in your real life know about your website?&lt;/h3&gt;
+&lt;p&gt;The only three people I know in real life can see my website listed in my Discord bio, so they definitely know about it.&lt;/p&gt;
+&lt;h3&gt;36. Do you update your website very often? How often is &amp;quot;very often?&amp;quot;&lt;/h3&gt;
+&lt;p&gt;When I feel like pushing an update on my site, I have a bad habit of checking it locally, so all the pushes are back-to-back until it works lol. Besides that, it&#39;s pretty rare. Maybe once a month or so.&lt;/p&gt;
+&lt;h3&gt;37. And the overall design, do you change that much? Why or why not?&lt;/h3&gt;
+&lt;p&gt;To be honest, I will probably never be happy with the design I&#39;m working with. But people who know me know that I&#39;ve been through maybe 5 different designs within the past year.&lt;/p&gt;
+&lt;h3&gt;38. Is your website more you-focused, hobby-focused, or outside world-focused?&lt;/h3&gt;
+&lt;p&gt;Definitely me, but I&#39;d like to post about my hobbies at some point.&lt;/p&gt;
+&lt;h3&gt;39. Do you do web design professionally?&lt;/h3&gt;
+&lt;p&gt;Hell no.&lt;/p&gt;
+&lt;h3&gt;40. If not, would you like to? And if you&#39;re comfortable answering, what do you do for work?&lt;/h3&gt;
+&lt;p&gt;No.&lt;/p&gt;
+&lt;h3&gt;41. Do you communicate with people by email very much?&lt;/h3&gt;
+&lt;p&gt;Not really, but my &lt;a href=&quot;mailto:me@july.lol&quot;&gt;email&lt;/a&gt; is open.&lt;/p&gt;
+&lt;h3&gt;Life. Some people reject social media and use websites as a replacement. Do you keep social media outside of your website?&lt;/h3&gt;
+&lt;p&gt;Isn&#39;t the indie web a social media in itself? I haven&#39;t rejected big social media sites yet, but I don&#39;t really get influenced by them like other people do.&lt;/p&gt;
+&lt;h3&gt;43. How about instant messengers? Do you use a mainstream one like Discord or Telegram? Or something like Matrix? Do you avoid them?&lt;/h3&gt;
+&lt;p&gt;I use Discord for the most part, but I am so prepared to jump ship if I have to.&lt;/p&gt;
+&lt;h3&gt;44. Do you listen to music while you work on websites? If so, what kinds of artists?&lt;/h3&gt;
+&lt;p&gt;I usually listen to a YouTube video in the background. But, if I am listening to music, it&#39;s most likely Porter Robinson.&lt;/p&gt;
+&lt;h3&gt;45. Do you keep everything you make on one website, or do you have more than one?&lt;/h3&gt;
+&lt;p&gt;For personal stuff, it&#39;s on this site. But I have 2 other sites for other stuff.&lt;/p&gt;
+&lt;h3&gt;46. On a similar note, do you keep to one topic on your site, or many?&lt;/h3&gt;
+&lt;p&gt;I&#39;m not sure what this means. Everything on my site is somewhat about me, so ...one?&lt;/p&gt;
+&lt;h3&gt;47. Do you present your real self, or at least try? Or do you construct a persona on purpose?&lt;/h3&gt;
+&lt;p&gt;A little bit of both. I don&#39;t like sharing my personal life online very much. But I definitely don&#39;t act the same in real life as I do online.&lt;/p&gt;
+&lt;h3&gt;48. Have you ever made a good friend thanks to your website?&lt;/h3&gt;
+&lt;p&gt;No.&lt;/p&gt;
+&lt;h3&gt;49. Are you happy with the way HTML and CSS currently work?&lt;/h3&gt;
+&lt;p&gt;Sure, I don&#39;t see anything wrong with it right now.&lt;/p&gt;
+&lt;h3&gt;50. What are practices that you think people should avoid?&lt;/h3&gt;
+&lt;p&gt;To be &lt;em&gt;very&lt;/em&gt; honest, I really think people should at least &lt;u&gt;try&lt;/u&gt; to make their own website instead of using things like Carrd or Rentry.&lt;/p&gt;
+&lt;h3&gt;51. What about under-utilized practices, or things you think people should do more?&lt;/h3&gt;
+&lt;p&gt;Hosting images on their own web server.&lt;/p&gt;
+&lt;h3&gt;52. Do you use a lot of semantic HTML? Or are you guilty of generic structure?&lt;/h3&gt;
+&lt;p&gt;I mostly use semantic HTML tags, but I have some generic tags here and there.&lt;/p&gt;
+&lt;h3&gt;53. Do you consider different browsers?&lt;/h3&gt;
+&lt;p&gt;I think I&#39;ve switched like 3 or 4 browsers within the past year.&lt;/p&gt;
+&lt;h3&gt;54. Speaking of, what&#39;s your preferred browser?&lt;/h3&gt;
+&lt;p&gt;Right now, I&#39;m using Ungoogled Chromium. I think chromium-based browsers are fine as long as you have a good one that isn&#39;t shoving AI down your throat like some of them do.&lt;/p&gt;
+&lt;h3&gt;55. And what OS are you on?&lt;/h3&gt;
+&lt;p&gt;Windows 11.&lt;/p&gt;
+&lt;h3&gt;56. Do you have a strong opinion on that, or do you just happen to use it?&lt;/h3&gt;
+&lt;p&gt;I&#39;d like to switch to Linux one day, I just can&#39;t right now with the games and stuff I do.&lt;/p&gt;
+&lt;h3&gt;57. Are your websites mobile-friendly?&lt;/h3&gt;
+&lt;p&gt;I try to make them as mobile-friendly as possible.&lt;/p&gt;
+&lt;h3&gt;58. What are your thoughts on autoplay?&lt;/h3&gt;
+&lt;p&gt;I think it&#39;s fine as long as it isn&#39;t blasting my eardrums.&lt;/p&gt;
+&lt;h3&gt;59. What are your thoughts on webrings? Are you in any?&lt;/h3&gt;
+&lt;p&gt;I guess I&#39;m technically in a few, I just haven&#39;t displayed them on my site. I think they&#39;re very cool and a good way to meet cool people.&lt;/p&gt;
+&lt;h3&gt;60. Do you have any web shrines? What do you like to see in that sort of page?&lt;/h3&gt;
+&lt;p&gt;I used to have one for Marble Hornets, but I got rid of that because it was too much for me to maintain. I like seeing shrines that talk about &lt;em&gt;why&lt;/em&gt; they like the topic.&lt;/p&gt;
+&lt;h3&gt;61. Are your websites &amp;quot;cliche,&amp;quot; in your opinion?&lt;/h3&gt;
+&lt;p&gt;This website? Definitely.&lt;/p&gt;
+&lt;h3&gt;62. What is your ideal website? Are you striving for that, or for something else?&lt;/h3&gt;
+&lt;p&gt;I feel like I answered this earlier. I like simple websites that don&#39;t feel like I&#39;m dragging my eyeballs through a bed of nails and I think I&#39;m doing okay on that front so far.&lt;/p&gt;
+&lt;h3&gt;63. Are you an artist? Do you draw or design your own assets?&lt;/h3&gt;
+&lt;p&gt;Definitively speaking, no. But I do photography so that&#39;s technically an art form, so yes? I don&#39;t know.&lt;/p&gt;
+&lt;h3&gt;64. What are your favorite resource sites?&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://layercake.moe/&quot;&gt;Layercake&lt;/a&gt; has a really good resource website @ https://loveberry.nekoweb.org.
+&lt;a href=&quot;https://32bit.cafe/&quot;&gt;32-Bit Cafe&lt;/a&gt; is a great one too.&lt;/p&gt;
+&lt;h3&gt;65. Is there a habit you just can&#39;t get away from no matter how hard you try?&lt;/h3&gt;
+&lt;p&gt;Checking my website locally before pushing lol.&lt;/p&gt;
+&lt;h3&gt;66. What&#39;s your biggest advice for a new webmaster?&lt;/h3&gt;
+&lt;p&gt;Do whatever you want. Don&#39;t add things to your website just because someone else did.&lt;/p&gt;
+&lt;h3&gt;67. Do you keep all your styling in CSS? Or do you hard-code some?&lt;/h3&gt;
+&lt;p&gt;I have a separate stylesheet file, but sometimes I do inline styling for extremely specific things.&lt;/p&gt;
+&lt;h3&gt;68. What do you think of frameset layouts?&lt;/h3&gt;
+&lt;p&gt;I&#39;ve never heard of that before, but after looking it up I don&#39;t see the issue with it? I can change my mind if I&#39;m educated more on it.&lt;/p&gt;
+&lt;h3&gt;69. How about table-based layouts?&lt;/h3&gt;
+&lt;p&gt;I&#39;ve never seen a website that&#39;s table-based, so I can&#39;t give an opinion on it.&lt;/p&gt;
+&lt;h3&gt;70. Do you subscribe to the ideas of &amp;quot;one-column,&amp;quot; &amp;quot;two-column&amp;quot; and &amp;quot;three-column&amp;quot; layouts? Do you use any of these?&lt;/h3&gt;
+&lt;p&gt;Again, I&#39;ve never heard of these.&lt;/p&gt;
+&lt;h3&gt;71. Do you spend longer on the HTML or the CSS?&lt;/h3&gt;
+&lt;p&gt;CSS, for sure.&lt;/p&gt;
+&lt;h3&gt;72. Have you ever made a page with no CSS? It&#39;s useful for your thoughts.&lt;/h3&gt;
+&lt;p&gt;Is it? I guess my 404 page doesn&#39;t have any CSS.&lt;/p&gt;
+&lt;h3&gt;73. Do you ever find yourself making layouts with nothing to put on them? Or do you only make layouts when they need arises?&lt;/h3&gt;
+&lt;p&gt;Only when needed.&lt;/p&gt;
+&lt;h3&gt;74. Would you consider yourself a beginner? Advanced? Somewhere in the middle?&lt;/h3&gt;
+&lt;p&gt;Somewhere in the middle. I&#39;m not an expert on web development, but I&#39;ve learned a ton over the years.&lt;/p&gt;
+&lt;h3&gt;75. Do you have a habit of looking at the source code of websites you visit?&lt;/h3&gt;
+&lt;p&gt;Only when I&#39;m like &amp;quot;how did they do that?&amp;quot;&lt;/p&gt;
+&lt;h3&gt;76. How did YOU learn how to make websites?&lt;/h3&gt;
+&lt;p&gt;Like I mentioned before, I learned how to make a basic website when I was 8 years old. But when I really got into it in 2023, I was looking at people&#39;s source code and deployed the FAFO method.&lt;/p&gt;
+&lt;h3&gt;77. Do you ever force elements to do things they&#39;re not supposed to?&lt;/h3&gt;
+&lt;p&gt;My banner and link backgrounds are not real images. They mimic the dithered effect.&lt;/p&gt;
+&lt;h3&gt;78. Thoughts on floating elements?&lt;/h3&gt;
+&lt;p&gt;They&#39;re there. I don&#39;t know how to answer that lol.&lt;/p&gt;
+&lt;h3&gt;79. When you&#39;re sizing stuff, what do you use first?&lt;/h3&gt;
+&lt;p&gt;Mostly rem or em. Then I use vh for mobile.&lt;/p&gt;
+&lt;h3&gt;80. Do you have a favorite font?&lt;/h3&gt;
+&lt;p&gt;I used to &lt;em&gt;love&lt;/em&gt; VT323. But I like Doto a lot, recently.&lt;/p&gt;
+&lt;h3&gt;81. Would you run a website with another person? How would that work?&lt;/h3&gt;
+&lt;p&gt;Probably not. I&#39;m not a fan of collaborative projects in the first place, so I think it would just be a lot of miscommunication and uncertainty.&lt;/p&gt;
+&lt;h3&gt;82. Do you surf the Web to find new personal websites very often?&lt;/h3&gt;
+&lt;p&gt;Not really, but if I see that someone has a personal site, I check it out.&lt;/p&gt;
+&lt;h3&gt;83. Do you bookmark other people&#39;s websites? How would you feel knowing someone else bookmarked yours?&lt;/h3&gt;
+&lt;p&gt;I don&#39;t, but I think it&#39;d be cool to know that someone bookmarked mine.&lt;/p&gt;
+&lt;h3&gt;84. What do you want people to be most impressed with when they see your website?&lt;/h3&gt;
+&lt;p&gt;I don&#39;t really care much about what people think of my site. Maybe the stuff I&#39;m interested in?&lt;/p&gt;
+&lt;h3&gt;85. Are you interested in technology outside of websites? Do you collect?&lt;/h3&gt;
+&lt;p&gt;I like photography and cameras. But I don&#39;t collect.&lt;/p&gt;
+&lt;h3&gt;86. How often and for how long are you online?&lt;/h3&gt;
+&lt;p&gt;Almost all day every day. It&#39;s a problem.&lt;/p&gt;
+&lt;h3&gt;87. When it comes to your website, who is your target audience?&lt;/h3&gt;
+&lt;p&gt;Anyone, really. D&amp;amp;D players and VR players.&lt;/p&gt;
+&lt;h3&gt;88. Have you ever been interested in XHTML?&lt;/h3&gt;
+&lt;p&gt;I don&#39;t know too much about it, tbh.&lt;/p&gt;
+&lt;h3&gt;89. Do you program in general? Have you ever written a program for use with or on your website, not counting simple JavaScript?&lt;/h3&gt;
+&lt;p&gt;I&#39;ve never programmed anything for my own website, but I&#39;m currently learning C# for VRChat/Unity. I&#39;m making a VRChat world for D&amp;amp;D that uses Udon# (VRChat&#39;s scripting language based on C#).&lt;/p&gt;
+&lt;h3&gt;90. Speaking of programs that help you make websites, what do you think of static site generators? Have you ever used one?&lt;/h3&gt;
+&lt;p&gt;They&#39;re difficult to learn, in my opinion. But I&#39;m using 11ty for this blog.&lt;/p&gt;
+&lt;h3&gt;91. Do you keep a hitcounter? Why or why not?&lt;/h3&gt;
+&lt;p&gt;No, I don&#39;t. I don&#39;t care much about analytics.&lt;/p&gt;
+&lt;h3&gt;92. Do you frequent forums? Which ones?&lt;/h3&gt;
+&lt;p&gt;(RIP NekoForum, again.)
+I used to in the late 2000s, and I used to frequent MelonLand. But I don&#39;t go on forums much anymore.&lt;/p&gt;
+&lt;h3&gt;93. Do you write your own page content directly into the editor, or do you prepare it elsewhere, like a text document or Word document?&lt;/h3&gt;
+&lt;p&gt;When I&#39;m home, it&#39;s directly into the editor. But if I&#39;m at work, I use Affine and just copy-paste when I get home.&lt;/p&gt;
+&lt;h3&gt;94. Do you think your appear cool to others? A more accurate answer now: do other people ever say you&#39;re cool?&lt;/h3&gt;
+&lt;p&gt;Again, I don&#39;t really care what others think of me. However, there have been people who said I am.&lt;/p&gt;
+&lt;h3&gt;95. Are you embarrassed of your old work? Have you ever deleted everything out of shame?&lt;/h3&gt;
+&lt;p&gt;Yeah, definitely my first website on Neocities. I used a template that looked like ass. And I&#39;ve deleted everything before, but not out of shame.&lt;/p&gt;
+&lt;h3&gt;96. Would you close down your website if you couldn&#39;t update it, or would you leave an archive?&lt;/h3&gt;
+&lt;p&gt;I&#39;d leave an archive, for sure. But I don&#39;t think I&#39;d ever close it down, unless I forget about it and don&#39;t pay for the domain.&lt;/p&gt;
+&lt;h3&gt;97. Do you reveal a lot about yourself on your website? Or are you more secretive?&lt;/h3&gt;
+&lt;p&gt;I try not to reveal a lot.&lt;/p&gt;
+&lt;h3&gt;98. Are you willing to reveal who your best online friend is, and/or if they have a website?&lt;/h3&gt;
+&lt;p&gt;My best friend is my partner, but she doesn&#39;t have a website yet.&lt;/p&gt;
+&lt;h3&gt;99. And do you optimize the images on your website?&lt;/h3&gt;
+&lt;p&gt;I try to use webm when I can.&lt;/p&gt;
+&lt;h3&gt;100. How do you feel after answering 100 questions? ...other than exhausted.&lt;/h3&gt;
+&lt;p&gt;It was nice to reflect on stuff, but yeah ... my fingers hurt.&lt;/p&gt;
 </content>
   </entry>
 </feed>

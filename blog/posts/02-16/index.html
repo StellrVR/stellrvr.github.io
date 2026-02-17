@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Webmaster Questions - july's blog</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="alternate" type="application/atom+xml" title="july's blog" href="/feed.xml">
+
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Blog-specific styles */
+        .blog-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .blog-header {
+            background: var(--ctp-base);
+            border: 1px solid var(--ctp-surface1);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 8px 40px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(205,214,244,0.02),
+                inset 0 1px 0 rgba(205,214,244,0.04);
+        }
+
+        .blog-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--ctp-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .blog-nav a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--ctp-surface1);
+            background: var(--ctp-mantle);
+            color: var(--ctp-subtext0);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .blog-nav a:hover,
+        .blog-nav a.active {
+            border-color: var(--ctp-mauve);
+            color: var(--ctp-text);
+            transform: translateY(-2px);
+        }
+
+        .content-card {
+            background: var(--ctp-base);
+            border: 1px solid var(--ctp-surface1);
+            border-radius: 18px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 8px 40px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(205,214,244,0.02),
+                inset 0 1px 0 rgba(205,214,244,0.04);
+        }
+
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .post-preview {
+            background: var(--ctp-mantle);
+            border: 1px solid var(--ctp-surface0);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .post-preview:hover {
+            border-color: var(--ctp-surface2);
+            transform: translateY(-2px);
+        }
+
+        .post-preview h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--ctp-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-preview h2 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .post-preview h2 a:hover {
+            color: var(--ctp-mauve);
+        }
+
+        .post-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--ctp-overlay1);
+            margin-bottom: 0.75rem;
+        }
+
+        .post-excerpt {
+            font-size: 0.9rem;
+            color: var(--ctp-subtext0);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .post-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--ctp-text);
+        }
+
+        .post-content h1,
+        .post-content h2,
+        .post-content h3 {
+            font-family: 'Space Mono', monospace;
+            color: var(--ctp-text);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content h1 { font-size: 1.8rem; }
+        .post-content h2 { font-size: 1.4rem; }
+        .post-content h3 { font-size: 1.1rem; }
+
+        .post-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .post-content a {
+            color: var(--ctp-mauve);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--ctp-mauve);
+            transition: color 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--ctp-lavender);
+        }
+
+        .post-content code {
+            font-family: 'Space Mono', monospace;
+            background: var(--ctp-mantle);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--ctp-mauve);
+        }
+
+        .post-content pre {
+            background: var(--ctp-mantle);
+            border: 1px solid var(--ctp-surface0);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.2rem;
+        }
+
+        .post-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .post-content ul,
+        .post-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content blockquote {
+            border-left: 3px solid var(--ctp-mauve);
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 1.2rem;
+            color: var(--ctp-subtext0);
+            font-style: italic;
+        }
+
+        .tag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .tag-card {
+            background: var(--ctp-mantle);
+            border: 1px solid var(--ctp-surface0);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .tag-card:hover {
+            border-color: var(--ctp-surface2);
+            transform: translateY(-2px);
+        }
+
+        .tag-card a {
+            text-decoration: none;
+            color: var(--ctp-text);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .tag-count {
+            font-size: 0.7rem;
+            color: var(--ctp-overlay1);
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .blog-header,
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .blog-title {
+                font-size: 1.5rem;
+            }
+
+            .post-content h1 { font-size: 1.5rem; }
+            .post-content h2 { font-size: 1.2rem; }
+            .post-content h3 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-fixed">
+    <img src="/assets/bg-image.png" id="background-img" alt="background image">
+</div>
+
+<div class="blog-container">
+    <div class="blog-header">
+        <h1 class="blog-title">100 Webmaster Questions</h1>
+        <p style="color: var(--ctp-subtext0); font-size: 0.9rem;">thoughts, projects, and whatever else</p>
+        <nav class="blog-nav">
+            <a href="https://july.lol">← home</a>
+            <a href="/blog/">all posts</a>
+            <a href="/blog/tags/">tags</a>
+            <a href="/blog/feed.xml">rss feed</a>
+        </nav>
+    </div>
+
+    
+<div class="content-card">
+    <article>
+        <header style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--ctp-surface0);">
+            <h1 style="font-family: 'Space Mono', monospace; font-size: 2rem; color: var(--ctp-text); margin-bottom: 0.5rem;">
+                100 Webmaster Questions
+            </h1>
+            <div class="post-meta">
+                <span>February 15, 2026</span>
+                
+                <span style="margin: 0 0.5rem; color: var(--ctp-surface2);">//</span>
+                <span>july</span>
+                
+            </div>
+            
+            <div class="post-tags" style="margin-top: 1rem;">
+                
+                <a href="/blog/tags/normal/" class="tag tag-accent" style="text-decoration: none;">normal</a>
+                
+                <a href="/blog/tags/qna/" class="tag tag-accent" style="text-decoration: none;">qna</a>
+                
+            </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>I saw someone posted this questionnaire on their site so I decided to do it myself.
+The original can be found <a href="https://mouseling.net/100webmaster">here</a>.</p>
+<h3>1. Please introduce yourself.</h3>
+<p>My name is July, or Stellr on other platforms. I'm a big fan of space, retro/cassette futurism, Dungeons &amp; Dragons, Porter Robinson, and gibbons. I play a lot of video games (especially VR), I like to code sometimes, I listen to lots of music, and I love spending time with my wonderful partner.</p>
+<h3>2. How long have you been making websites?</h3>
+<p>I remember making my first website when I was around 8 years old or so (2007), but I didn't get super into it until around 2023.</p>
+<h3>3. And what got you into the hobby?</h3>
+<p>I had met someone who had a friend and that friend had their website listed in their Discord bio. Out of curiosity, I checked it out and they had &quot;Yesterwebring&quot; listed in their footer. From there, it was just a rabbit hole of finding cool &quot;old web&quot; sites and so I just decided I wanted to do it myself.</p>
+<h3>4. What kind of website are you most interested in?</h3>
+<p>I really like personal websites that aren't too flashy or overcomplicated. While I still believe that anyone should make their website however they want to, very simple sites are the ones that make me want to check them out more.</p>
+<h3>5. What's your workflow? Do you plan your websites our thoroughly or do you come up with the design as you go along?</h3>
+<p>I usually just see a design aesthetic, regardless if it's a website or not, and I think &quot;I should try and do something like that.&quot; I know that's not very original, but is there really any originality nowadays?</p>
+<h3>6. Please link your biggest inspirations.</h3>
+<p><a href="https://twitter.com/Wys_teriaFlower">My lovely partner</a></p>
+<h3>7. What's your favorite part about making websites?</h3>
+<p>I think trying to style the site with CSS is kinda fun. Just throwing shit at the wall and seeing what sticks.</p>
+<h3>8. And the thing you struggle with the most?</h3>
+<p>More recently? Getting 11ty to work for this blog.
+But overall, probably learning JavaScript.</p>
+<h3>9. Do you keep the same layout on all of your pages? Or do you use different ones?</h3>
+<p>I try to keep it consistent on all of my pages.</p>
+<h3>10. How confident are you with CSS?</h3>
+<p>I'm a lot more confident about CSS now than I was a year or so ago.</p>
+<h3>11. Do you know how to correctly use &lt;dl&gt;?</h3>
+<p>No, but I'll look into it. I think it's a good semantic way of replacing lists? But that's all I know.</p>
+<h3>12. What is your favorite HTML element?</h3>
+<p>Either &lt;section&gt; or &lt;footer&gt;.</p>
+<h3>13. If you're making a new web page from scratch, what is the first thing you do?</h3>
+<p>Pasting my boilerplate, I guess.</p>
+<h3>14. Do you know JavaScript?</h3>
+<p>Not <em>everything,</em> but I've been learning for a while now.</p>
+<h3>15. How about PHP?</h3>
+<p>I tried learning PHP a while ago when I made NekoForum (RIP), but it was too much for my small potato chip brain.</p>
+<h3>16. Does your website have a theme that you stick to?</h3>
+<p>Anyone who knows me will say no lol. It used to be very terminal-esque (think 1970's kind of tech), but I've grown to enjoy more modern stuff more recently.</p>
+<h3>17. Are you more focused on content or design?</h3>
+<p>Definitely design.</p>
+<h3>18. Do you own a domain name?</h3>
+<p>Yes, three actually.</p>
+<h3>19. What do you think of nostalgia-focused or &quot;retro&quot; websites?</h3>
+<p>Again, I believe people should be allowed to do whatever they want. However, I think it's a little strange for people to say that they &quot;miss&quot; the early 2000s era of the web when they either weren't around back then or they were way too young to understand it.</p>
+<h3>20. Is your HTML valid? Do you even check?</h3>
+<p>I don't check on a regular basis, but I did recently and it said it's valid.</p>
+<h3>21. What is your opinion on buttons and banners?</h3>
+<p>This implies there's negative connotation to them lol. I love them.</p>
+<h3>22. What do you think of button walls in particular?</h3>
+<p>Again, I love them. Do people really have a problem with this?</p>
+<h3>23. If you started over again, would you make something similar or completely different?</h3>
+<p>I'd probably make something similar but not the exact same. I'd most likely experiment with the layout, but keep the overall design.</p>
+<h3>24. Are you envious of other people's websites?</h3>
+<p>Yes and no. I think some people's websites are very cool, and I'd love to know how they did certain things, but I also don't really put much thought into it.</p>
+<h3>25. What text editor do you use?</h3>
+<p>Right now, I use JetBrains WebStorm. But I used to use VSCodium.</p>
+<h3>26. Why do you use that one?</h3>
+<p>It saves me a ton of time with its autofill feature when writing CSS or JS.</p>
+<h3>27. Do you host your image files on your web server, or on another host?</h3>
+<p>I host my own image files and I firmly believe that you shouldn't host your images on another host simply because of link expiry or potential shut-downs from that host.</p>
+<h3>28. What's your opinion on the Neocities vs. Nekoweb debate?</h3>
+<p>Is this still a debate? I don't host my site on those platforms anymore, but I think that debate is ridiculous. Both of them have their own pros and cons.</p>
+<h3>29. How much server space would you estimate your main website takes up?</h3>
+<p>It's currently 23.4MB</p>
+<h3>30. Do you keep local backups of your files?</h3>
+<p>Always.</p>
+<h3>31. Do you prefer simple or highly visual websites?</h3>
+<p>I think you could have a little bit of both.</p>
+<h3>32. Do you stick to certain colors? Do you do that on purpose, or is it your subconscious?</h3>
+<p>I used to stick with a certain green color (#73F3BB), but now I'm just using Catppuccin.</p>
+<h3>33. Have you ever thought about quitting? Why?</h3>
+<p>Numerous times. It was mostly because of the community behind the indie web and how much drama was going around, but I told myself that I shouldn't get involved nor should I care about it. Other times it was because of other things in my life that was keeping me away from doing this.</p>
+<h3>34. Do you have many webmaster friends, or is it a solitary hobby?</h3>
+<p>I don't know if they would consider me a friend, but I do know a lot of other people in the community that are chill.</p>
+<h3>35. Do people in your real life know about your website?</h3>
+<p>The only three people I know in real life can see my website listed in my Discord bio, so they definitely know about it.</p>
+<h3>36. Do you update your website very often? How often is &quot;very often?&quot;</h3>
+<p>When I feel like pushing an update on my site, I have a bad habit of checking it locally, so all the pushes are back-to-back until it works lol. Besides that, it's pretty rare. Maybe once a month or so.</p>
+<h3>37. And the overall design, do you change that much? Why or why not?</h3>
+<p>To be honest, I will probably never be happy with the design I'm working with. But people who know me know that I've been through maybe 5 different designs within the past year.</p>
+<h3>38. Is your website more you-focused, hobby-focused, or outside world-focused?</h3>
+<p>Definitely me, but I'd like to post about my hobbies at some point.</p>
+<h3>39. Do you do web design professionally?</h3>
+<p>Hell no.</p>
+<h3>40. If not, would you like to? And if you're comfortable answering, what do you do for work?</h3>
+<p>No.</p>
+<h3>41. Do you communicate with people by email very much?</h3>
+<p>Not really, but my <a href="mailto:me@july.lol">email</a> is open.</p>
+<h3>Life. Some people reject social media and use websites as a replacement. Do you keep social media outside of your website?</h3>
+<p>Isn't the indie web a social media in itself? I haven't rejected big social media sites yet, but I don't really get influenced by them like other people do.</p>
+<h3>43. How about instant messengers? Do you use a mainstream one like Discord or Telegram? Or something like Matrix? Do you avoid them?</h3>
+<p>I use Discord for the most part, but I am so prepared to jump ship if I have to.</p>
+<h3>44. Do you listen to music while you work on websites? If so, what kinds of artists?</h3>
+<p>I usually listen to a YouTube video in the background. But, if I am listening to music, it's most likely Porter Robinson.</p>
+<h3>45. Do you keep everything you make on one website, or do you have more than one?</h3>
+<p>For personal stuff, it's on this site. But I have 2 other sites for other stuff.</p>
+<h3>46. On a similar note, do you keep to one topic on your site, or many?</h3>
+<p>I'm not sure what this means. Everything on my site is somewhat about me, so ...one?</p>
+<h3>47. Do you present your real self, or at least try? Or do you construct a persona on purpose?</h3>
+<p>A little bit of both. I don't like sharing my personal life online very much. But I definitely don't act the same in real life as I do online.</p>
+<h3>48. Have you ever made a good friend thanks to your website?</h3>
+<p>No.</p>
+<h3>49. Are you happy with the way HTML and CSS currently work?</h3>
+<p>Sure, I don't see anything wrong with it right now.</p>
+<h3>50. What are practices that you think people should avoid?</h3>
+<p>To be <em>very</em> honest, I really think people should at least <u>try</u> to make their own website instead of using things like Carrd or Rentry.</p>
+<h3>51. What about under-utilized practices, or things you think people should do more?</h3>
+<p>Hosting images on their own web server.</p>
+<h3>52. Do you use a lot of semantic HTML? Or are you guilty of generic structure?</h3>
+<p>I mostly use semantic HTML tags, but I have some generic tags here and there.</p>
+<h3>53. Do you consider different browsers?</h3>
+<p>I think I've switched like 3 or 4 browsers within the past year.</p>
+<h3>54. Speaking of, what's your preferred browser?</h3>
+<p>Right now, I'm using Ungoogled Chromium. I think chromium-based browsers are fine as long as you have a good one that isn't shoving AI down your throat like some of them do.</p>
+<h3>55. And what OS are you on?</h3>
+<p>Windows 11.</p>
+<h3>56. Do you have a strong opinion on that, or do you just happen to use it?</h3>
+<p>I'd like to switch to Linux one day, I just can't right now with the games and stuff I do.</p>
+<h3>57. Are your websites mobile-friendly?</h3>
+<p>I try to make them as mobile-friendly as possible.</p>
+<h3>58. What are your thoughts on autoplay?</h3>
+<p>I think it's fine as long as it isn't blasting my eardrums.</p>
+<h3>59. What are your thoughts on webrings? Are you in any?</h3>
+<p>I guess I'm technically in a few, I just haven't displayed them on my site. I think they're very cool and a good way to meet cool people.</p>
+<h3>60. Do you have any web shrines? What do you like to see in that sort of page?</h3>
+<p>I used to have one for Marble Hornets, but I got rid of that because it was too much for me to maintain. I like seeing shrines that talk about <em>why</em> they like the topic.</p>
+<h3>61. Are your websites &quot;cliche,&quot; in your opinion?</h3>
+<p>This website? Definitely.</p>
+<h3>62. What is your ideal website? Are you striving for that, or for something else?</h3>
+<p>I feel like I answered this earlier. I like simple websites that don't feel like I'm dragging my eyeballs through a bed of nails and I think I'm doing okay on that front so far.</p>
+<h3>63. Are you an artist? Do you draw or design your own assets?</h3>
+<p>Definitively speaking, no. But I do photography so that's technically an art form, so yes? I don't know.</p>
+<h3>64. What are your favorite resource sites?</h3>
+<p><a href="https://layercake.moe">Layercake</a> has a really good resource website @ https://loveberry.nekoweb.org.
+<a href="https://32bit.cafe">32-Bit Cafe</a> is a great one too.</p>
+<h3>65. Is there a habit you just can't get away from no matter how hard you try?</h3>
+<p>Checking my website locally before pushing lol.</p>
+<h3>66. What's your biggest advice for a new webmaster?</h3>
+<p>Do whatever you want. Don't add things to your website just because someone else did.</p>
+<h3>67. Do you keep all your styling in CSS? Or do you hard-code some?</h3>
+<p>I have a separate stylesheet file, but sometimes I do inline styling for extremely specific things.</p>
+<h3>68. What do you think of frameset layouts?</h3>
+<p>I've never heard of that before, but after looking it up I don't see the issue with it? I can change my mind if I'm educated more on it.</p>
+<h3>69. How about table-based layouts?</h3>
+<p>I've never seen a website that's table-based, so I can't give an opinion on it.</p>
+<h3>70. Do you subscribe to the ideas of &quot;one-column,&quot; &quot;two-column&quot; and &quot;three-column&quot; layouts? Do you use any of these?</h3>
+<p>Again, I've never heard of these.</p>
+<h3>71. Do you spend longer on the HTML or the CSS?</h3>
+<p>CSS, for sure.</p>
+<h3>72. Have you ever made a page with no CSS? It's useful for your thoughts.</h3>
+<p>Is it? I guess my 404 page doesn't have any CSS.</p>
+<h3>73. Do you ever find yourself making layouts with nothing to put on them? Or do you only make layouts when they need arises?</h3>
+<p>Only when needed.</p>
+<h3>74. Would you consider yourself a beginner? Advanced? Somewhere in the middle?</h3>
+<p>Somewhere in the middle. I'm not an expert on web development, but I've learned a ton over the years.</p>
+<h3>75. Do you have a habit of looking at the source code of websites you visit?</h3>
+<p>Only when I'm like &quot;how did they do that?&quot;</p>
+<h3>76. How did YOU learn how to make websites?</h3>
+<p>Like I mentioned before, I learned how to make a basic website when I was 8 years old. But when I really got into it in 2023, I was looking at people's source code and deployed the FAFO method.</p>
+<h3>77. Do you ever force elements to do things they're not supposed to?</h3>
+<p>My banner and link backgrounds are not real images. They mimic the dithered effect.</p>
+<h3>78. Thoughts on floating elements?</h3>
+<p>They're there. I don't know how to answer that lol.</p>
+<h3>79. When you're sizing stuff, what do you use first?</h3>
+<p>Mostly rem or em. Then I use vh for mobile.</p>
+<h3>80. Do you have a favorite font?</h3>
+<p>I used to <em>love</em> VT323. But I like Doto a lot, recently.</p>
+<h3>81. Would you run a website with another person? How would that work?</h3>
+<p>Probably not. I'm not a fan of collaborative projects in the first place, so I think it would just be a lot of miscommunication and uncertainty.</p>
+<h3>82. Do you surf the Web to find new personal websites very often?</h3>
+<p>Not really, but if I see that someone has a personal site, I check it out.</p>
+<h3>83. Do you bookmark other people's websites? How would you feel knowing someone else bookmarked yours?</h3>
+<p>I don't, but I think it'd be cool to know that someone bookmarked mine.</p>
+<h3>84. What do you want people to be most impressed with when they see your website?</h3>
+<p>I don't really care much about what people think of my site. Maybe the stuff I'm interested in?</p>
+<h3>85. Are you interested in technology outside of websites? Do you collect?</h3>
+<p>I like photography and cameras. But I don't collect.</p>
+<h3>86. How often and for how long are you online?</h3>
+<p>Almost all day every day. It's a problem.</p>
+<h3>87. When it comes to your website, who is your target audience?</h3>
+<p>Anyone, really. D&amp;D players and VR players.</p>
+<h3>88. Have you ever been interested in XHTML?</h3>
+<p>I don't know too much about it, tbh.</p>
+<h3>89. Do you program in general? Have you ever written a program for use with or on your website, not counting simple JavaScript?</h3>
+<p>I've never programmed anything for my own website, but I'm currently learning C# for VRChat/Unity. I'm making a VRChat world for D&amp;D that uses Udon# (VRChat's scripting language based on C#).</p>
+<h3>90. Speaking of programs that help you make websites, what do you think of static site generators? Have you ever used one?</h3>
+<p>They're difficult to learn, in my opinion. But I'm using 11ty for this blog.</p>
+<h3>91. Do you keep a hitcounter? Why or why not?</h3>
+<p>No, I don't. I don't care much about analytics.</p>
+<h3>92. Do you frequent forums? Which ones?</h3>
+<p>(RIP NekoForum, again.)
+I used to in the late 2000s, and I used to frequent MelonLand. But I don't go on forums much anymore.</p>
+<h3>93. Do you write your own page content directly into the editor, or do you prepare it elsewhere, like a text document or Word document?</h3>
+<p>When I'm home, it's directly into the editor. But if I'm at work, I use Affine and just copy-paste when I get home.</p>
+<h3>94. Do you think your appear cool to others? A more accurate answer now: do other people ever say you're cool?</h3>
+<p>Again, I don't really care what others think of me. However, there have been people who said I am.</p>
+<h3>95. Are you embarrassed of your old work? Have you ever deleted everything out of shame?</h3>
+<p>Yeah, definitely my first website on Neocities. I used a template that looked like ass. And I've deleted everything before, but not out of shame.</p>
+<h3>96. Would you close down your website if you couldn't update it, or would you leave an archive?</h3>
+<p>I'd leave an archive, for sure. But I don't think I'd ever close it down, unless I forget about it and don't pay for the domain.</p>
+<h3>97. Do you reveal a lot about yourself on your website? Or are you more secretive?</h3>
+<p>I try not to reveal a lot.</p>
+<h3>98. Are you willing to reveal who your best online friend is, and/or if they have a website?</h3>
+<p>My best friend is my partner, but she doesn't have a website yet.</p>
+<h3>99. And do you optimize the images on your website?</h3>
+<p>I try to use webm when I can.</p>
+<h3>100. How do you feel after answering 100 questions? ...other than exhausted.</h3>
+<p>It was nice to reflect on stuff, but yeah ... my fingers hurt.</p>
+
+        </div>
+
+        <footer style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--ctp-surface0);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="/blog/" style="font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--ctp-mauve); text-decoration: none;">
+                    ← back to all posts
+                </a>
+                
+                <div style="font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--ctp-overlay1);">
+                    tagged with:
+                    
+                    <a href="/blog/tags/normal/" style="color: var(--ctp-subtext0); text-decoration: none; margin-left: 0.5rem;">normal</a>
+                    
+                    <a href="/blog/tags/qna/" style="color: var(--ctp-subtext0); text-decoration: none; margin-left: 0.5rem;">qna</a>
+                    
+                </div>
+                
+            </div>
+        </footer>
+    </article>
+</div>
+
+</div>
+
+<script src="/script.js"></script>
+</body>
+</html>
