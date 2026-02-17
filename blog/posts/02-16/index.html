@@ -1146,7 +1146,7 @@ I used to in the late 2000s, and I used to frequent MelonLand. But I don't go on
       <div class="comment-item ${pending ? 'comment-pending' : ''}" id="ci-${c.id}">
         <div class="comment-bubble">
           <div class="comment-meta">
-            ${c.is_webmaster ? '<span class="webmaster-badge">⭐ webmaster</span>' : ''}
+            ${c.is_webmaster ? '<span class="webmaster-badge"><i class="fa-regular fa-star"></i></span>' : ''}
             ${pending && modMode ? '<span class="pending-badge">pending</span>' : ''}
             <span class="comment-author">${esc(c.name)}</span>
             ${websiteHtml}
@@ -1171,7 +1171,7 @@ I used to in the late 2000s, and I used to frequent MelonLand. But I don't go on
             <textarea class="comment-input comment-textarea reply-textarea" id="rc-${c.id}" placeholder="write a reply..." maxlength="5000"></textarea>
             <div class="reply-form-actions">
               <span style="font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--ctp-overlay0);margin-right:auto;" id="rcc-${c.id}">0 / 5000</span>
-              <button class="emote-toggle-btn" id="reb-${c.id}" type="button">😊</button>
+              <button class="emote-toggle-btn" id="reb-${c.id}" type="button"><i class="fa-regular fa-face-smile-beam"></i></button>
               <button class="cancel-reply-btn" onclick="closeReplyForm('${c.id}')">cancel</button>
               <button class="post-reply-btn" onclick="submitReply('${c.id}')">post reply</button>
             </div>
@@ -1242,7 +1242,6 @@ I used to in the late 2000s, and I used to frequent MelonLand. But I don't go on
       if (error) throw error;
       let rows = approved || [];
 
-      // In mod mode, merge in pending comments for this post
       if (modMode && adminKey) {
         const { data: pending } = await db.rpc('get_pending_comments', {
           p_admin_key: adminKey,
