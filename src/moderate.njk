@@ -1,0 +1,208 @@
+---
+layout: layout.njk
+title: moderation
+description: comment moderation panel
+permalink: /moderate/
+---
+
+<div class="content-card">
+
+  <div style="font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ctp-overlay0); margin-bottom:1.5rem;">
+    ⚡ comment moderation
+  </div>
+
+  <div id="mod-login-form">
+    <p style="font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--ctp-subtext0); margin-bottom:1rem;">
+      enter your passphrase to access moderation
+    </p>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+      <input type="password" id="mod-key-input" placeholder="passphrase"
+        style="background:var(--ctp-mantle); border:1px solid var(--ctp-surface1); border-radius:8px;
+               padding:0.5rem 0.75rem; color:var(--ctp-text); font-family:'DM Sans',sans-serif;
+               font-size:0.85rem; outline:none; width:260px; box-sizing:border-box;">
+      <button id="mod-login-btn"
+        style="font-family:'Space Mono',monospace; font-size:0.72rem; background:var(--ctp-mantle);
+               border:1px solid var(--ctp-mauve); border-radius:8px; color:var(--ctp-mauve);
+               padding:0.4rem 1rem; cursor:pointer;">
+        unlock
+      </button>
+    </div>
+    <div id="mod-login-status" style="font-family:'Space Mono',monospace; font-size:0.68rem;
+         margin-top:0.5rem; color:var(--ctp-red); display:none;">
+      incorrect passphrase
+    </div>
+  </div>
+
+  <div id="mod-panel" style="display:none;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+                gap:0.5rem; margin-bottom:1.5rem;">
+      <span style="font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--ctp-green);">
+        ✓ authenticated as webmaster
+      </span>
+      <button id="mod-logout"
+        style="font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--ctp-red);
+               background:none; border:none; cursor:pointer; text-decoration:underline;">
+        log out
+      </button>
+    </div>
+
+    <div id="pending-count" style="font-family:'Space Mono',monospace; font-size:0.75rem;
+         color:var(--ctp-subtext0); margin-bottom:1.25rem;"></div>
+
+    <div id="pending-list"></div>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+
+  const SUPABASE_URL      = 'https://uursjzoynluaqpyvtdwl.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1cnNqem95bmx1YXFweXZ0ZHdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjU5NzAsImV4cCI6MjA4NjkwMTk3MH0.OIrM2kt-gxDyJqqNSUV0m0jAIuh3YIGzDSseNi5qxHw';
+
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let adminKey = sessionStorage.getItem('blogAdminKey') || null;
+
+  function esc(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+  }
+
+  function fmtDate(str) {
+    return new Date(str).toLocaleDateString('en-US', {
+      year:'numeric', month:'short', day:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    });
+  }
+
+  async function loadPending() {
+    const list  = document.getElementById('pending-list');
+    const count = document.getElementById('pending-count');
+    list.innerHTML = '<p style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--ctp-overlay0);">loading...</p>';
+
+    try {
+      const { data, error } = await db.rpc('get_pending_comments', {
+        p_admin_key: adminKey
+      });
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        count.textContent = 'no pending comments — all caught up!';
+        list.innerHTML = '';
+        return;
+      }
+
+      count.textContent = `${data.length} pending comment${data.length === 1 ? '' : 's'}`;
+
+      list.innerHTML = data.map(c => `
+        <div id="mod-c-${c.id}" style="background:var(--ctp-mantle);
+          border:1px solid color-mix(in srgb, var(--ctp-yellow) 40%, transparent);
+          border-radius:10px; padding:1rem; margin-bottom:0.85rem;">
+          <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+            <span style="font-family:'Space Mono',monospace; font-size:0.75rem; font-weight:700; color:var(--ctp-text);">
+              ${esc(c.name)}
+            </span>
+            ${c.website ? `<a href="${esc(c.website)}" target="_blank" rel="noopener"
+              style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--ctp-blue);text-decoration:none;">${esc(c.website)}</a>` : ''}
+            <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--ctp-overlay0);margin-left:auto;">
+              ${fmtDate(c.created_at)}
+            </span>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--ctp-overlay0);margin-bottom:0.5rem;">
+            post: <span style="color:var(--ctp-subtext0);">${esc(c.post_id)}</span>
+            ${c.parent_id ? `<span style="margin-left:0.5rem;">↩ reply to comment</span>` : ''}
+          </div>
+          <div style="font-size:0.85rem;color:var(--ctp-subtext1);line-height:1.6;
+               white-space:pre-wrap;word-break:break-word;margin-bottom:0.75rem;">
+            ${esc(c.content)}
+          </div>
+          <div style="display:flex;gap:0.5rem;">
+            <button onclick="approveComment('${c.id}')"
+              style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--ctp-green);
+                     background:color-mix(in srgb,var(--ctp-green) 10%,var(--ctp-base));
+                     border:1px solid color-mix(in srgb,var(--ctp-green) 30%,transparent);
+                     border-radius:6px;padding:0.3rem 0.75rem;cursor:pointer;">
+              ✓ approve
+            </button>
+            <button onclick="deleteComment('${c.id}')"
+              style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--ctp-red);
+                     background:color-mix(in srgb,var(--ctp-red) 10%,var(--ctp-base));
+                     border:1px solid color-mix(in srgb,var(--ctp-red) 30%,transparent);
+                     border-radius:6px;padding:0.3rem 0.75rem;cursor:pointer;">
+              ✗ delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+    } catch (err) {
+      console.error(err);
+      list.innerHTML = '<p style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--ctp-red);">failed to load comments</p>';
+    }
+  }
+
+  window.approveComment = async function (id) {
+    try {
+      await db.rpc('approve_comment', { p_comment_id: id, p_admin_key: adminKey });
+      document.getElementById('mod-c-' + id).remove();
+      await loadPending();
+    } catch (err) { console.error(err); alert('Failed to approve.'); }
+  };
+
+  window.deleteComment = async function (id) {
+    if (!confirm('Delete this comment and all its replies?')) return;
+    try {
+      await db.rpc('delete_comment_admin', { p_comment_id: id, p_admin_key: adminKey });
+      document.getElementById('mod-c-' + id).remove();
+      await loadPending();
+    } catch (err) { console.error(err); alert('Failed to delete.'); }
+  };
+
+  function showPanel() {
+    document.getElementById('mod-login-form').style.display = 'none';
+    document.getElementById('mod-panel').style.display      = 'block';
+    loadPending();
+  }
+
+  document.getElementById('mod-login-btn').addEventListener('click', async function () {
+    const key = document.getElementById('mod-key-input').value;
+    if (!key) return;
+
+    const { error } = await db.rpc('get_pending_comments', { p_admin_key: key });
+
+    if (error) {
+      document.getElementById('mod-login-status').style.display = 'block';
+      return;
+    }
+
+    sessionStorage.setItem('blogAdminKey', key);
+    adminKey = key;
+    document.getElementById('mod-login-status').style.display = 'none';
+    showPanel();
+  });
+
+  document.getElementById('mod-key-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('mod-login-btn').click();
+  });
+
+  document.getElementById('mod-logout').addEventListener('click', function () {
+    sessionStorage.removeItem('blogAdminKey');
+    adminKey = null;
+    document.getElementById('mod-panel').style.display      = 'none';
+    document.getElementById('mod-login-form').style.display = 'block';
+    document.getElementById('mod-key-input').value = '';
+  });
+
+  // Auto-login if session exists
+  if (adminKey) showPanel();
+
+})();
+</script>
