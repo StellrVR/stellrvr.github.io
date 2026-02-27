@@ -296,11 +296,32 @@ function initDitherBackground(canvas, opts) {
         });
     }
 
+    // ── color state (lerps smoothly between colors on cycle) ────────────
+    let currentColor = [...opts.waveColor];
+    let targetColor  = [...opts.waveColor];
+    let lerpT = 1.0;
+
+    function setWaveColor(rgb) {
+        // snapshot the in-progress lerp position as the new start
+        currentColor = currentColor.map((v, i) => v + (targetColor[i] - v) * Math.min(lerpT, 1.0));
+        targetColor  = rgb;
+        lerpT = 0.0;
+    }
+
     // ── render loop ───────────────────────────────────────────────────────
     let start = performance.now();
     function render() {
         const t = (performance.now() - start) / 1000;
         const w = canvas.width, h = canvas.height;
+
+        // smooth color lerp (smoothstep, ~40 frames)
+        if (lerpT < 1.0) {
+            lerpT = Math.min(lerpT + 0.025, 1.0);
+            const ease = lerpT * lerpT * (3.0 - 2.0 * lerpT);
+            const lerped = currentColor.map((v, i) => v + (targetColor[i] - v) * ease);
+            gl.useProgram(waveProg);
+            gl.uniform3fv(wU.waveColor, lerped);
+        }
 
         // — Pass 1: wave → FBO —
         gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
@@ -327,6 +348,8 @@ function initDitherBackground(canvas, opts) {
         requestAnimationFrame(render);
     }
     render();
+
+    return { setWaveColor };
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -621,9 +644,9 @@ async function fetchLanyardStatus() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Init WebGL dither background — react-bits Dither port, Catppuccin mauve wave
+    // Init WebGL dither background — react-bits Dither port
     const ditherBgCanvas = document.getElementById('dither-bg');
-    if (ditherBgCanvas) initDitherBackground(ditherBgCanvas, {
+    const ditherBg = initDitherBackground(ditherBgCanvas, {
         waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
         colorNum:               4.0,
         pixelSize:              2.0,
@@ -634,6 +657,29 @@ document.addEventListener('DOMContentLoaded', () => {
         enableMouseInteraction: true,
     });
 
+    // Cycle through Catppuccin accent colors on button click
+    const BG_COLORS = [
+        { name: 'mauve',    rgb: CTP.mauve    },
+        { name: 'blue',     rgb: CTP.blue     },
+        { name: 'peach',    rgb: CTP.peach    },
+        { name: 'pink',     rgb: CTP.pink     },
+        { name: 'teal',     rgb: CTP.teal     },
+        { name: 'lavender', rgb: CTP.lavender },
+        { name: 'green',    rgb: CTP.green    },
+        { name: 'red',      rgb: CTP.red      },
+    ];
+    let bgColorIdx = 0;
+
+    const bgToggle = document.getElementById('bg-toggle');
+    if (bgToggle && ditherBg) {
+        bgToggle.addEventListener('click', () => {
+            bgColorIdx = (bgColorIdx + 1) % BG_COLORS.length;
+            const { name, rgb } = BG_COLORS[bgColorIdx];
+            ditherBg.setWaveColor([rgb[0]/255, rgb[1]/255, rgb[2]/255]);
+            bgToggle.textContent = name;
+        });
+    }
+
     const banner = document.getElementById('banner-canvas');
     if (banner) {
         const src = banner.getAttribute('data-src');
@@ -642,16 +688,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             generateBanner(banner);
         }
-    }
-
-    const bgToggle = document.getElementById('bg-toggle');
-    const ditherBg = document.getElementById('dither-bg');
-
-    if (bgToggle && ditherBg) {
-        bgToggle.addEventListener('click', () => {
-            const isRevealed = ditherBg.classList.toggle('revealed');
-            bgToggle.textContent = isRevealed ? 'dim bg' : 'toggle bg';
-        });
     }
 
     const avatar = document.getElementById('avatar-canvas');

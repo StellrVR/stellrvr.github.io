@@ -555,9 +555,6 @@ body::before {
     image-rendering: pixelated;
 }
 
-#dither-bg.revealed {
-    opacity: 1;
-}
 
 .footer-divider {
     color: var(--ctp-surface2);
