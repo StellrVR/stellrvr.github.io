@@ -310,7 +310,7 @@ function initDitherBackground(canvas, opts) {
         bindQuad(waveProg);
         gl.uniform2f(wU.resolution, w, h);
         gl.uniform1f(wU.time, t);
-        gl.uniform2f(wU.mousePos, mouse.x, h - mouse.y); // flip Y to match GLSL
+        gl.uniform2f(wU.mousePos, mouse.x, mouse.y);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
         // — Pass 2: dither → screen —
