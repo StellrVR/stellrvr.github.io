@@ -26,21 +26,20 @@ function clamp(v) {
     return Math.max(0, Math.min(255, Math.round(v)));
 }
 
-// ─── ReactBits Dither Background (vanilla WebGL port) ────────────────────────
 function initDitherBackground(canvas, opts) {
     opts = Object.assign({
-        waveSpeed:              0.05,
-        waveFrequency:          3.0,
-        waveAmplitude:          0.3,
-        waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
-        colorNum:               4.0,
-        pixelSize:              2.0,
+        waveSpeed:             0.05,
+        waveFrequency:         3.0,
+        waveAmplitude:         0.3,
+        waveColor:             [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
+        colorNum:              4.0,
+        pixelSize:             2.0,
         enableMouseInteraction: true,
-        mouseRadius:            0.3,
+        mouseRadius:           0.3,
     }, opts);
 
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) { canvas.style.display = 'none'; return null; }
+    if (!gl) { canvas.style.display = 'none'; return; }
 
     const vertSrc = `
         attribute vec2 a_pos;
@@ -218,6 +217,7 @@ function initDitherBackground(canvas, opts) {
     }
 
     let fbo, fbTex, fbW = 0, fbH = 0;
+
     function createFBO(w, h) {
         if (fbo) { gl.deleteFramebuffer(fbo); gl.deleteTexture(fbTex); }
         fbTex = gl.createTexture();
@@ -282,13 +282,32 @@ function initDitherBackground(canvas, opts) {
         });
     }
 
-    let currentWaveColor = [...opts.waveColor];
+    let currentColor = [...opts.waveColor];
+    let targetColor  = [...opts.waveColor];
+    let lerpT = 1.0;
+
+    function setWaveColor(rgb) {
+        // snapshot the in-progress lerp position as the new start
+        currentColor = currentColor.map((v, i) => v + (targetColor[i] - v) * Math.min(lerpT, 1.0));
+        targetColor  = rgb;
+        lerpT = 0.0;
+    }
 
     let start = performance.now();
     function render() {
         const t = (performance.now() - start) / 1000;
         const w = canvas.width, h = canvas.height;
 
+        // smooth color lerp (smoothstep, ~40 frames)
+        if (lerpT < 1.0) {
+            lerpT = Math.min(lerpT + 0.025, 1.0);
+            const ease = lerpT * lerpT * (3.0 - 2.0 * lerpT);
+            const lerped = currentColor.map((v, i) => v + (targetColor[i] - v) * ease);
+            gl.useProgram(waveProg);
+            gl.uniform3fv(wU.waveColor, lerped);
+        }
+
+        // — Pass 1: wave → FBO —
         gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
         gl.viewport(0, 0, w, h);
         gl.useProgram(waveProg);
@@ -296,10 +315,10 @@ function initDitherBackground(canvas, opts) {
         bindQuad(waveProg);
         gl.uniform2f(wU.resolution, w, h);
         gl.uniform1f(wU.time, t);
-        gl.uniform3fv(wU.waveColor, currentWaveColor);
         gl.uniform2f(wU.mousePos, mouse.x, mouse.y);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
+        // — Pass 2: dither → screen —
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.viewport(0, 0, w, h);
         gl.useProgram(ditherProg);
@@ -314,11 +333,8 @@ function initDitherBackground(canvas, opts) {
     }
     render();
 
-    return {
-        setWaveColor: (rgb) => { currentWaveColor = rgb; }
-    };
+    return { setWaveColor };
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 function sierraDither(imageData, palette) {
     const { width, height, data } = imageData;
@@ -418,7 +434,6 @@ function ditherImageOnCanvas(canvas, src, w, h, palette) {
 }
 
 function generateBanner(canvas) {
-    // Increased width to 800 to match max-width of card
     const w = 800, h = 160;
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d');
@@ -612,18 +627,83 @@ async function fetchLanyardStatus() {
 document.addEventListener('DOMContentLoaded', () => {
 
     const ditherBgCanvas = document.getElementById('dither-bg');
-    if (ditherBgCanvas) {
-        initDitherBackground(ditherBgCanvas, {
-            waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
-            colorNum:               4.0,
-            pixelSize:              2.0,
-            waveSpeed:              0.05,
-            waveFrequency:          3.0,
-            waveAmplitude:          0.3,
-            mouseRadius:            0.3,
-            enableMouseInteraction: true,
+    const ditherBg = initDitherBackground(ditherBgCanvas, {
+        waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
+        colorNum:               4.0,
+        pixelSize:              2.0,
+        waveSpeed:              0.05,
+        waveFrequency:          3.0,
+        waveAmplitude:          0.3,
+        mouseRadius:            0.3,
+        enableMouseInteraction: true,
+    });
+
+    const BG_COLORS = [
+        { name: 'mauve',    rgb: CTP.mauve    },
+        { name: 'blue',     rgb: CTP.blue     },
+        { name: 'peach',    rgb: CTP.peach    },
+        { name: 'pink',     rgb: CTP.pink     },
+        { name: 'teal',     rgb: CTP.teal     },
+        { name: 'lavender', rgb: CTP.lavender },
+        { name: 'green',    rgb: CTP.green    },
+        { name: 'red',      rgb: CTP.red      },
+    ];
+    let bgColorIdx = 0;
+
+    const bgToggle = document.getElementById('bg-toggle');
+    if (bgToggle && ditherBg) {
+        bgToggle.addEventListener('click', () => {
+            bgColorIdx = (bgColorIdx + 1) % BG_COLORS.length;
+            const { name, rgb } = BG_COLORS[bgColorIdx];
+            ditherBg.setWaveColor([rgb[0]/255, rgb[1]/255, rgb[2]/255]);
+            bgToggle.textContent = name;
         });
     }
+
+    function buildDisplacementMap() {
+        const card = document.querySelector('.profile-card');
+        if (!card) return;
+        const rect  = card.getBoundingClientRect();
+        const w     = rect.width  || 800;
+        const h     = rect.height || 600;
+        const br    = 18;
+        const edge  = Math.min(w, h) * (0.07 * 0.5);
+        const uid   = 'gs-grad';
+
+        const svg = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="${uid}-r" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#0000"/>
+                    <stop offset="100%" stop-color="red"/>
+                </linearGradient>
+                <linearGradient id="${uid}-b" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0000"/>
+                    <stop offset="100%" stop-color="blue"/>
+                </linearGradient>
+            </defs>
+            <rect width="${w}" height="${h}" fill="black"/>
+            <rect width="${w}" height="${h}" rx="${br}" fill="url(#${uid}-r)"/>
+            <rect width="${w}" height="${h}" rx="${br}" fill="url(#${uid}-b)" style="mix-blend-mode:difference"/>
+            <rect x="${edge}" y="${edge}" width="${w - edge*2}" height="${h - edge*2}"
+                  rx="${br}" fill="hsl(0 0% 50% / 0.93)" style="filter:blur(11px)"/>
+        </svg>`;
+
+        const href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+        document.getElementById('glass-displacement-map')?.setAttribute('href', href);
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isGlass = document.body.classList.toggle('glass-theme');
+            themeToggle.textContent = isGlass ? 'default mode' : 'glass mode';
+            if (isGlass) buildDisplacementMap();
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        if (document.body.classList.contains('glass-theme')) buildDisplacementMap();
+    });
 
     const banner = document.getElementById('banner-canvas');
     if (banner) {
