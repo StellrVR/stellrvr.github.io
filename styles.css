@@ -546,19 +546,16 @@ body::before {
     overflow: hidden;
 }
 
-.bg-fixed img {
+#dither-bg {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: filter 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
-    filter: blur(20px) brightness(0.7);
-    transform: scale(1);
-    opacity: 0.5;
+    display: block;
+    transition: opacity 0.5s ease;
+    opacity: 0.55;
+    image-rendering: pixelated;
 }
 
-.bg-fixed img.revealed {
-    filter: blur(0) brightness(1);
-    transform: scale(1);
+#dither-bg.revealed {
     opacity: 1;
 }
 
