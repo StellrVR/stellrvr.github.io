@@ -41,6 +41,27 @@
     <canvas id="dither-bg"></canvas>
 </div>
 
+<!-- GlassSurface SVG displacement filter (port of react-bits GlassSurface) -->
+<svg id="glass-filter-svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="glass-filter" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+            <feImage id="glass-displacement-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
+            <feDisplacementMap in="SourceGraphic" in2="map" scale="-180" xChannelSelector="R" yChannelSelector="G" result="dispRed" />
+            <feColorMatrix in="dispRed" type="matrix"
+                           values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
+            <feDisplacementMap in="SourceGraphic" in2="map" scale="-170" xChannelSelector="R" yChannelSelector="G" result="dispGreen" />
+            <feColorMatrix in="dispGreen" type="matrix"
+                           values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
+            <feDisplacementMap in="SourceGraphic" in2="map" scale="-160" xChannelSelector="R" yChannelSelector="G" result="dispBlue" />
+            <feColorMatrix in="dispBlue" type="matrix"
+                           values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+            <feBlend in="red" in2="green" mode="screen" result="rg" />
+            <feBlend in="rg" in2="blue" mode="screen" result="output" />
+            <feGaussianBlur in="output" stdDeviation="0.7" />
+        </filter>
+    </defs>
+</svg>
+
 <div class="profile-card">
 
     <div class="card-banner">
@@ -173,7 +194,7 @@
                     <div class="project-info">
                         <div class="project-name">dragonspire</div>
                         <div class="project-desc">a dungeons &amp; dragons VRChat world aimed to be as close to the real thing as possible</div>
-                        <p style="color: var(--ctp-overlay0); font-size: 12px;"><i><a href="https://vrchat.com/home/world/wrld_51878aeb-9a58-483a-9228-8cf486319f86/info" target="_blank">check it out</a></i></p>
+                        <p style="color: var(--ctp-overlay0); font-size: 12px;"><i>link soon</i></p>
                     </div>
                 </div>
             </div>
@@ -185,6 +206,8 @@
         made with level 3 spell slots // 2026 // <a href="https://julylmao.atabook.org">guestbook</a>
         <span class="footer-divider"> // </span>
         <span id="bg-toggle" class="footer-action">toggle bg</span>
+        <span class="footer-divider"> // </span>
+        <span id="theme-toggle" class="footer-action">glass mode</span>
     </div>
 
 </div>

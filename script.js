@@ -680,6 +680,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── Glass theme toggle ────────────────────────────────────────────────
+    function buildDisplacementMap() {
+        const card = document.querySelector('.profile-card');
+        if (!card) return;
+        const rect  = card.getBoundingClientRect();
+        const w     = rect.width  || 800;
+        const h     = rect.height || 600;
+        const br    = 18;
+        const edge  = Math.min(w, h) * (0.07 * 0.5);
+        const uid   = 'gs-grad';
+
+        const svg = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="${uid}-r" x1="100%" y1="0%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#0000"/>
+                    <stop offset="100%" stop-color="red"/>
+                </linearGradient>
+                <linearGradient id="${uid}-b" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0000"/>
+                    <stop offset="100%" stop-color="blue"/>
+                </linearGradient>
+            </defs>
+            <rect width="${w}" height="${h}" fill="black"/>
+            <rect width="${w}" height="${h}" rx="${br}" fill="url(#${uid}-r)"/>
+            <rect width="${w}" height="${h}" rx="${br}" fill="url(#${uid}-b)" style="mix-blend-mode:difference"/>
+            <rect x="${edge}" y="${edge}" width="${w - edge*2}" height="${h - edge*2}"
+                  rx="${br}" fill="hsl(0 0% 50% / 0.93)" style="filter:blur(11px)"/>
+        </svg>`;
+
+        const href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+        document.getElementById('glass-displacement-map')?.setAttribute('href', href);
+    }
+
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isGlass = document.body.classList.toggle('glass-theme');
+            themeToggle.textContent = isGlass ? 'default mode' : 'glass mode';
+            if (isGlass) buildDisplacementMap();
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        if (document.body.classList.contains('glass-theme')) buildDisplacementMap();
+    });
+
     const banner = document.getElementById('banner-canvas');
     if (banner) {
         const src = banner.getAttribute('data-src');

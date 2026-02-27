@@ -580,3 +580,96 @@ body::before {
     .avatar-section { margin-top: -40px; }
     .card-body { padding: 0.2rem 0.9rem 0.9rem; }
 }
+
+/* ── Glass theme ─────────────────────────────────────────────────────────── */
+
+/* Hidden SVG filter element injected by JS */
+#glass-filter-svg {
+    position: fixed;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Increase dither bg brightness in glass mode so there's something to blur through */
+body.glass-theme #dither-bg {
+    opacity: 1;
+}
+
+/* Card becomes transparent glass */
+body.glass-theme .profile-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+            0 0 2px 1px rgba(255,255,255,0.06) inset,
+            0 0 10px 4px rgba(255,255,255,0.03) inset,
+            0 8px 40px rgba(0,0,0,0.4),
+            0 2px 0 rgba(255,255,255,0.05) inset;
+    backdrop-filter: url(#glass-filter) saturate(1.4) blur(18px);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+body.glass-theme .banner-fade {
+    background: linear-gradient(transparent, rgba(10,10,20,0.35));
+}
+
+body.glass-theme .avatar-ring {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+}
+
+body.glass-theme .badge {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+}
+
+body.glass-theme .info-item {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.08);
+}
+
+body.glass-theme .tag {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+}
+
+body.glass-theme .tag-accent { background: rgba(203,166,247,0.1); border-color: rgba(203,166,247,0.25); }
+body.glass-theme .tag-blue   { background: rgba(137,180,250,0.1); border-color: rgba(137,180,250,0.25); }
+body.glass-theme .tag-teal   { background: rgba(148,226,213,0.1); border-color: rgba(148,226,213,0.25); }
+body.glass-theme .tag-peach  { background: rgba(250,179,135,0.1); border-color: rgba(250,179,135,0.25); }
+body.glass-theme .tag-pink   { background: rgba(245,194,231,0.1); border-color: rgba(245,194,231,0.25); }
+
+body.glass-theme .project-mini {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.08);
+}
+
+body.glass-theme .link-btn {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.1);
+}
+
+body.glass-theme .card-footer {
+    background: rgba(255,255,255,0.03);
+    border-top-color: rgba(255,255,255,0.08);
+}
+
+/* Fallback for browsers that don't support SVG backdrop-filter (Firefox, Safari) */
+@supports not (backdrop-filter: url(#x)) {
+    body.glass-theme .profile-card {
+        backdrop-filter: blur(20px) saturate(1.6) brightness(1.1);
+        -webkit-backdrop-filter: blur(20px) saturate(1.6) brightness(1.1);
+    }
+}
+
+/* Theme transition */
+body.glass-theme .profile-card,
+body.glass-theme .badge,
+body.glass-theme .info-item,
+body.glass-theme .tag,
+body.glass-theme .project-mini,
+body.glass-theme .link-btn,
+body.glass-theme .card-footer {
+    transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}

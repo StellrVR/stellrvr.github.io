@@ -26,6 +26,300 @@ function clamp(v) {
     return Math.max(0, Math.min(255, Math.round(v)));
 }
 
+// ─── ReactBits Dither Background (vanilla WebGL port) ────────────────────────
+function initDitherBackground(canvas, opts) {
+    opts = Object.assign({
+        waveSpeed:              0.05,
+        waveFrequency:          3.0,
+        waveAmplitude:          0.3,
+        waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
+        colorNum:               4.0,
+        pixelSize:              2.0,
+        enableMouseInteraction: true,
+        mouseRadius:            0.3,
+    }, opts);
+
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) { canvas.style.display = 'none'; return null; }
+
+    const vertSrc = `
+        attribute vec2 a_pos;
+        varying vec2 v_uv;
+        void main() {
+            v_uv = a_pos * 0.5 + 0.5;
+            gl_Position = vec4(a_pos, 0.0, 1.0);
+        }
+    `;
+
+    const waveFrag = `
+        precision highp float;
+        varying vec2 v_uv;
+        uniform vec2  resolution;
+        uniform float time;
+        uniform float waveSpeed;
+        uniform float waveFrequency;
+        uniform float waveAmplitude;
+        uniform vec3  waveColor;
+        uniform vec2  mousePos;
+        uniform int   enableMouseInteraction;
+        uniform float mouseRadius;
+
+        vec4 mod289v4(vec4 x) { return x - floor(x*(1.0/289.0))*289.0; }
+        vec4 permute(vec4 x)   { return mod289v4(((x*34.0)+1.0)*x); }
+        vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314*r; }
+        vec2 fade(vec2 t) { return t*t*t*(t*(t*6.0-15.0)+10.0); }
+
+        float cnoise(vec2 P) {
+            vec4 Pi = floor(P.xyxy) + vec4(0.0,0.0,1.0,1.0);
+            vec4 Pf = fract(P.xyxy) - vec4(0.0,0.0,1.0,1.0);
+            Pi = mod289v4(Pi);
+            vec4 ix=Pi.xzxz, iy=Pi.yyww, fx=Pf.xzxz, fy=Pf.yyww;
+            vec4 i = permute(permute(ix)+iy);
+            vec4 gx = fract(i*(1.0/41.0))*2.0-1.0;
+            vec4 gy = abs(gx)-0.5;
+            vec4 tx = floor(gx+0.5);
+            gx -= tx;
+            vec2 g00=vec2(gx.x,gy.x), g10=vec2(gx.y,gy.y);
+            vec2 g01=vec2(gx.z,gy.z), g11=vec2(gx.w,gy.w);
+            vec4 norm = taylorInvSqrt(vec4(dot(g00,g00),dot(g01,g01),dot(g10,g10),dot(g11,g11)));
+            g00*=norm.x; g01*=norm.y; g10*=norm.z; g11*=norm.w;
+            float n00=dot(g00,vec2(fx.x,fy.x)), n10=dot(g10,vec2(fx.y,fy.y));
+            float n01=dot(g01,vec2(fx.z,fy.z)), n11=dot(g11,vec2(fx.w,fy.w));
+            vec2 fade_xy = fade(Pf.xy);
+            vec2 n_x = mix(vec2(n00,n01),vec2(n10,n11),fade_xy.x);
+            return 2.3*mix(n_x.x,n_x.y,fade_xy.y);
+        }
+
+        float fbm(vec2 p) {
+            float value=0.0, amp=1.0, freq=waveFrequency;
+            for (int i=0; i<4; i++) {
+                value += amp * abs(cnoise(p));
+                p     *= freq;
+                amp   *= waveAmplitude;
+            }
+            return value;
+        }
+
+        float pattern(vec2 p) {
+            vec2 p2 = p - time * waveSpeed;
+            return fbm(p + fbm(p2));
+        }
+
+        void main() {
+            vec2 uv = gl_FragCoord.xy / resolution.xy;
+            uv -= 0.5;
+            uv.x *= resolution.x / resolution.y;
+            float f = pattern(uv);
+            if (enableMouseInteraction == 1) {
+                vec2 mouseNDC = (mousePos / resolution - 0.5) * vec2(1.0, -1.0);
+                mouseNDC.x *= resolution.x / resolution.y;
+                float dist   = length(uv - mouseNDC);
+                float effect = 1.0 - smoothstep(0.0, mouseRadius, dist);
+                f -= 0.5 * effect;
+            }
+            vec3 col = mix(vec3(0.0), waveColor, f);
+            gl_FragColor = vec4(col, 1.0);
+        }
+    `;
+
+    const ditherFragCompat = `
+        precision highp float;
+        varying vec2 v_uv;
+        uniform sampler2D inputBuffer;
+        uniform vec2  resolution;
+        uniform float colorNum;
+        uniform float pixelSize;
+
+        float bayerVal(int idx) {
+            if(idx== 0) return  0.0/64.0; if(idx== 1) return 48.0/64.0;
+            if(idx== 2) return 12.0/64.0; if(idx== 3) return 60.0/64.0;
+            if(idx== 4) return  3.0/64.0; if(idx== 5) return 51.0/64.0;
+            if(idx== 6) return 15.0/64.0; if(idx== 7) return 63.0/64.0;
+            if(idx== 8) return 32.0/64.0; if(idx== 9) return 16.0/64.0;
+            if(idx==10) return 44.0/64.0; if(idx==11) return 28.0/64.0;
+            if(idx==12) return 35.0/64.0; if(idx==13) return 19.0/64.0;
+            if(idx==14) return 47.0/64.0; if(idx==15) return 31.0/64.0;
+            if(idx==16) return  8.0/64.0; if(idx==17) return 56.0/64.0;
+            if(idx==18) return  4.0/64.0; if(idx==19) return 52.0/64.0;
+            if(idx==20) return 11.0/64.0; if(idx==21) return 59.0/64.0;
+            if(idx==22) return  7.0/64.0; if(idx==23) return 55.0/64.0;
+            if(idx==24) return 40.0/64.0; if(idx==25) return 24.0/64.0;
+            if(idx==26) return 36.0/64.0; if(idx==27) return 20.0/64.0;
+            if(idx==28) return 43.0/64.0; if(idx==29) return 27.0/64.0;
+            if(idx==30) return 39.0/64.0; if(idx==31) return 23.0/64.0;
+            if(idx==32) return  2.0/64.0; if(idx==33) return 50.0/64.0;
+            if(idx==34) return 14.0/64.0; if(idx==35) return 62.0/64.0;
+            if(idx==36) return  1.0/64.0; if(idx==37) return 49.0/64.0;
+            if(idx==38) return 13.0/64.0; if(idx==39) return 61.0/64.0;
+            if(idx==40) return 34.0/64.0; if(idx==41) return 18.0/64.0;
+            if(idx==42) return 46.0/64.0; if(idx==43) return 30.0/64.0;
+            if(idx==44) return 33.0/64.0; if(idx==45) return 17.0/64.0;
+            if(idx==46) return 45.0/64.0; if(idx==47) return 29.0/64.0;
+            if(idx==48) return 10.0/64.0; if(idx==49) return 58.0/64.0;
+            if(idx==50) return  6.0/64.0; if(idx==51) return 54.0/64.0;
+            if(idx==52) return  9.0/64.0; if(idx==53) return 57.0/64.0;
+            if(idx==54) return  5.0/64.0; if(idx==55) return 53.0/64.0;
+            if(idx==56) return 42.0/64.0; if(idx==57) return 26.0/64.0;
+            if(idx==58) return 38.0/64.0; if(idx==59) return 22.0/64.0;
+            if(idx==60) return 41.0/64.0; if(idx==61) return 25.0/64.0;
+            if(idx==62) return 37.0/64.0; if(idx==63) return 21.0/64.0;
+            return 0.0;
+        }
+
+        vec3 dither(vec2 uv, vec3 color) {
+            vec2 scaledCoord = floor(uv * resolution / pixelSize);
+            int x = int(mod(scaledCoord.x, 8.0));
+            int y = int(mod(scaledCoord.y, 8.0));
+            float threshold = bayerVal(y * 8 + x) - 0.25;
+            float step = 1.0 / (colorNum - 1.0);
+            color += threshold * step;
+            color  = clamp(color - 0.2, 0.0, 1.0);
+            return floor(color * (colorNum - 1.0) + 0.5) / (colorNum - 1.0);
+        }
+
+        void main() {
+            vec2 normalizedPixelSize = pixelSize / resolution;
+            vec2 uvPixel = normalizedPixelSize * floor(v_uv / normalizedPixelSize);
+            vec4 color   = texture2D(inputBuffer, uvPixel);
+            color.rgb    = dither(v_uv, color.rgb);
+            gl_FragColor = color;
+        }
+    `;
+
+    function makeProgram(vs, fs) {
+        function compile(type, src) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
+                console.error(gl.getShaderInfoLog(s));
+            return s;
+        }
+        const p = gl.createProgram();
+        gl.attachShader(p, compile(gl.VERTEX_SHADER, vs));
+        gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fs));
+        gl.linkProgram(p);
+        if (!gl.getProgramParameter(p, gl.LINK_STATUS))
+            console.error(gl.getProgramInfoLog(p));
+        return p;
+    }
+
+    const waveProg   = makeProgram(vertSrc, waveFrag);
+    const ditherProg = makeProgram(vertSrc, ditherFragCompat);
+
+    const quadBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+    function bindQuad(prog) {
+        const loc = gl.getAttribLocation(prog, 'a_pos');
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    }
+
+    let fbo, fbTex, fbW = 0, fbH = 0;
+    function createFBO(w, h) {
+        if (fbo) { gl.deleteFramebuffer(fbo); gl.deleteTexture(fbTex); }
+        fbTex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, fbTex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        fbo = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fbTex, 0);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        fbW = w; fbH = h;
+    }
+
+    function resize() {
+        const w = canvas.clientWidth  || window.innerWidth;
+        const h = canvas.clientHeight || window.innerHeight;
+        canvas.width  = w;
+        canvas.height = h;
+        createFBO(w, h);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    gl.useProgram(waveProg);
+    const wU = {
+        resolution:             gl.getUniformLocation(waveProg, 'resolution'),
+        time:                   gl.getUniformLocation(waveProg, 'time'),
+        waveSpeed:              gl.getUniformLocation(waveProg, 'waveSpeed'),
+        waveFrequency:          gl.getUniformLocation(waveProg, 'waveFrequency'),
+        waveAmplitude:          gl.getUniformLocation(waveProg, 'waveAmplitude'),
+        waveColor:              gl.getUniformLocation(waveProg, 'waveColor'),
+        mousePos:               gl.getUniformLocation(waveProg, 'mousePos'),
+        enableMouseInteraction: gl.getUniformLocation(waveProg, 'enableMouseInteraction'),
+        mouseRadius:            gl.getUniformLocation(waveProg, 'mouseRadius'),
+    };
+    gl.uniform1f(wU.waveSpeed,              opts.waveSpeed);
+    gl.uniform1f(wU.waveFrequency,          opts.waveFrequency);
+    gl.uniform1f(wU.waveAmplitude,          opts.waveAmplitude);
+    gl.uniform3fv(wU.waveColor,             opts.waveColor);
+    gl.uniform1i(wU.enableMouseInteraction, opts.enableMouseInteraction ? 1 : 0);
+    gl.uniform1f(wU.mouseRadius,            opts.mouseRadius);
+
+    gl.useProgram(ditherProg);
+    const dU = {
+        inputBuffer: gl.getUniformLocation(ditherProg, 'inputBuffer'),
+        resolution:  gl.getUniformLocation(ditherProg, 'resolution'),
+        colorNum:    gl.getUniformLocation(ditherProg, 'colorNum'),
+        pixelSize:   gl.getUniformLocation(ditherProg, 'pixelSize'),
+    };
+    gl.uniform1i(dU.inputBuffer, 0);
+    gl.uniform1f(dU.colorNum,    opts.colorNum);
+    gl.uniform1f(dU.pixelSize,   opts.pixelSize);
+
+    const mouse = { x: 0, y: 0 };
+    if (opts.enableMouseInteraction) {
+        window.addEventListener('mousemove', e => {
+            const r = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - r.left;
+            mouse.y = e.clientY - r.top;
+        });
+    }
+
+    let currentWaveColor = [...opts.waveColor];
+
+    let start = performance.now();
+    function render() {
+        const t = (performance.now() - start) / 1000;
+        const w = canvas.width, h = canvas.height;
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+        gl.viewport(0, 0, w, h);
+        gl.useProgram(waveProg);
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+        bindQuad(waveProg);
+        gl.uniform2f(wU.resolution, w, h);
+        gl.uniform1f(wU.time, t);
+        gl.uniform3fv(wU.waveColor, currentWaveColor);
+        gl.uniform2f(wU.mousePos, mouse.x, mouse.y);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, w, h);
+        gl.useProgram(ditherProg);
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+        bindQuad(ditherProg);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, fbTex);
+        gl.uniform2f(dU.resolution, w, h);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+        requestAnimationFrame(render);
+    }
+    render();
+
+    return {
+        setWaveColor: (rgb) => { currentWaveColor = rgb; }
+    };
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 function sierraDither(imageData, palette) {
     const { width, height, data } = imageData;
     const buf = new Float32Array(width * height * 3);
@@ -317,6 +611,20 @@ async function fetchLanyardStatus() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const ditherBgCanvas = document.getElementById('dither-bg');
+    if (ditherBgCanvas) {
+        initDitherBackground(ditherBgCanvas, {
+            waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
+            colorNum:               4.0,
+            pixelSize:              2.0,
+            waveSpeed:              0.05,
+            waveFrequency:          3.0,
+            waveAmplitude:          0.3,
+            mouseRadius:            0.3,
+            enableMouseInteraction: true,
+        });
+    }
+
     const banner = document.getElementById('banner-canvas');
     if (banner) {
         const src = banner.getAttribute('data-src');
@@ -325,16 +633,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             generateBanner(banner);
         }
-    }
-
-    const bgToggle = document.getElementById('bg-toggle');
-    const bgImg = document.getElementById('background-img');
-
-    if (bgToggle && bgImg) {
-        bgToggle.addEventListener('click', () => {
-            const isRevealed = bgImg.classList.toggle('revealed');
-            bgToggle.textContent = isRevealed ? 'hide bg' : 'view bg';
-        });
     }
 
     const avatar = document.getElementById('avatar-canvas');
