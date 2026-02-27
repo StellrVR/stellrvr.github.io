@@ -581,9 +581,7 @@ body::before {
     .card-body { padding: 0.2rem 0.9rem 0.9rem; }
 }
 
-/* ── Glass theme ─────────────────────────────────────────────────────────── */
 
-/* Hidden SVG filter element injected by JS */
 #glass-filter-svg {
     position: fixed;
     width: 0;
@@ -592,12 +590,10 @@ body::before {
     z-index: -1;
 }
 
-/* Increase dither bg brightness in glass mode so there's something to blur through */
 body.glass-theme #dither-bg {
     opacity: 1;
 }
 
-/* Card becomes transparent glass */
 body.glass-theme .profile-card {
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.12);
@@ -655,7 +651,6 @@ body.glass-theme .card-footer {
     border-top-color: rgba(255,255,255,0.08);
 }
 
-/* Fallback for browsers that don't support SVG backdrop-filter (Firefox, Safari) */
 @supports not (backdrop-filter: url(#x)) {
     body.glass-theme .profile-card {
         backdrop-filter: blur(20px) saturate(1.6) brightness(1.1);
@@ -663,7 +658,6 @@ body.glass-theme .card-footer {
     }
 }
 
-/* Theme transition */
 body.glass-theme .profile-card,
 body.glass-theme .badge,
 body.glass-theme .info-item,

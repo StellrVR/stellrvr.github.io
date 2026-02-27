@@ -26,10 +26,6 @@ function clamp(v) {
     return Math.max(0, Math.min(255, Math.round(v)));
 }
 
-// ─── ReactBits Dither Background (vanilla WebGL port) ────────────────────────
-// Faithfully ported from the react-bits Dither component (React Three Fiber).
-// Two-pass: pass 1 renders the animated wave (Perlin FBM), pass 2 applies the
-// Bayer 8×8 ordered dither post-process — exactly matching the source shaders.
 function initDitherBackground(canvas, opts) {
     opts = Object.assign({
         waveSpeed:             0.05,
@@ -45,7 +41,6 @@ function initDitherBackground(canvas, opts) {
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
     if (!gl) { canvas.style.display = 'none'; return; }
 
-    // ── shared vertex shader (full-screen quad, also used for post pass) ──
     const vertSrc = `
         attribute vec2 a_pos;
         varying vec2 v_uv;
@@ -55,7 +50,6 @@ function initDitherBackground(canvas, opts) {
         }
     `;
 
-    // ── Pass 1: wave shader — direct port of waveFragmentShader ──────────
     const waveFrag = `
         precision highp float;
         varying vec2 v_uv;
@@ -127,7 +121,6 @@ function initDitherBackground(canvas, opts) {
         }
     `;
 
-    // ── Pass 2: Bayer 8×8 dither post-process (WebGL1-compatible, no array literals) ──
     const ditherFragCompat = `
         precision highp float;
         varying vec2 v_uv;
@@ -192,7 +185,6 @@ function initDitherBackground(canvas, opts) {
         }
     `;
 
-    // ── compile helper ────────────────────────────────────────────────────
     function makeProgram(vs, fs) {
         function compile(type, src) {
             const s = gl.createShader(type);
@@ -214,7 +206,6 @@ function initDitherBackground(canvas, opts) {
     const waveProg   = makeProgram(vertSrc, waveFrag);
     const ditherProg = makeProgram(vertSrc, ditherFragCompat);
 
-    // ── full-screen quad buffer (shared by both passes) ───────────────────
     const quadBuf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
@@ -225,7 +216,6 @@ function initDitherBackground(canvas, opts) {
         gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     }
 
-    // ── framebuffer + texture for pass 1 output ───────────────────────────
     let fbo, fbTex, fbW = 0, fbH = 0;
 
     function createFBO(w, h) {
@@ -243,7 +233,6 @@ function initDitherBackground(canvas, opts) {
         fbW = w; fbH = h;
     }
 
-    // ── resize ────────────────────────────────────────────────────────────
     function resize() {
         const w = canvas.clientWidth  || window.innerWidth;
         const h = canvas.clientHeight || window.innerHeight;
@@ -254,7 +243,6 @@ function initDitherBackground(canvas, opts) {
     resize();
     window.addEventListener('resize', resize);
 
-    // ── wave program uniforms ─────────────────────────────────────────────
     gl.useProgram(waveProg);
     const wU = {
         resolution:             gl.getUniformLocation(waveProg, 'resolution'),
@@ -274,7 +262,6 @@ function initDitherBackground(canvas, opts) {
     gl.uniform1i(wU.enableMouseInteraction, opts.enableMouseInteraction ? 1 : 0);
     gl.uniform1f(wU.mouseRadius,            opts.mouseRadius);
 
-    // ── dither program uniforms ───────────────────────────────────────────
     gl.useProgram(ditherProg);
     const dU = {
         inputBuffer: gl.getUniformLocation(ditherProg, 'inputBuffer'),
@@ -286,7 +273,6 @@ function initDitherBackground(canvas, opts) {
     gl.uniform1f(dU.colorNum,    opts.colorNum);
     gl.uniform1f(dU.pixelSize,   opts.pixelSize);
 
-    // ── mouse tracking ────────────────────────────────────────────────────
     const mouse = { x: 0, y: 0 };
     if (opts.enableMouseInteraction) {
         window.addEventListener('mousemove', e => {
@@ -296,7 +282,6 @@ function initDitherBackground(canvas, opts) {
         });
     }
 
-    // ── color state (lerps smoothly between colors on cycle) ────────────
     let currentColor = [...opts.waveColor];
     let targetColor  = [...opts.waveColor];
     let lerpT = 1.0;
@@ -308,7 +293,6 @@ function initDitherBackground(canvas, opts) {
         lerpT = 0.0;
     }
 
-    // ── render loop ───────────────────────────────────────────────────────
     let start = performance.now();
     function render() {
         const t = (performance.now() - start) / 1000;
@@ -351,7 +335,6 @@ function initDitherBackground(canvas, opts) {
 
     return { setWaveColor };
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 function sierraDither(imageData, palette) {
     const { width, height, data } = imageData;
@@ -451,7 +434,6 @@ function ditherImageOnCanvas(canvas, src, w, h, palette) {
 }
 
 function generateBanner(canvas) {
-    // Increased width to 800 to match max-width of card
     const w = 800, h = 160;
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d');
@@ -644,7 +626,6 @@ async function fetchLanyardStatus() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Init WebGL dither background — react-bits Dither port
     const ditherBgCanvas = document.getElementById('dither-bg');
     const ditherBg = initDitherBackground(ditherBgCanvas, {
         waveColor:              [CTP.mauve[0]/255, CTP.mauve[1]/255, CTP.mauve[2]/255],
@@ -657,7 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
         enableMouseInteraction: true,
     });
 
-    // Cycle through Catppuccin accent colors on button click
     const BG_COLORS = [
         { name: 'mauve',    rgb: CTP.mauve    },
         { name: 'blue',     rgb: CTP.blue     },
@@ -680,7 +660,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Glass theme toggle ────────────────────────────────────────────────
     function buildDisplacementMap() {
         const card = document.querySelector('.profile-card');
         if (!card) return;
